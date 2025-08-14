@@ -1,0 +1,60 @@
+.animated-icon {
+  width: 56px;
+  height: 56px;
+  position: relative;
+}
+
+.icon-background {
+  width: 56px;
+  height: 56px;
+  left: 4.2px;
+  top: -3.29px;
+  transform: rotate(0deg);
+  position: absolute;
+  transform-origin: bottom right;
+  background: #1088F4;
+  border-radius: 12px;
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 12px rgba(16, 136, 244, 0.3);
+}
+
+.animated-icon:hover {
+  .icon-background {
+    transform: rotate(5deg);
+  }
+}
+
+.icon-background.animate {
+  transform: rotate(15deg);
+}
+
+.icon-overlay {
+  width: 56px;
+  height: 56px;
+  left: 0;
+  top: 0;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.60);
+  border-radius: 12px;
+  outline: 1px rgba(255, 255, 255, 0.60) solid;
+  outline-offset: -1px;
+  backdrop-filter: blur(8px);
+}
+
+.icon-content {
+  width: 24px;
+  height: 24px;
+  left: 16px;
+  top: 16px;
+  position: absolute;
+  overflow: hidden;
+}
+
+.icon-shape {
+  width: 21px;
+  height: 19.5px;
+  left: 1.5px;
+  top: 1.5px;
+  position: absolute;
+  background: #1088F4;
+}
