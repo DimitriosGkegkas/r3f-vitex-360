@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Header } from './Header';
-import { InfoCard } from './InfoCard';
-import { Menu } from './Menu';
-import FloorPanel from './FloorPanel';
-import { experienceStates, ExperienceState } from '../config';
-import { useExperienceState } from '../hooks';
+import { Header } from '../Header';
+import { InfoCard } from '../InfoCard';
+import { Menu } from '../Menu';
+import { FloorPanel } from '../FloorPanel';
+import { experienceStates, ExperienceState } from '../../config';
+import { useExperienceState } from '../../hooks';
 import './Experience.css';
 
 interface ExperienceProps {
