@@ -7,4 +7,4 @@ export { StartButton } from './StartButton';
 export { InfoCard } from './InfoCard';
 export { Menu } from './Menu';
 export { Experience } from './Experience';
-export { default as FloorPanel } from './FloorPanel';
+export { FloorPanel } from './FloorPanel';
