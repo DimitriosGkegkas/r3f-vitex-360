@@ -1,13 +1,31 @@
-import { Canvas } from "@react-three/fiber";
-import { Experience } from "./components/Experience";
-import { Environment } from "@react-three/drei";
+import React, { useState } from 'react';
+import { LoadingPage, Experience } from './components';
+import './App.css';
 
 const App: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<'loading' | 'experience'>('loading');
+  const [currentStateId, setCurrentStateId] = useState<string>('raw-materials');
+
+  const handleStart = () => {
+    console.log('Starting the experience...');
+    setCurrentPage('experience');
+  };
+
+  const handleStateChange = (newStateId: string) => {
+    setCurrentStateId(newStateId);
+  };
+
   return (
-    <Canvas shadows camera={{ position: [0, 0, 0], fov: 45 }}>
-      <Environment preset="city"></Environment>
-      <Experience />
-    </Canvas>
+    <div className="App">
+      {currentPage === 'loading' ? (
+        <LoadingPage onStart={handleStart} />
+      ) : (
+        <Experience 
+          currentStateId={currentStateId}
+          onStateChange={handleStateChange}
+        />
+      )}
+    </div>
   );
 };
 

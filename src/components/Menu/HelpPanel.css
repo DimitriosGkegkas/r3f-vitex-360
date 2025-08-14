@@ -1,0 +1,175 @@
+/* Help Panel Styles */
+.help-panel {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  width: 400px;
+  background: rgba(255, 255, 255, 0.50);
+  overflow: hidden;
+  border-radius: 40px;
+  outline: 1px #E6E6E6 solid;
+  outline-offset: -1px;
+  backdrop-filter: blur(20px);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.help-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.help-icon {
+  width: 56px;
+  height: 56px;
+  position: relative;
+}
+
+.help-icon-background {
+  width: 56px;
+  height: 56px;
+  left: 18.20px;
+  top: -16.29px;
+  position: absolute;
+  transform: rotate(15deg);
+  transform-origin: top left;
+  background: #1088F4;
+  border-radius: 12px;
+}
+
+.help-icon-foreground {
+  width: 56px;
+  height: 56px;
+  left: 0;
+  top: 0;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.60);
+  border-radius: 12px;
+  outline: 1px rgba(255, 255, 255, 0.60) solid;
+  outline-offset: -1px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.help-icon-symbol {
+  width: 19.50px;
+  height: 19.50px;
+  background: #1088F4;
+}
+
+.help-title {
+  color: #1A1A1A;
+  font-size: 24px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  line-height: 32px;
+  word-wrap: break-word;
+}
+
+.help-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-icon {
+  width: 12.50px;
+  height: 12.50px;
+  background: #4D4D4D;
+}
+
+.help-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.help-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.help-item-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.movement-icon {
+  background: #1088F4;
+  width: 15px;
+  height: 19.50px;
+  margin: 2.25px 4.50px;
+}
+
+.rotation-icon {
+  background: #1088F4;
+  width: 16.50px;
+  height: 16.50px;
+  margin: 3.75px;
+}
+
+.steps-icon {
+  background: #1088F4;
+  width: 22.50px;
+  height: 16.50px;
+  margin: 3.75px 0.75px;
+}
+
+.floors-icon {
+  background: #1088F4;
+  width: 17.25px;
+  height: 18px;
+  margin: 3px;
+}
+
+.help-item-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.help-item-title {
+  color: #1A1A1A;
+  font-size: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  word-wrap: break-word;
+}
+
+.help-item-description {
+  color: #4D4D4D;
+  font-size: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  word-wrap: break-word;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .help-panel {
+    width: 100vw;
+    left: 0px;
+    bottom: 0px;
+    position: fixed;
+    border-radius: 40px 40px 0px 0px;
+  }
+}

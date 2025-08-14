@@ -1,0 +1,52 @@
+.welcome-card {
+  width: 440px;
+  height: fit-content;
+  padding: 40px;
+  left: 500px;
+  top: 101px;
+  background: rgba(255, 255, 255, 0.50);
+  overflow: hidden;
+  border-radius: 40px;
+  outline: 1px #E6E6E6 solid;
+  outline-offset: -1px;
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 16px;
+  z-index: 10;
+}
+
+.welcome-title {
+  align-self: stretch;
+  color: #1A1A1A;
+  font-size: 24px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  line-height: 32px;
+  word-wrap: break-word;
+  margin: 0;
+}
+
+.bullet-points {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .welcome-card {
+    width: 343px;
+    padding: 24px 16px 16px 16px;
+    left: 16px;
+    top: 140px;
+  }
+  
+  .welcome-title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}

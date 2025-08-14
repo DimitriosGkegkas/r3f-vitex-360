@@ -1,0 +1,177 @@
+.menu-container {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  z-index: 100;
+}
+
+.menu-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.menu-button {
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.60);
+  overflow: hidden;
+  border-radius: 40px;
+  outline: 1px #E6E6E6 solid;
+  outline-offset: -1px;
+  backdrop-filter: blur(20px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 40px;
+  height: 40px;
+}
+
+.menu-button:hover {
+  background: rgba(255, 255, 255, 0.80);
+  transform: translateY(-2px);
+}
+
+.menu-button.active {
+  background: rgba(22.14, 128.02, 223.32, 0.30);
+}
+
+.menu-button.muted {
+  background: rgba(220, 53, 69, 0.30);
+}
+
+.menu-button.active .button-text {
+  color: white;
+}
+
+/* Help button active state - white background with white icon */
+.menu-button.active .button-icon svg path {
+  fill: white;
+}
+
+.menu-button.muted .button-icon svg {
+  color: #DC3545;
+}
+
+.button-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-icon svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.3s ease;
+}
+
+.menu-button .button-icon svg {
+  color: #1A1A1A;
+}
+
+.menu-button.active .button-icon svg {
+  color: white;
+}
+
+.icon-symbol {
+  position: absolute;
+  background: #1A1A1A;
+}
+
+.icon-floor {
+  width: 14.38px;
+  height: 15px;
+  left: 2.5px;
+  top: 2.5px;
+}
+
+.icon-info {
+  width: 18.13px;
+  height: 16.25px;
+  left: 1.25px;
+  top: 1.88px;
+}
+
+.icon-settings {
+  width: 16.25px;
+  height: 16.25px;
+  left: 1.88px;
+  top: 1.88px;
+}
+
+.menu-button.active .icon-symbol {
+  background: white;
+}
+
+.menu-button.muted .icon-symbol {
+  background: #DC3545;
+}
+
+.button-text {
+  color: #1A1A1A;
+  font-size: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  line-height: 20px;
+  word-wrap: break-word;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .menu-container {
+    right: 16px;
+    top: 16px;
+  }
+  
+  .menu-button {
+    padding: 6px;
+    min-width: 36px;
+    height: 36px;
+  }
+  
+  .button-icon {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .button-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .icon-floor {
+    width: 13px;
+    height: 13.5px;
+    left: 2.25px;
+    top: 2.25px;
+  }
+  
+  .icon-info {
+    width: 16.3px;
+    height: 14.6px;
+    left: 1.13px;
+    top: 1.69px;
+  }
+  
+  .icon-settings {
+    width: 14.6px;
+    height: 14.6px;
+    left: 1.69px;
+    top: 1.69px;
+  }
+
+
+}

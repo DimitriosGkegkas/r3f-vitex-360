@@ -1,0 +1,34 @@
+.bullet-point {
+  align-self: stretch;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+}
+
+.bullet-icon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.bullet-icon-shape {
+  width: 18.75px;
+  height: 13.5px;
+  left: 3px;
+  top: 6px;
+  position: absolute;
+  background: #1088F4;
+}
+
+.bullet-text {
+  flex: 1 1 0;
+  color: #1A1A1A;
+  font-size: 16px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  line-height: 24px;
+  word-wrap: break-word;
+}
