@@ -6,6 +6,67 @@
   font-family: 'Manrope', sans-serif;
 }
 
+.experience-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  gap: 20px;
+}
+
+.experience-container > *:first-child {
+  flex: 2;
+  min-width: 0;
+}
+
+.image-viewer-section {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.experience-360-viewer {
+  height: 100%;
+  min-height: 400px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .experience-container {
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+  }
+  
+  .experience-container > *:first-child {
+    flex: none;
+    height: 60%;
+  }
+  
+  .image-viewer-section {
+    flex: none;
+    height: 40%;
+  }
+  
+  .experience-360-viewer {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .experience-container {
+    padding: 10px;
+    gap: 10px;
+  }
+  
+  .experience-360-viewer {
+    min-height: 250px;
+  }
+}
+
 * {
   box-sizing: border-box;
 }

@@ -1,9 +1,24 @@
 .experience-page {
   width: 100%;
   height: 100%;
-  position: relative;
-  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: transparent;
   overflow: hidden;
+  z-index: 15;
+}
+
+/* Background overlay to capture clicks and forward to canvas */
+.experience-background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 5;
+  pointer-events: auto;
 }
 
 .experience-background {
@@ -23,7 +38,7 @@
 
 .experience-content {
   position: relative;
-  z-index: 10;
+  z-index: 15;
   width: 100%;
   height: 100%;
 }
@@ -32,14 +47,14 @@
   position: absolute;
   left: 24px;
   top: 246px;
-  z-index: 20;
+  z-index: 25;
 }
 
 .interactive-elements {
   position: absolute;
   left: 604px;
   top: 362px;
-  z-index: 20;
+  z-index: 25;
 }
 
 .interactive-point {

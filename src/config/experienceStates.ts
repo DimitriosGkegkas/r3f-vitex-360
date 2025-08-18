@@ -5,6 +5,7 @@ export interface ExperienceState {
   floor: string;
   description: string;
   keypoints: string[];
+  environmentImage: string; // URL to base folder containing px, nx, py, ny, pz, nz images
 }
 
 export const experienceStates: Record<string, ExperienceState> = {
@@ -19,7 +20,8 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Quality control standards',
       'Innovation in material selection',
       'Craftsmanship principles'
-    ]
+    ],
+    environmentImage: '/cubemap/raw-materials'
   },
   'sorting': {
     id: 'sorting',
@@ -32,7 +34,8 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Quality assessment',
       'Precision sorting',
       'Standards compliance'
-    ]
+    ],
+    environmentImage: '/cubemap/sorting'
   },
   'quantities': {
     id: 'quantities',
@@ -45,7 +48,8 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Precise measurements',
       'Product consistency',
       'Efficiency management'
-    ]
+    ],
+    environmentImage: '/cubemap/quantities'
   },
   'secrets': {
     id: 'secrets',
@@ -58,7 +62,8 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Traditional techniques',
       'Innovation methods',
       'Unique processes'
-    ]
+    ],
+    environmentImage: '/cubemap/secrets'
   },
   'mixing': {
     id: 'mixing',
@@ -71,7 +76,8 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Component integration',
       'Quality mixing',
       'Process optimization'
-    ]
+    ],
+    environmentImage: '/cubemap/mixing'
   },
   'packaging': {
     id: 'packaging',
@@ -84,7 +90,8 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Quality assurance',
       'Customer satisfaction',
       'Final inspection'
-    ]
+    ],
+    environmentImage: '/cubemap/packaging'
   },
 };
 
