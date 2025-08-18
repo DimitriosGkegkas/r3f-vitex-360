@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { Header } from '../Header';
 import { InfoCard } from '../InfoCard';
 import { Menu } from '../Menu';
@@ -23,11 +23,6 @@ export const Experience: React.FC<ExperienceProps> = ({ currentStateId, onStateC
     canGoPrevious
   } = useExperienceState(currentStateId);
 
-  // Ref for the background overlay
-  const backgroundOverlayRef = useRef<HTMLDivElement>(null);
-
-  // State for FloorPanel visibility
-
   // Sync local state with prop changes
   useEffect(() => {
     if (localStateId !== currentStateId) {
@@ -48,28 +43,6 @@ export const Experience: React.FC<ExperienceProps> = ({ currentStateId, onStateC
       const newStateId = goToPrevious();
       if (newStateId) {
         onStateChange(newStateId);
-      }
-    }
-  };
-
-  // Handle background clicks to forward to canvas
-  const handleBackgroundClick = (event: React.MouseEvent) => {
-    // Only handle clicks on the background overlay itself, not on child elements
-    if (event.target === backgroundOverlayRef.current) {
-      // Find the canvas element and simulate a click on it
-      const canvas = document.querySelector('canvas');
-      if (canvas) {
-        // Create a new mouse event to forward to the canvas
-        const canvasEvent = new MouseEvent('mousedown', {
-          clientX: event.clientX,
-          clientY: event.clientY,
-          button: event.button,
-          buttons: event.buttons,
-          bubbles: true,
-          cancelable: true
-        });
-
-        canvas.dispatchEvent(canvasEvent);
       }
     }
   };

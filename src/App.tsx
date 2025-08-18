@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { LoadingPage, Experience } from './components';
-import Image360Viewer, { TestImage360Viewer } from './components/Image360Viewer/Image360Viewer';
 import './App.css';
 
 const App: React.FC = () => {
