@@ -41,10 +41,6 @@
     padding: 15px;
   }
   
-  .experience-container > *:first-child {
-    flex: none;
-    height: 60%;
-  }
   
   .image-viewer-section {
     flex: none;

@@ -6,6 +6,8 @@ export interface ExperienceState {
   description: string;
   keypoints: string[];
   environmentImage: string; // URL to base folder containing px, nx, py, ny, pz, nz images
+  cameraAngle: number; // Initial camera angle in degrees (0 = straight ahead, positive = look up, negative = look down)
+  cameraYaw: number; // Initial camera yaw in degrees (0 = north, 90 = east, 180 = south, 270 = west)
 }
 
 export const experienceStates: Record<string, ExperienceState> = {
@@ -21,7 +23,9 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Innovation in material selection',
       'Craftsmanship principles'
     ],
-    environmentImage: '/cubemap/raw-materials'
+    environmentImage: '/cubemap/raw-materials',
+    cameraAngle: 0,
+    cameraYaw: 30,
   },
   'sorting': {
     id: 'sorting',
@@ -35,7 +39,9 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Precision sorting',
       'Standards compliance'
     ],
-    environmentImage: '/cubemap/sorting'
+    environmentImage: '/cubemap/sorting',
+    cameraAngle: 0,
+    cameraYaw: 50,
   },
   'quantities': {
     id: 'quantities',
@@ -49,7 +55,9 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Product consistency',
       'Efficiency management'
     ],
-    environmentImage: '/cubemap/quantities'
+    environmentImage: '/cubemap/quantities',
+    cameraAngle: 0,
+    cameraYaw: 100,
   },
   'secrets': {
     id: 'secrets',
@@ -63,7 +71,9 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Innovation methods',
       'Unique processes'
     ],
-    environmentImage: '/cubemap/secrets'
+    environmentImage: '/cubemap/secrets',
+    cameraAngle: 0,
+    cameraYaw: 150,
   },
   'mixing': {
     id: 'mixing',
@@ -77,7 +87,9 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Quality mixing',
       'Process optimization'
     ],
-    environmentImage: '/cubemap/mixing'
+    environmentImage: '/cubemap/mixing',
+    cameraAngle: 0,
+    cameraYaw: 200,
   },
   'packaging': {
     id: 'packaging',
@@ -91,7 +103,9 @@ export const experienceStates: Record<string, ExperienceState> = {
       'Customer satisfaction',
       'Final inspection'
     ],
-    environmentImage: '/cubemap/packaging'
+    environmentImage: '/cubemap/packaging',
+    cameraAngle: 0,
+    cameraYaw: 250,
   },
 };
 
