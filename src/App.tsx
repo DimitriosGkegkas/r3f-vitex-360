@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { LoadingPage, Experience } from './components';
+import Image360Viewer, { TestImage360Viewer } from './components/Image360Viewer/Image360Viewer';
 import './App.css';
 
 const App: React.FC = () => {
@@ -20,10 +21,13 @@ const App: React.FC = () => {
       {currentPage === 'loading' ? (
         <LoadingPage onStart={handleStart} />
       ) : (
-        <Experience 
-          currentStateId={currentStateId}
-          onStateChange={handleStateChange}
-        />
+        <div className="experience-container">
+          <Experience
+            currentStateId={currentStateId}
+            onStateChange={handleStateChange}
+          />
+
+        </div>
       )}
     </div>
   );

@@ -1,0 +1,17 @@
+.image-360-viewer {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  cursor: grab;
+  border-radius: 8px;
+}
+
+.image-360-viewer:active {
+  cursor: grabbing;
+}
+
+.image-360-viewer canvas {
+  display: block;
+  width: 100vw !important;
+  height: 100vh !important;
+}
