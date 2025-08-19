@@ -3,10 +3,12 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { Environment, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import { ExperienceState, getStateById } from '../../config/experienceStates';
+import KeypointSpheres from '../KeypointSpheres';
 
 interface Image360ViewerProps {
   stateId: string;
   className?: string;
+  onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
 }
 
 // Scene with the environment
@@ -132,14 +134,17 @@ const DragLookControls: React.FC<{ experienceState?: ExperienceState }> = ({ exp
 const Image360Viewer: React.FC<Image360ViewerProps> = ({
   stateId,
   className = '',
+  onTooltipChange,
 }) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
+  const experienceState = getStateById(stateId);
 
   return (
     <Canvas className={className} gl={{ antialias: true, alpha: false }}>
       <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 10, 0]} fov={45} />
-      <DragLookControls experienceState={getStateById(stateId)} />
+      <DragLookControls experienceState={experienceState} />
       <PanoramaScene stateId={stateId} />
+      {experienceState && <KeypointSpheres experienceState={experienceState} onTooltipChange={onTooltipChange} />}
     </Canvas>
   );
 };

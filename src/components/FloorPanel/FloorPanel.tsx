@@ -9,6 +9,7 @@ interface FloorPanelProps {
   onStepChange: (direction: 'next' | 'prev') => void;
   canGoPrevious: () => boolean;
   onClose?: () => void;
+  onStateChange: (stateId: string) => void;
 }
 
 const FloorPanel: React.FC<FloorPanelProps> = ({
@@ -17,11 +18,16 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
   stateOrder,
   onStepChange,
   canGoPrevious,
-  onClose
+  onClose,
+  onStateChange
 }) => {
   // Calculate current step number for progress
   const currentStepNumber = stateOrder.indexOf(currentStateId) + 1;
   const totalSteps = stateOrder.length;
+
+  const handleFloorClick = (stateId: string) => {
+    onStateChange(stateId);
+  };
 
   return (
     <div className="floors-panel">
@@ -53,21 +59,20 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
         <div className="floors-list">
           {stateOrder.map((stateId, index) => {
             const state = experienceStates[stateId];
-            const isCompleted = index < stateOrder.indexOf(currentStateId);
+            const isActive = index == stateOrder.indexOf(currentStateId);
 
             return (
               <div
                 key={stateId}
-                className="floor-item"
+                className={`floor-item ${isActive ? 'active' : ''}`}
+                onClick={() => handleFloorClick(stateId)}
+                style={{ cursor: 'pointer' }}
               >
-                {isCompleted ? (
-                  <div className="floor-icon"></div>
-                ) : (
-                  <>
-                    <div className="floor-number">{state.floor}</div>
-                    <div className="floor-name">{state.title}</div>
-                  </>
-                )}
+                <>
+                  <div className="floor-number">{state.floor}</div>
+                  <div className="floor-name">{state.title}</div>
+                </>
+
               </div>
             );
           })}
