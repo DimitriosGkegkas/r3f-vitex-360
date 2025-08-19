@@ -86,6 +86,13 @@
   display: flex;
   transition: all 0.3s ease;
   min-height: 48px;
+  cursor: pointer;
+}
+
+.floor-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(0deg, rgba(251.76, 253.66, 234.72, 0.80) 0%, rgba(251.76, 253.66, 234.72, 0.80) 100%);
 }
 
 .floor-item:nth-child(1) {
@@ -134,6 +141,11 @@
   display: inline-flex;
 }
 
+.floor-item.active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 136, 244, 0.2);
+}
+
 .floor-item.completed {
   justify-content: center;
   align-items: center;
@@ -142,6 +154,46 @@
   margin-left: 140px;
   margin-right: 140px;
   background: linear-gradient(0deg, rgba(246.50, 225.10, 253.01, 0.60) 0%, rgba(246.50, 225.10, 253.01, 0.60) 100%);
+}
+
+/* Hover effects for clickable floor items */
+.floor-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.floor-item.active:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 136, 244, 0.2);
+}
+
+.floor-item:nth-child(1):hover {
+  background: linear-gradient(0deg, #FEE4E4 0%, #FEE4E4 100%);
+  box-shadow: 0 4px 12px rgba(254, 228, 228, 0.3);
+}
+
+.floor-item:nth-child(2):hover {
+  background: linear-gradient(0deg, rgba(251.76, 253.66, 234.72, 0.80) 0%, rgba(251.76, 253.66, 234.72, 0.80) 100%);
+}
+
+.floor-item:nth-child(3):hover {
+  background: linear-gradient(0deg, rgba(234.74, 253.47, 231, 0.80) 0%, rgba(234.74, 253.47, 231, 0.80) 100%);
+}
+
+.floor-item:nth-child(4):hover {
+  background: linear-gradient(0deg, rgba(232.80, 253.38, 247.21, 0.80) 0%, rgba(232.80, 253.38, 247.21, 0.80) 100%);
+}
+
+.floor-item:nth-child(5):hover {
+  background: linear-gradient(0deg, rgba(225.83, 230.82, 253.02, 0.80) 0%, rgba(225.83, 230.82, 253.02, 0.80) 100%);
+}
+
+.floor-item:nth-child(6):hover {
+  background: linear-gradient(0deg, rgba(246.50, 225.10, 253.01, 0.80) 0%, rgba(246.50, 225.10, 253.01, 0.80) 100%);
+}
+
+.floor-item:nth-child(7):hover {
+  background: linear-gradient(0deg, rgba(246.50, 225.10, 253.01, 0.80) 0%, rgba(246.50, 225.10, 253.01, 0.80) 100%);
 }
 
 .floor-number {
@@ -167,7 +219,7 @@
   word-wrap: break-word;
 }
 
-.floor-item:nth-child(1) .floor-name {
+.floor-item.active .floor-name {
   color: #1088F4;
 }
 
