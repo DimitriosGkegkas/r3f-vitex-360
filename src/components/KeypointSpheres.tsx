@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import { Billboard, Image } from '@react-three/drei';
 import * as THREE from 'three';
-import { Keypoint, Step } from '../config/experienceStates';
+import { Keypoint } from '../config';
 
 interface KeypointSpheresProps {
   keypoints: Keypoint[];

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { Environment, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
-import { Environment as EnvironmentType, environments, Floor, getFloorById } from '../../config/experienceStates';
+import { Environment as EnvironmentType, environments, Floor, getFloorById } from '../../config';
 import KeypointSpheres from '../KeypointSpheres';
 
 interface Image360ViewerProps {

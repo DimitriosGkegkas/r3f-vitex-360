@@ -1,5 +1,5 @@
 import React from 'react';
-import { Floor } from '../../config/experienceStates';
+import { Floor } from '../../config';
 import './FloorPanel.css';
 
 interface FloorPanelProps {
