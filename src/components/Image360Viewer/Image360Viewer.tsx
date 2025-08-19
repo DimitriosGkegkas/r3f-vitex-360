@@ -2,19 +2,20 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { Environment, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
-import { ExperienceState, getStateById } from '../../config/experienceStates';
+import { Environment as EnvironmentType, environments, Floor, getFloorById } from '../../config/experienceStates';
 import KeypointSpheres from '../KeypointSpheres';
 
 interface Image360ViewerProps {
-  stateId: string;
+  currentFloorId: string;
+  currentStepId: string;
   className?: string;
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
+  onStepChange: (stepId: string) => void;
 }
 
 // Scene with the environment
-const PanoramaScene: React.FC<{ stateId: string }> = ({ stateId }) => {
-  const experienceState = getStateById(stateId);
-  const environmentImage = experienceState?.environmentImage;
+const PanoramaScene: React.FC<{ environment: EnvironmentType }> = ({ environment }) => {
+  const environmentImage = environment?.environmentImage;
 
   const getEnvironmentProps = () => {
     if (!environmentImage) {
@@ -48,7 +49,7 @@ const PanoramaScene: React.FC<{ stateId: string }> = ({ stateId }) => {
   );
 };
 
-const DragLookControls: React.FC<{ experienceState?: ExperienceState }> = ({ experienceState }) => {
+const DragLookControls: React.FC<{ floor?: Floor; stepId?: string }> = ({ floor, stepId }) => {
   const { camera, gl } = useThree()
   const [isDragging, setIsDragging] = useState(false)
   const prevMouse = useRef({ x: 0, y: 0 })
@@ -88,15 +89,22 @@ const DragLookControls: React.FC<{ experienceState?: ExperienceState }> = ({ exp
     [isDragging]
   )
 
-  // 🔥 When state changes, set new target pitch
+  // 🔥 When floor or step changes, set new target pitch and yaw
   useEffect(() => {
-    if (experienceState?.cameraAngle !== undefined) {
-      targetPitch.current = (experienceState.cameraAngle * Math.PI) / 180
-    }
-    if (experienceState?.cameraYaw !== undefined) {
-      targetYaw.current = (experienceState.cameraYaw * Math.PI) / 180
-    }
-  }, [experienceState])
+    if (floor && stepId) {
+      const step = floor.steps.find(s => s.id === stepId);
+      if (step) {
+        const environmentId = step?.environmentId;
+        const environment = environments[environmentId || ''];
+        if (environment.cameraAngle !== undefined) {
+          targetPitch.current = (environment.cameraAngle * Math.PI) / 180;
+        }
+        if (environment.cameraYaw !== undefined) {
+          targetYaw.current = (environment.cameraYaw * Math.PI) / 180;
+        }
+      }
+    } 
+  }, [floor, stepId])
 
   // 🎥 Apply smooth rotation every frame
   useFrame(() => {
@@ -132,19 +140,30 @@ const DragLookControls: React.FC<{ experienceState?: ExperienceState }> = ({ exp
 
 
 const Image360Viewer: React.FC<Image360ViewerProps> = ({
-  stateId,
+  currentFloorId,
+  currentStepId,
   className = '',
   onTooltipChange,
+  onStepChange,
 }) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const experienceState = getStateById(stateId);
+  const floor = getFloorById(currentFloorId);
+  const step = floor?.steps.find(s => s.id === currentStepId);
+  const environmentId = step?.environmentId;
+  const environment = environments[environmentId || ''];
+
+  
 
   return (
     <Canvas className={className} gl={{ antialias: true, alpha: false }}>
       <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 10, 0]} fov={45} />
-      <DragLookControls experienceState={experienceState} />
-      <PanoramaScene stateId={stateId} />
-      {experienceState && <KeypointSpheres experienceState={experienceState} onTooltipChange={onTooltipChange} />}
+      <DragLookControls floor={floor} stepId={currentStepId} />
+      <PanoramaScene environment={environment} />
+      {floor && <KeypointSpheres 
+        keypoints={environment?.keypoints || []}
+        onStepChange={onStepChange}
+        onTooltipChange={onTooltipChange} 
+      />}
     </Canvas>
   );
 };

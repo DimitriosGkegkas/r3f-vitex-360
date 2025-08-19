@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Text, Sphere, Sparkles, Billboard, Image } from '@react-three/drei';
+import { Billboard, Image } from '@react-three/drei';
 import * as THREE from 'three';
-import { ExperienceState, Keypoint } from '../config/experienceStates';
+import { Keypoint, Step } from '../config/experienceStates';
 
 interface KeypointSpheresProps {
-  experienceState: ExperienceState;
+  keypoints: Keypoint[];
+  onStepChange: (stepId: string) => void;
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
 }
 
 interface KeypointSphereProps {
-  keypoint: Keypoint;
-  onClick: (keypoint: Keypoint) => void;
+  step: Keypoint;
+  onClick: (stepId: string) => void;
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
 }
 
-const KeypointSphere: React.FC<KeypointSphereProps> = ({ keypoint, onClick, onTooltipChange }) => {
+const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, onClick, onTooltipChange }) => {
   const [hovered, setHovered] = useState(false);
   const meshRef = React.useRef<THREE.Mesh>(null);
 
@@ -38,26 +39,26 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ keypoint, onClick, onTo
     if (onTooltipChange) {
       if (hovered) {
         onTooltipChange({
-          title: keypoint.title,
+          title: step.title,
           isVisible: true
         });
       } else {
         onTooltipChange(null);
       }
     }
-  }, [hovered, onTooltipChange, keypoint.title]);
+  }, [hovered, onTooltipChange, step.title]);
 
   // Convert yaw/pitch/zoom to 3D position
   // Camera is at [0, 10, 0], so we need to offset from that position
   const getPosition = () => {
-    const yawRad = (keypoint.yaw * Math.PI) / 180;
-    const pitchRad = (keypoint.pitch * Math.PI) / 180;
+    const yawRad = (step.yaw * Math.PI) / 180;
+    const pitchRad = (step.pitch * Math.PI) / 180;
 
     // Calculate position on a sphere relative to camera
     // Camera is at [0, 10, 0], so we offset from there
-    const x = (keypoint.zoom/0.3) * Math.cos(pitchRad) * Math.sin(yawRad);
-    const y = 10 + (keypoint.zoom/0.3) * Math.sin(pitchRad); // Offset by camera height
-    const z = (keypoint.zoom/0.3) * Math.cos(pitchRad) * Math.cos(yawRad);
+    const x = (step.zoom/0.3) * Math.cos(pitchRad) * Math.sin(yawRad);
+    const y = 10 + (step.zoom/0.3) * Math.sin(pitchRad); // Offset by camera height
+    const z = (step.zoom/0.3) * Math.cos(pitchRad) * Math.cos(yawRad);
 
     return [x, y, z];
   };
@@ -77,30 +78,34 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ keypoint, onClick, onTo
       <Billboard>
         <Image
           url={"/Hotspot.png"}
-          scale={0.5}
+          scale={0.5} // Larger scale for current step
           transparent
           onPointerOver={() => setHovered(true)}
           onPointerOut={() => setHovered(false)}
-          onClick={() => onClick(keypoint)}
+          onClick={() => onClick(step.targetStep)}
         />
       </Billboard>
     </group>
   );
 };
 
-const KeypointSpheres: React.FC<KeypointSpheresProps> = ({ experienceState, onTooltipChange }) => {
-  const handleKeypointClick = (keypoint: Keypoint) => {
-    console.log('Keypoint clicked:', keypoint);
-    // TODO: Implement keypoint interaction (show detailed info, trigger animations, etc.)
+const KeypointSpheres: React.FC<KeypointSpheresProps> = ({ 
+  keypoints, 
+  onStepChange, 
+  onTooltipChange 
+}) => {
+  const handleStepClick = (stepId: string) => {
+    console.log('Step clicked:', stepId);
+    onStepChange(stepId);
   };
 
   return (
     <group>
-      {experienceState.keypoints.map((keypoint) => (
+      {keypoints.map((step) => (
         <KeypointSphere
-          key={keypoint.id}
-          keypoint={keypoint}
-          onClick={handleKeypointClick}
+          key={step.id}
+          step={step}
+          onClick={handleStepClick}
           onTooltipChange={onTooltipChange}
         />
       ))}
