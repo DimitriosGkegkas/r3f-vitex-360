@@ -1,10 +1,10 @@
 import React from 'react';
-import { ExperienceState } from '../../config/experienceStates';
+import { Floor } from '../../config/experienceStates';
 import './FloorPanel.css';
 
 interface FloorPanelProps {
-  currentStateId: string;
-  experienceStates: Record<string, ExperienceState>;
+  currentFloorId: string;
+  experienceStates: Record<string, Floor>;
   stateOrder: string[];
   onStepChange: (direction: 'next' | 'prev') => void;
   canGoPrevious: () => boolean;
@@ -13,7 +13,7 @@ interface FloorPanelProps {
 }
 
 const FloorPanel: React.FC<FloorPanelProps> = ({
-  currentStateId,
+  currentFloorId,
   experienceStates,
   stateOrder,
   onStepChange,
@@ -22,7 +22,7 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
   onStateChange
 }) => {
   // Calculate current step number for progress
-  const currentStepNumber = stateOrder.indexOf(currentStateId) + 1;
+  const currentStepNumber = stateOrder.indexOf(currentFloorId) + 1;
   const totalSteps = stateOrder.length;
 
   const handleFloorClick = (stateId: string) => {
@@ -58,8 +58,8 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
         <div className="panel-title">Όροφοι</div>
         <div className="floors-list">
           {stateOrder.map((stateId, index) => {
-            const state = experienceStates[stateId];
-            const isActive = index == stateOrder.indexOf(currentStateId);
+            const floor = experienceStates[stateId];
+            const isActive = index == stateOrder.indexOf(currentFloorId);
 
             return (
               <div
@@ -69,8 +69,8 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
                 style={{ cursor: 'pointer' }}
               >
                 <>
-                  <div className="floor-number">{state.floor}</div>
-                  <div className="floor-name">{state.title}</div>
+                  <div className="floor-number">{floor.floorNumber}</div>
+                  <div className="floor-name">{floor.title}</div>
                 </>
 
               </div>

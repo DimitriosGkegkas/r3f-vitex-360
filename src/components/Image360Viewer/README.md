@@ -83,11 +83,11 @@ import { useExperienceState } from './hooks';
 import { Image360Viewer } from './components';
 
 function CustomViewer() {
-  const { currentStateId, goToNext, goToPrevious } = useExperienceState();
+  const { currentFloorId, goToNext, goToPrevious } = useExperienceState();
   
   return (
     <div>
-      <Image360Viewer stateId={currentStateId} />
+      <Image360Viewer stateId={currentFloorId} />
       <button onClick={goToNext}>Next</button>
       <button onClick={goToPrevious}>Previous</button>
     </div>
