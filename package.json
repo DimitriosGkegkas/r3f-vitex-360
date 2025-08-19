@@ -11,17 +11,18 @@
   "dependencies": {
     "@babel/runtime": "^7.28.3",
     "@react-three/drei": "^9.120.4",
-    "@react-three/fiber": "8.13.3",
+    "@react-three/fiber": "^8.15.19",
     "@react-three/postprocessing": "^2.16.0",
+    "@react-three/xr": "^6.6.22",
     "gl-noise": "^1.6.1",
     "leva": "^0.9.35",
     "maath": "^0.10.7",
     "postprocessing": "^6.34.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-three-fiber": "^6.0.13",
-    "three": "^0.171.0",
-    "three-custom-shader-material": "^5.4.0"
+    "three": "^0.157.0",
+    "three-custom-shader-material": "^5.4.0",
+    "zustand": "^4.5.7"
   },
   "devDependencies": {
     "@types/react": "^18.0.27",

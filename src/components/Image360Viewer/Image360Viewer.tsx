@@ -4,14 +4,18 @@ import { Environment, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import { Environment as EnvironmentType, environments, Floor, getFloorById } from '../../config';
 import KeypointSpheres from '../KeypointSpheres';
+import { DefaultXRController, DefaultXRControllerOptions, XR, XRStore, useXRControllerButtonEvent } from '@react-three/xr';
+import ControllerLabels from '../ControllerLabels';
 
 interface Image360ViewerProps {
   currentFloorId: string;
   currentStepId: string;
+  xrStore: XRStore;
   className?: string;
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
   onStepChange: (stepId: string) => void;
 }
+
 
 // Scene with the environment
 const PanoramaScene: React.FC<{ environment: EnvironmentType }> = ({ environment }) => {
@@ -103,7 +107,7 @@ const DragLookControls: React.FC<{ floor?: Floor; stepId?: string }> = ({ floor,
           targetYaw.current = (environment.cameraYaw * Math.PI) / 180;
         }
       }
-    } 
+    }
   }, [floor, stepId])
 
   // 🎥 Apply smooth rotation every frame
@@ -142,6 +146,7 @@ const DragLookControls: React.FC<{ floor?: Floor; stepId?: string }> = ({ floor,
 const Image360Viewer: React.FC<Image360ViewerProps> = ({
   currentFloorId,
   currentStepId,
+  xrStore,
   className = '',
   onTooltipChange,
   onStepChange,
@@ -152,18 +157,22 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   const environmentId = step?.environmentId;
   const environment = environments[environmentId || ''];
 
-  
+
 
   return (
     <Canvas className={className} gl={{ antialias: true, alpha: false }}>
-      <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 10, 0]} fov={45} />
-      <DragLookControls floor={floor} stepId={currentStepId} />
-      <PanoramaScene environment={environment} />
-      {floor && <KeypointSpheres 
-        keypoints={environment?.keypoints || []}
-        onStepChange={onStepChange}
-        onTooltipChange={onTooltipChange} 
-      />}
+      <XR store={xrStore}>
+        <PerspectiveCamera ref={cameraRef} makeDefault position={[0, 10, 0]} fov={45} />
+        <ambientLight intensity={5} />
+        {/* <DragLookControls floor={floor} stepId={currentStepId} /> */}
+        <PanoramaScene environment={environment} />
+        {floor && <KeypointSpheres
+          keypoints={environment?.keypoints || []}
+          onStepChange={onStepChange}
+          onTooltipChange={onTooltipChange}
+        />}
+        <ControllerLabels />
+      </XR>
     </Canvas>
   );
 };

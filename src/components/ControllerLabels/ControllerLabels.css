@@ -1,0 +1,32 @@
+.controller-label {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.left-controller {
+  border-color: #4CAF50;
+  color: #4CAF50;
+}
+
+.right-controller {
+  border-color: #2196F3;
+  color: #2196F3;
+}
+
+/* Hover effects for better visibility */
+.controller-label:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}

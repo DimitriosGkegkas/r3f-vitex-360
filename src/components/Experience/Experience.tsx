@@ -6,8 +6,10 @@ import { FloorPanel } from '../FloorPanel';
 import { floors, Floor, getNextStep, getPreviousStep } from '../../config';
 import './Experience.css';
 import Image360Viewer from '../Image360Viewer';
+import { XRStore } from '@react-three/xr';
 
 interface ExperienceProps {
+  xrStore: XRStore;
   currentFloorId: string;
   currentStepId: string;
   onStateChange: (newFloorId: string) => void;
@@ -16,11 +18,12 @@ interface ExperienceProps {
 }
 
 export const Experience: React.FC<ExperienceProps> = ({ 
+  xrStore,
   currentFloorId, 
   currentStepId, 
   onStateChange, 
   onStepChange, 
-  onTooltipChange 
+  onTooltipChange
 }) => {
   // Get current floor data
   const currentFloor: Floor = floors[currentFloorId];
@@ -88,6 +91,7 @@ export const Experience: React.FC<ExperienceProps> = ({
       <Image360Viewer
         currentFloorId={currentFloorId}
         currentStepId={currentStepId}
+        xrStore={xrStore}
         className="w-full h-full"
         onTooltipChange={onTooltipChange}
         onStepChange={onStepChange}
