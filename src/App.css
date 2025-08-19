@@ -11,6 +11,7 @@
   width: 100%;
   height: 100vh;
   gap: 20px;
+  position: relative;
 }
 
 .experience-container > *:first-child {
@@ -33,6 +34,24 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* VR Toggle Container */
+.vr-toggle-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+/* VR Mode Styling */
+.experience-container.vr-mode {
+  background: #000;
+}
+
+.experience-container.vr-mode .vr-toggle-container {
+  top: 20px;
+  right: 20px;
+}
+
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
   .experience-container {
@@ -41,7 +60,6 @@
     padding: 15px;
   }
   
-  
   .image-viewer-section {
     flex: none;
     height: 40%;
@@ -49,6 +67,11 @@
   
   .experience-360-viewer {
     min-height: 300px;
+  }
+  
+  .vr-toggle-container {
+    top: 10px;
+    right: 10px;
   }
 }
 
@@ -60,6 +83,11 @@
   
   .experience-360-viewer {
     min-height: 250px;
+  }
+  
+  .vr-toggle-container {
+    top: 5px;
+    right: 5px;
   }
 }
 

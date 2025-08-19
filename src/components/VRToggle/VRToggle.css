@@ -1,0 +1,155 @@
+.vr-toggle {
+  position: relative;
+  display: inline-block;
+}
+
+.vr-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.vr-toggle-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.vr-toggle-button:active {
+  transform: translateY(0);
+}
+
+.vr-toggle-button.vr-active {
+  background: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+  color: #000;
+}
+
+.vr-toggle-button.vr-active:hover {
+  background: linear-gradient(135deg, #00ee7e 0%, #00bb5f 100%);
+}
+
+.vr-icon {
+  font-size: 20px;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.vr-text {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.vr-tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 10px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.vr-tooltip::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid rgba(0, 0, 0, 0.9);
+}
+
+.vr-tooltip p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.vr-tooltip p:first-child {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.vr-toggle-disabled {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(128, 128, 128, 0.3);
+  color: #888;
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.vr-toggle-disabled .vr-icon {
+  font-size: 20px;
+  opacity: 0.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .vr-toggle-button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  
+  .vr-icon {
+    font-size: 18px;
+  }
+  
+  .vr-tooltip {
+    font-size: 12px;
+    padding: 10px 14px;
+  }
+}
+
+/* Animation for VR mode transition */
+.vr-toggle-button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vr-toggle-button.vr-active {
+  animation: vr-pulse 2s infinite;
+}
+
+@keyframes vr-pulse {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(0, 255, 136, 0.6);
+  }
+}
+
+/* Hover effects for better UX */
+.vr-toggle-button:hover .vr-icon {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}
+
+.vr-toggle-button:hover .vr-text {
+  transform: translateX(2px);
+  transition: transform 0.2s ease;
+}

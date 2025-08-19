@@ -11,3 +11,5 @@ export { FloorPanel } from './FloorPanel';
 export { default as Image360Viewer } from './Image360Viewer';
 export { default as KeypointSpheres } from './KeypointSpheres';
 export { default as Tooltip } from './Tooltip';
+export { VRToggle } from './VRToggle';
+export { default as ControllerLabels } from './ControllerLabels';
