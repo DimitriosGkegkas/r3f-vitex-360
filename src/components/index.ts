@@ -1,6 +1,7 @@
 export { LoadingPage } from './LoadingPage';
 export { Header } from './Header';
 export { WelcomeCard } from './WelcomeCard';
+export { ScoreCard } from './ScoreCard';
 export { AnimatedIcon } from './AnimatedIcon';
 export { BulletPoint } from './BulletPoint';
 export { StartButton } from './StartButton';

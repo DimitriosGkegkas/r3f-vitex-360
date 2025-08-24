@@ -57,7 +57,7 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, onClick, onToolti
     // Calculate position on a sphere relative to camera
     // Camera is at [0, 10, 0], so we offset from there
     const x = (step.zoom/0.3) * Math.cos(pitchRad) * Math.sin(yawRad);
-    const y = 10 + (step.zoom/0.3) * Math.sin(pitchRad); // Offset by camera height
+    const y = 1.6 + (step.zoom/0.3) * Math.sin(pitchRad); // Offset by camera height
     const z = (step.zoom/0.3) * Math.cos(pitchRad) * Math.cos(yawRad);
 
     return [x, y, z];

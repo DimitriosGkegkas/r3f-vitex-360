@@ -24,6 +24,29 @@ yarn dev
 
 3. Open your browser and navigate to `http://localhost:5173`
 
+## Testing with URL Parameters
+
+The application supports URL parameters for testing specific floors and steps. This is useful for developers to jump to different parts of the experience without navigating through the entire flow.
+
+### URL Format
+```
+http://localhost:5174/?floorId={floorId}&stepId={stepId}
+```
+
+### Example Test URL
+**Start at beginning:**
+```
+http://localhost:5174/?floorId=raw-materials&stepId=sustainable-sourcing
+```
+
+### How It Works
+
+- **floorId**: Specifies which floor to start on
+- **stepId**: Specifies which step within that floor to start on
+- **Automatic Start**: When both parameters are provided, the experience starts automatically
+- **Step Tracking**: The specified step is automatically marked as visited
+- **Completion**: Reaching the final step (`final-inspection`) triggers the completion screen
+
 ## Configuration
 
 The application uses a modular configuration system located in `src/config/`:
@@ -33,11 +56,106 @@ The application uses a modular configuration system located in `src/config/`:
 - **`experienceStates.ts`**: Contains cross-referencing helper functions
 - **`README.md`**: Detailed documentation on how to create new environments and floor steps
 
+### Configuration Examples
+
+#### 1. Environment Setup (`environments.ts`)
+
+Each environment represents a 360° space with interactive keypoints. Here's how to create a new environment:
+
+```typescript
+// Example: Creating a new "workshop" environment
+'workshop-env': {
+  id: 'workshop-env',
+  environmentImage: '/cubemap/workshop', // Path to cubemap folder
+  cameraAngle: 0,                        // Initial camera pitch (0 = horizon)
+  cameraYaw: 90,                         // Initial camera yaw (90 = east)
+  keypoints: [
+    {
+      id: 'workshop-entrance-kp',
+      yaw: 180,                           // Direction to look (180 = south)
+      pitch: 0,                           // Look up/down angle (0 = straight)
+      zoom: 1.5,                          // Camera distance (1.5 = medium zoom)
+      targetFloor: 'workshop',            // Which floor this keypoint belongs to
+      targetStep: 'workshop-entrance',    // Which step this keypoint belongs to
+      title: 'Workshop Entrance'          // Display title for the keypoint
+    }
+  ]
+}
+```
+
+**Keypoint Properties:**
+- **yaw**: Horizontal rotation (0° = north, 90° = east, 180° = south, 270° = west)
+- **pitch**: Vertical rotation (0° = horizon, positive = look up, negative = look down)
+- **zoom**: Camera distance (1.0 = normal, <1.0 = closer, >1.0 = further)
+- **targetFloor/Step**: Links the keypoint to specific floor and step in the experience
+
+#### 2. Floor and Step Setup (`floorSteps.ts`)
+
+Each floor contains multiple steps that users progress through:
+
+```typescript
+// Example: Creating a new "workshop" floor
+'workshop': {
+  id: 'workshop',
+  title: 'Workshop Area',
+  floorNumber: '6ος',
+  description: 'Experience the creative workshop where ideas come to life through skilled craftsmanship.',
+  environmentId: 'workshop-env',  // Must match environment ID
+  steps: [
+    {
+      id: 'workshop-entrance',
+      title: 'Welcome to the Workshop',
+      description: 'Step into our creative space where innovation meets tradition.',
+      stepName: 'Πρώτο',
+      environmentId: 'workshop-env'  // Must match environment ID
+    },
+    {
+      id: 'workshop-tools',
+      title: 'Essential Tools',
+      description: 'Discover the specialized tools that make our craft possible.',
+      stepName: 'Δεύτερο',
+      environmentId: 'workshop-env'
+    }
+  ]
+}
+```
+
+**Important Notes:**
+- **environmentId**: Must match exactly between floor and environment configurations
+- **stepName**: Greek ordinal numbers (Πρώτο, Δεύτερο, Τρίτο, Τέταρτο)
+- **floorNumber**: Greek ordinal numbers (5ος, 4ος, 3ος, 2ος, 1ος, Ισόγειο)
+
+#### 3. Navigation Flow
+
+The system automatically handles navigation between floors and steps:
+
+```typescript
+// Floor order determines progression
+const floorOrder = [
+  'raw-materials',    // 5ος όροφος
+  'sorting',          // 4ος όροφος
+  'quantities',       // 3ος όροφος
+  'secrets',          // 2ος όροφος
+  'mixing',           // 1ος όροφος
+  'packaging'         // Ισόγειο
+];
+```
+
 ### Quick Configuration Guide
 
-1. **Add New Environment**: Create cubemap images and configure in `environments.ts`
-2. **Add New Floor**: Configure floor and steps in `floorSteps.ts`
-3. **Update Navigation**: Modify floor order arrays for proper navigation flow
+1. **Add New Environment**: 
+   - Create cubemap images in `public/cubemap/your-environment/`
+   - Configure in `environments.ts` with keypoints
+   - Set camera angles and zoom levels
+
+2. **Add New Floor**: 
+   - Configure floor and steps in `floorSteps.ts`
+   - Link to environment via `environmentId`
+   - Add to `floorOrder` array for proper navigation
+
+3. **Update Navigation**: 
+   - Modify floor order arrays in `floorSteps.ts`
+   - Ensure all `environmentId` references match exactly
 
 For detailed configuration instructions, see `src/config/README.md`.
 

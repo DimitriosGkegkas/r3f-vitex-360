@@ -13,6 +13,7 @@ interface InfoCardProps {
   children?: React.ReactNode;
   onNext?: () => void;
   onPrev?: () => void;
+  billboard?: boolean;
 }
 
 export const InfoCard: React.FC<InfoCardProps> = ({
@@ -25,10 +26,11 @@ export const InfoCard: React.FC<InfoCardProps> = ({
   className = '',
   children,
   onNext,
-  onPrev
+  onPrev,
+  billboard = false
 }) => {
   return (
-    <div className={`info-card ${className}`}>
+    <div className={`info-card ${billboard ? 'billboard' : ''} ${className}`}>
       {(step || floor) && (
         <div className="info-meta">
           {step && (
