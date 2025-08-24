@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { LoadingPage, Experience, Tooltip } from './components';
+import { LoadingPage, Experience, Tooltip, ScoreCard } from './components';
 import { floors } from './config';
 import './App.css';
 import { CustomVRButton } from './components/VRExperience/VRExperience';
@@ -10,29 +10,94 @@ interface TooltipData {
   isVisible: boolean;
 }
 
+interface VisitedStep {
+  floorId: string;
+  stepId: string;
+}
+
 const xrStore = createXRStore(
   { controller: { left: true, right: true } }
 );
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<'loading' | 'experience'>('loading');
+  const [currentPage, setCurrentPage] = useState<'loading' | 'experience' | 'completion'>('loading');
   const [currentFloorId, setCurrentFloorId] = useState<string>('raw-materials');
   const [currentStepId, setCurrentStepId] = useState<string>('sustainable-sourcing'); // Start with first step of raw-materials
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
-  const [isVRMode, setIsVRMode] = useState(false);
-  const [isVRSupported, setIsVRSupported] = useState(false);
+  const [visitedSteps, setVisitedSteps] = useState<VisitedStep[]>([]);
 
+  // Calculate total possible steps
+  const totalPossibleSteps = Object.values(floors).reduce((total, floor) => total + floor.steps.length, 0);
+
+  // Check if we're at the last step of the last floor
+  const isAtLastStep = currentFloorId === 'packaging' && currentStepId === 'final-inspection';
+
+  // Calculate score (visited steps vs total possible steps)
+  const visitedCount = visitedSteps.length;
+  const scorePercentage = Math.round((visitedCount / totalPossibleSteps) * 100);
+
+  // Calculate daily production capacity based on score
+  const dailyProduction = Math.round((scorePercentage / 100) * 14000); // Max 14,000 bags per day
+
+  // URL parameter support for debugging
   useEffect(() => {
-    // Check if WebXR is supported
-    if ('xr' in navigator) {
-      navigator.xr?.isSessionSupported('immersive-vr').then((supported) => {
-        setIsVRSupported(supported);
-      });
+    const urlParams = new URLSearchParams(window.location.search);
+    const floorIdParam = urlParams.get('floorId');
+    const stepIdParam = urlParams.get('stepId');
+
+    // Validate floor ID
+    if (floorIdParam && floors[floorIdParam]) {
+      setCurrentFloorId(floorIdParam);
+      
+      // If step ID is provided and valid for this floor, set it
+      if (stepIdParam) {
+        const floor = floors[floorIdParam];
+        const stepExists = floor.steps.some(step => step.id === stepIdParam);
+        if (stepExists) {
+          setCurrentStepId(stepIdParam);
+        } else {
+          // If step ID is invalid, default to first step of the floor
+          setCurrentStepId(floor.steps[0].id);
+        }
+      } else {
+        // If no step ID provided, default to first step of the floor
+        setCurrentStepId(floors[floorIdParam].steps[0].id);
+      }
+      
+      // If both parameters are provided, start directly in experience mode
+      if (floorIdParam && stepIdParam) {
+        setCurrentPage('experience');
+        // Mark the initial step as visited
+        setVisitedSteps([{
+          floorId: floorIdParam,
+          stepId: stepIdParam
+        }]);
+      }
     }
   }, []);
 
+  useEffect(() => {
+    // Check if we should show completion page when reaching the last step
+    if (isAtLastStep && currentPage === 'experience') {
+      setCurrentPage('completion');
+    }
+  }, [isAtLastStep, currentPage]);
+
   const handleStart = () => {
     console.log('Starting the experience...');
+    setCurrentPage('experience');
+    // Mark the initial step as visited
+    setVisitedSteps([{
+      floorId: 'raw-materials',
+      stepId: 'sustainable-sourcing'
+    }]);
+  };
+
+  const handleRestart = () => {
+    console.log('Restarting the experience...');
+    setVisitedSteps([]);
+    setCurrentFloorId('raw-materials');
+    setCurrentStepId('sustainable-sourcing');
     setCurrentPage('experience');
   };
 
@@ -47,16 +112,42 @@ const App: React.FC = () => {
 
   const handleStepChange = (newStepId: string) => {
     setCurrentStepId(newStepId);
-  };
-
-  const handleVRToggle = (isVR: boolean) => {
-    setIsVRMode(isVR);
+    
+    // Mark this step as visited
+    const newVisitedStep: VisitedStep = {
+      floorId: currentFloorId,
+      stepId: newStepId
+    };
+    
+    // Check if this step is already visited
+    const isAlreadyVisited = visitedSteps.some(
+      step => step.floorId === newVisitedStep.floorId && step.stepId === newVisitedStep.stepId
+    );
+    
+    if (!isAlreadyVisited) {
+      setVisitedSteps(prev => {
+        const newVisitedSteps = [...prev, newVisitedStep];
+        console.log('New step visited:', newVisitedStep);
+        console.log('Total visited steps:', newVisitedSteps.length);
+        console.log('Total possible steps:', totalPossibleSteps);
+        return newVisitedSteps;
+      });
+    }
   };
 
   return (
     <div className="App">
       {currentPage === 'loading' ? (
         <LoadingPage onStart={handleStart} />
+      ) : currentPage === 'completion' ? (
+        <div className="completion-container">
+          <ScoreCard
+            visitedCount={visitedCount}
+            totalPossibleSteps={totalPossibleSteps}
+            dailyProduction={dailyProduction}
+            onRestart={handleRestart}
+          />
+        </div>
       ) : (
         <div className="experience-container">
           {/* VR Toggle */}
@@ -73,7 +164,6 @@ const App: React.FC = () => {
             onStepChange={handleStepChange}
             onTooltipChange={setTooltip}
           />
-
 
           {/* Render tooltip outside the canvas */}
           <Tooltip

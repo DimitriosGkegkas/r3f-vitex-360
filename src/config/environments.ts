@@ -26,8 +26,8 @@ export const environments: Record<string, Environment> = {
     keypoints: [
       {
         id: 'sustainable-sourcing-kp',
-        yaw: 178,
-        pitch: 6,
+        yaw: 180,
+        pitch: 0,
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'sustainable-sourcing',
