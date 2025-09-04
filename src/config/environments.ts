@@ -23,7 +23,7 @@ export const environments: Record<string, Environment> = {
     id: 'raw-materials-env_5_1',
     environmentImage: '/cubemap/raw-materials/5_1',
     cameraAngle: -20,
-    cameraYaw: 210,
+    cameraYaw: 30,
     keypoints: [
       {
         id: 'step_5_2-kp',
