@@ -78,6 +78,7 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, onClick, onToolti
       <Billboard>
         <Image
           url={"/Hotspot.png"}
+          side={THREE.DoubleSide}
           scale={0.5} // Larger scale for current step
           transparent
           onPointerOver={() => setHovered(true)}

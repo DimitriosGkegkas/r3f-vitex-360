@@ -24,35 +24,105 @@ export const floors: Record<string, Floor> = {
     description: 'Dive into the dynamic realm of materials, where creativity intertwines with skill. Uncover the true spirit of craftsmanship and innovation in every facet. <br/><br/>Experience the artistry behind each design, as quality takes center stage. <br/>From sustainable resources to cutting-edge techniques, every choice reflects a commitment to excellence.',
     steps: [
       {
-        id: 'sustainable-sourcing',
-        title: 'Sustainable Material Sourcing',
+        id: 'step_5_1',
+        title: 'ΚΕΙΜΕΝΟ ΒΗΜΑ ΑΣΑΝΣΕΡ',
         description: 'Discover how we carefully select environmentally responsible materials that meet our high quality standards while protecting our planet.',
         stepName: 'Πρώτο',
-        environmentId: 'raw-materials-env'
+        environmentId: 'raw-materials-env_5_1'
       },
       {
-        id: 'quality-control',
-        title: 'Quality Control Standards',
+        id: 'info_5_1_1',
+        title: 'Κείμενο Ασανσέρ',
+        description: 'Μηχανισμός του Ασανσέρ.',
+        stepName: 'Πρώτο',
+        environmentId: 'raw-materials-env_5_1'
+      },
+      {
+        id: 'info_5_1_2',
+        title: 'Κείμενο θέα στο βάθος',
+        description: 'Εδώ θα αναφερθεί ότι η Vitex αποτελεί ένα οικοσύστημα βιομηχανικών λύσεων. Στο campus φαίνονται και άλλες λύσεις/μονάδες που έχουν αναπτυχθεί, δείχνοντας το πώς λειτουργεί το σύνολο.',
+        stepName: 'Πρώτο',
+        environmentId: 'raw-materials-env_5_1'
+      },
+      {
+        id: 'step_5_2',
+        title: 'ΚΕΙΜΕΝΟ ΒΗΜΑ 5_2',
         description: 'Learn about our rigorous testing procedures and quality assurance protocols that ensure every material meets our exacting specifications.',
         stepName: 'Δεύτερο',
-        environmentId: 'raw-materials-env'
+        environmentId: 'raw-materials-env_5_2'
       },
       {
-        id: 'innovation-selection',
+        id: 'info_5_2_1',
+        title: 'Κείμενο κίτρινο στο πάτωμα',
+        description: 'Discover how we carefully select environmentally responsible materials that meet our high quality standards while protecting our planet.',
+        stepName: 'Πρώτο',
+        environmentId: 'raw-materials-env_5_2'
+      },
+      {
+        id: 'step_5_3',
         title: 'Innovation in Material Selection',
         description: 'Explore cutting-edge materials and advanced technologies that give our products their unique properties and performance.',
         stepName: 'Τρίτο',
-        environmentId: 'raw-materials-env'
+        environmentId: 'raw-materials-env_5_3'
       },
       {
-        id: 'craftsmanship-principles',
+        id: 'info_5_3_1',
+        title: 'Πληροφορίες για τους σωλήνες',
+        description: 'Discover how we carefully select environmentally responsible materials that meet our high quality standards while protecting our planet.',
+        stepName: 'Πρώτο',
+        environmentId: 'raw-materials-env_5_3'
+      },
+      {
+        id: 'step_5_4',
         title: 'Craftsmanship Principles',
         description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
         stepName: 'Τέταρτο',
-        environmentId: 'raw-materials-env'
-      }
+        environmentId: 'raw-materials-env_5_4'
+      },
+      {
+        id: 'info_5_4_1',
+        title: 'Κίτρινο',
+        description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
+        stepName: 'Τέταρτο',
+        environmentId: 'raw-materials-env_5_4'
+      },
+      {
+        id: 'info_5_4_2',
+        title: 'Μηχάνημα ACΜΟΝ',
+        description: 'Παρουσιάζει το μηχάνημα ACCOM. Θα εξηγηθεί η λειτουργία του και ο ρόλος του στη ροή της παραγωγής.',
+        stepName: 'Τέταρτο',
+        environmentId: 'raw-materials-env_5_4'
+      },
+      {
+        id: 'step_5_5',
+        title: 'Craftsmanship Principles',
+        description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
+        stepName: 'Τέταρτο',
+        environmentId: 'raw-materials-env_5_5'
+      },
+      {
+        id: 'info_5_5_1',
+        title: 'Πράσινο',
+        description: 'Η αξία των σιλό, το ύψος τους, ο ρόλος τους στη διαχείριση των πρώτων υλών.',
+        stepName: 'Τέταρτο',
+        environmentId: 'raw-materials-env_5_5'
+      },
+      {
+        id: 'step_5_6',
+        title: 'Craftsmanship Principles',
+        description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
+        stepName: 'Τέταρτο',
+        environmentId: 'raw-materials-env_5_6'
+      },
+      {
+        id: 'info_5_6_1',
+        title: 'Κείμενο για θέα',
+        description: 'Πληροφορίες για τη θεα πιο αναλητικά',
+        stepName: 'Τέταρτο',
+        environmentId: 'raw-materials-env_5_6'
+      },
     ],
-    environmentId: 'raw-materials-env'
+    environmentId: 'raw-materials-env_5_1'
   },
   'sorting': {
     id: 'sorting',
@@ -65,28 +135,35 @@ export const floors: Record<string, Floor> = {
         title: 'Material Classification',
         description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
         stepName: 'Πρώτο',
-        environmentId: 'sorting-env'
+        environmentId: 'sorting-env_4_1'
       },
+      // {
+      //   id: 'material-classification',
+      //   title: 'Material Classification',
+      //   description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
+      //   stepName: 'Πρώτο',
+      //   environmentId: 'sorting-env_4_1'
+      // },
       {
         id: 'quality-assessment',
         title: 'Quality Assessment',
         description: 'Witness our comprehensive evaluation process that ensures only the finest materials proceed to the next stage.',
         stepName: 'Δεύτερο',
-        environmentId: 'sorting-env'
+        environmentId: 'sorting-env_4_1'
       },
       {
         id: 'precision-sorting',
         title: 'Precision Sorting',
         description: 'Observe the exacting standards and attention to detail that make our sorting process so effective.',
         stepName: 'Τρίτο',
-        environmentId: 'sorting-env'
+        environmentId: 'sorting-env_4_1'
       },
       {
         id: 'standards-compliance',
         title: 'Standards Compliance',
         description: 'Learn about the industry standards and regulations we follow to maintain the highest quality and safety.',
         stepName: 'Τέταρτο',
-        environmentId: 'sorting-env'
+        environmentId: 'sorting-env_4_1'
       }
     ],
     environmentId: 'sorting-env'
@@ -102,28 +179,28 @@ export const floors: Record<string, Floor> = {
         title: 'Quantity Optimization',
         description: 'Explore how we calculate the perfect ratios and quantities to achieve consistent product quality every time.',
         stepName: 'Πρώτο',
-        environmentId: 'quantities-env'
+        environmentId: 'quantities-env_3_1'
       },
       {
         id: 'precise-measurements',
         title: 'Precise Measurements',
         description: 'Discover the advanced measuring equipment and techniques that ensure accuracy down to the smallest detail.',
         stepName: 'Δεύτερο',
-        environmentId: 'quantities-env'
+        environmentId: 'quantities-env_3_1'
       },
       {
         id: 'product-consistency',
         title: 'Product Consistency',
         description: 'Learn how our quantity management systems guarantee that every batch meets the same high standards.',
         stepName: 'Τρίτο',
-        environmentId: 'quantities-env'
+        environmentId: 'quantities-env_3_1'
       },
       {
         id: 'efficiency-management',
         title: 'Efficiency Management',
         description: 'See how we optimize our processes to minimize waste while maintaining the highest quality standards.',
         stepName: 'Τέταρτο',
-        environmentId: 'quantities-env'
+        environmentId: 'quantities-env_3_1'
       }
     ],
     environmentId: 'quantities-env'
@@ -139,28 +216,28 @@ export const floors: Record<string, Floor> = {
         title: 'Trade Secrets',
         description: 'Discover the closely guarded techniques and processes that have been perfected over generations.',
         stepName: 'Πρώτο',
-        environmentId: 'secrets-env'
+        environmentId: 'secrets-env_2_1'
       },
       {
         id: 'traditional-techniques',
         title: 'Traditional Techniques',
         description: 'Learn about the time-honored methods that form the foundation of our craft and quality.',
         stepName: 'Δεύτερο',
-        environmentId: 'secrets-env'
+        environmentId: 'secrets-env_2_1'
       },
       {
         id: 'innovation-methods',
         title: 'Innovation Methods',
         description: 'See how we combine traditional wisdom with modern technology to create something truly special.',
         stepName: 'Τρίτο',
-        environmentId: 'secrets-env'
+        environmentId: 'secrets-env_2_1'
       },
       {
         id: 'unique-processes',
         title: 'Unique Processes',
         description: 'Explore the distinctive approaches that set our products apart from everything else in the market.',
         stepName: 'Τέταρτο',
-        environmentId: 'secrets-env'
+        environmentId: 'secrets-env_2_1'
       }
     ],
     environmentId: 'secrets-env'
@@ -176,28 +253,28 @@ export const floors: Record<string, Floor> = {
         title: 'Perfect Blending',
         description: 'Observe the precise techniques that ensure every component is perfectly integrated for optimal results.',
         stepName: 'Πρώτο',
-        environmentId: 'mixing-env'
+        environmentId: 'mixing-env_1_1'
       },
       {
         id: 'component-integration',
         title: 'Component Integration',
         description: 'Learn how we carefully combine different elements to create a harmonious and effective final product.',
         stepName: 'Δεύτερο',
-        environmentId: 'mixing-env'
+        environmentId: 'mixing-env_1_1'
       },
       {
         id: 'quality-mixing',
         title: 'Quality Mixing',
         description: 'Discover the quality control measures that ensure every batch meets our exacting standards.',
         stepName: 'Τρίτο',
-        environmentId: 'mixing-env'
+        environmentId: 'mixing-env_1_1'
       },
       {
         id: 'process-optimization',
         title: 'Process Optimization',
         description: 'See how we continuously improve our mixing processes for better efficiency and quality.',
         stepName: 'Τέταρτο',
-        environmentId: 'mixing-env'
+        environmentId: 'mixing-env_1_1'
       }
     ],
     environmentId: 'mixing-env'
@@ -249,36 +326,36 @@ export const getFloorById = (id: string): Floor | undefined => {
 export const getNextFloor = (currentId: string): Floor | undefined => {
   const floorOrder = [
     'raw-materials',
-    'sorting', 
+    'sorting',
     'quantities',
     'secrets',
     'mixing',
     'packaging'
   ];
-  
+
   const currentIndex = floorOrder.indexOf(currentId);
   if (currentIndex === -1 || currentIndex === floorOrder.length - 1) {
     return undefined;
   }
-  
+
   return floors[floorOrder[currentIndex + 1]];
 };
 
 export const getPreviousFloor = (currentId: string): Floor | undefined => {
   const floorOrder = [
     'raw-materials',
-    'sorting', 
+    'sorting',
     'quantities',
     'secrets',
     'mixing',
     'packaging'
   ];
-  
+
   const currentIndex = floorOrder.indexOf(currentId);
   if (currentIndex <= 0) {
     return undefined;
   }
-  
+
   return floors[floorOrder[currentIndex - 1]];
 };
 
@@ -291,23 +368,23 @@ export const getStepById = (floorId: string, stepId: string): Step | undefined =
 export const getNextStep = (floorId: string, currentStepId: string): Step | undefined => {
   const floor = floors[floorId];
   if (!floor) return undefined;
-  
+
   const currentIndex = floor.steps.findIndex(step => step.id === currentStepId);
   if (currentIndex === -1 || currentIndex === floor.steps.length - 1) {
     return undefined;
   }
-  
+
   return floor.steps[currentIndex + 1];
 };
 
 export const getPreviousStep = (floorId: string, currentStepId: string): Step | undefined => {
   const floor = floors[floorId];
   if (!floor) return undefined;
-  
+
   const currentIndex = floor.steps.findIndex(step => step.id === currentStepId);
   if (currentIndex === -1 || currentIndex <= 0) {
     return undefined;
   }
-  
+
   return floor.steps[currentIndex - 1];
 };
