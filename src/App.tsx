@@ -22,7 +22,7 @@ const xrStore = createXRStore(
 const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<'loading' | 'experience' | 'completion'>('loading');
   const [currentFloorId, setCurrentFloorId] = useState<string>('raw-materials');
-  const [currentStepId, setCurrentStepId] = useState<string>('sustainable-sourcing'); // Start with first step of raw-materials
+  const [currentStepId, setCurrentStepId] = useState<string>('step_5_1'); // Start with first step of raw-materials
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [visitedSteps, setVisitedSteps] = useState<VisitedStep[]>([]);
 

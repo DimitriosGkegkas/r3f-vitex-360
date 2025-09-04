@@ -255,7 +255,7 @@ const PanoramaScene: React.FC<{ environment: EnvironmentType }> = ({ environment
       <Environment
         {...getEnvironmentProps()}
         background={true}
-        resolution={512}
+        resolution={1024}
         ground={{
           height: 1.7,
           radius: 60,
@@ -296,8 +296,8 @@ const DragLookControls: React.FC<{ floor?: Floor; stepId?: string }> = ({ floor,
 
       const sensitivity = 0.002
 
-      targetYaw.current += deltaX * sensitivity // left/right
-      targetPitch.current += deltaY * sensitivity // up/down
+      targetYaw.current -= deltaX * sensitivity // left/right
+      targetPitch.current -= deltaY * sensitivity // up/down
 
       // clamp target pitch
       const limit = Math.PI / 2 - 0.1
@@ -381,7 +381,8 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             ref={cameraRef}
             makeDefault
             position={[0, 1.6, 0]}
-            fov={45}
+            fov={85}
+            scale={[1,1,-1]}
             // Ensure camera updates properly in VR
             matrixAutoUpdate={true}
             matrixWorldAutoUpdate={true}
