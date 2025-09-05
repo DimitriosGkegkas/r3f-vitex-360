@@ -6,6 +6,7 @@ import { Environment as EnvironmentType, environments, Floor, getFloorById } fro
 import KeypointSpheres from '../KeypointSpheres';
 import { useXR, XR, XRStore } from '@react-three/xr';
 import ControllerLabels from '../ControllerLabels';
+import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 
 interface Image360ViewerProps {
   currentFloorId: string;
@@ -381,6 +382,11 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   return (
     <>
       <Canvas className={className} gl={{ antialias: true, alpha: false }}>
+        <EffectComposer>
+          {/* Bloom makes emissive/glow pop */}
+          {/* <Bloom intensity={1.2} luminanceThreshold={0.2} luminanceSmoothing={0.9} /> */}
+          {/* <Vignette eskil offset={0.2} darkness={0.6} /> */}
+        </EffectComposer>
         <XR store={xrStore}>
           <PerspectiveCamera
             ref={cameraRef}
@@ -397,6 +403,8 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
           <PanoramaScene environment={environment} />
           {floor && <KeypointSpheres
             keypoints={environment?.keypoints || []}
+            environmentId={environmentId}
+            steps={floor.steps}
             onStepChange={onStepChange}
             onTooltipChange={onTooltipChange}
           />}
