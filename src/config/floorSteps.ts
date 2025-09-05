@@ -388,3 +388,5 @@ export const getPreviousStep = (floorId: string, currentStepId: string): Step | 
 
   return floor.steps[currentIndex - 1];
 };
+
+export const allSteps = Object.values(floors).flatMap(floor => floor.steps);
