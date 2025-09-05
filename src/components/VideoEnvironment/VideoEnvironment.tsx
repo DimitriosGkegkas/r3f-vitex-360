@@ -1,27 +1,40 @@
-import React, { useEffect, useMemo, useRef } from 'react';
-import { useThree, useFrame } from '@react-three/fiber';
+import React, { useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
 interface VideoEnvironmentProps {
   src: string;
-  background?: boolean;
-  env?: boolean;
-  updateHz?: number;
-  onError?: () => void;
+  quality?: 'low' | 'medium' | 'high'; // Quality preset
 }
 
-const VideoEnvironment: React.FC<VideoEnvironmentProps> = ({ 
+const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({ 
   src, 
-  background = true, 
-  env = true, 
-  updateHz = 10, 
-  onError 
+  quality = 'medium'
 }) => {
-  const { gl, scene } = useThree();
-  const pmrem = useMemo(() => new THREE.PMREMGenerator(gl), [gl]);
   const sphereRef = useRef<THREE.Mesh>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const textureRef = useRef<THREE.VideoTexture | null>(null);
   
+  // Quality presets for different performance levels
+  const qualitySettings = {
+    low: { resolution: 512, segments: [32, 16] },
+    medium: { resolution: 1024, segments: [64, 32] },
+    high: { resolution: 2048, segments: [128, 64] }
+  };
+  
+  const settings = qualitySettings[quality];
+  
+  // Create video texture only when src changes
   const videoTex = useMemo(() => {
+    // Clean up previous video and texture
+    if (videoRef.current) {
+      videoRef.current.pause();
+      videoRef.current.src = '';
+      videoRef.current.load();
+    }
+    if (textureRef.current) {
+      textureRef.current.dispose();
+    }
+    
     const video = document.createElement('video');
     video.src = src;
     video.crossOrigin = 'anonymous';
@@ -31,10 +44,12 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = ({
     video.preload = 'auto';
     video.setAttribute('webkit-playsinline', 'true');
     
+    // Store video reference for cleanup
+    videoRef.current = video;
+    
     // Add error handling
     video.onerror = () => {
       console.error('Video loading error');
-      onError?.();
     };
     
     const t = new THREE.VideoTexture(video);
@@ -44,6 +59,9 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = ({
     t.generateMipmaps = false;
     t.colorSpace = THREE.SRGBColorSpace;
     
+    // Store texture reference for cleanup
+    textureRef.current = t;
+    
     // Start playing the video
     (async () => { 
       try { 
@@ -51,42 +69,38 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = ({
         console.log('Video started playing successfully');
       } catch (error) {
         console.error('Video play error:', error);
-        onError?.();
       }
     })();
     
     return t;
-  }, [src, onError]);
-
-  // Throttled PMREM update
-  const lastRef = useRef(0);
+  }, [src]); // Only depend on src, not onError
   
-  useEffect(() => () => pmrem.dispose(), [pmrem]);
-
-  useFrame((_, dt) => {
-    if (!env) return;
-    lastRef.current += dt;
-    if (lastRef.current >= 1 / updateHz) {
-      lastRef.current = 0;
-      // Recompute prefiltered env from current video frame
-      const rt = pmrem.fromEquirectangular(videoTex);
-      const envTex = rt.texture;
-      // Assign to scene.environment (and optionally background)
-      scene.environment = envTex;
-      if (!background) {
-        // If not using sphere background, you can set the background directly:
-        scene.background = envTex;
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.pause();
+        videoRef.current.src = '';
+        videoRef.current.load();
       }
-      // Release previous targets automatically; keep the latest one
-    }
-  });
+      if (textureRef.current) {
+        textureRef.current.dispose();
+      }
+    };
+  }, []);
 
-  return background ? (
+  return (
     <mesh ref={sphereRef} rotation={[0, Math.PI, 0]}>
-      <sphereGeometry args={[50, 60, 40]} />
-      <meshBasicMaterial map={videoTex} side={THREE.BackSide} toneMapped={false} />
+      <sphereGeometry args={[50, settings.segments[0], settings.segments[1]]} />
+      <meshBasicMaterial 
+        map={videoTex} 
+        side={THREE.FrontSide} 
+        toneMapped={false}
+      />
     </mesh>
-  ) : null;
-};
+  );
+});
+
+VideoEnvironment.displayName = 'VideoEnvironment';
 
 export default VideoEnvironment;
