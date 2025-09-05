@@ -1,7 +1,7 @@
 import { useXRInputSourceState, XRSpace } from '@react-three/xr'
 import { Billboard, Text } from '@react-three/drei'
 
-function ControllerLabels({ handedness = 'right' }) {
+function ControllerLabels({ handedness = 'right' as const }) {
   const state = useXRInputSourceState('controller', handedness)
 
   if (!state?.inputSource?.gripSpace) return null
