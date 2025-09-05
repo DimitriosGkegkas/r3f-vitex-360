@@ -25,6 +25,7 @@ const App: React.FC = () => {
   const [currentStepId, setCurrentStepId] = useState<string>('step_5_1'); // Start with first step of raw-materials
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [visitedSteps, setVisitedSteps] = useState<VisitedStep[]>([]);
+  const [isLoadingPageDissolving, setIsLoadingPageDissolving] = useState(false);
 
   // Calculate total possible steps
   const totalPossibleSteps = Object.values(floors).reduce((total, floor) => total + floor.steps.length, 0);
@@ -85,12 +86,18 @@ const App: React.FC = () => {
 
   const handleStart = () => {
     console.log('Starting the experience...');
-    setCurrentPage('experience');
-    // Mark the initial step as visited
-    setVisitedSteps([{
-      floorId: 'raw-materials',
-      stepId: 'sustainable-sourcing'
-    }]);
+    // Start dissolve animation
+    setIsLoadingPageDissolving(true);
+    
+    // After dissolve animation completes, transition to experience
+    setTimeout(() => {
+      setCurrentPage('experience');
+      // Mark the initial step as visited
+      setVisitedSteps([{
+        floorId: 'raw-materials',
+        stepId: 'sustainable-sourcing'
+      }]);
+    }, 1000); // 1 second dissolve animation
   };
 
   const handleRestart = () => {
@@ -137,18 +144,8 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      {currentPage === 'loading' ? (
-        <LoadingPage onStart={handleStart} />
-      ) : currentPage === 'completion' ? (
-        <div className="completion-container">
-          <ScoreCard
-            visitedCount={visitedCount}
-            totalPossibleSteps={totalPossibleSteps}
-            dailyProduction={dailyProduction}
-            onRestart={handleRestart}
-          />
-        </div>
-      ) : (
+      {/* Always render Experience in background */}
+      {currentPage !== 'completion' && (
         <div className="experience-container">
           {/* VR Toggle */}
           <div className="vr-toggle-container">
@@ -163,12 +160,31 @@ const App: React.FC = () => {
             onStateChange={handleStateChange}
             onStepChange={handleStepChange}
             onTooltipChange={setTooltip}
+            isBackgroundMode={currentPage === 'loading'}
+            shouldStartVideo={isLoadingPageDissolving}
           />
 
           {/* Render tooltip outside the canvas */}
           <Tooltip
             title={tooltip?.title}
             isVisible={tooltip?.isVisible}
+          />
+        </div>
+      )}
+
+      {/* Show LoadingPage on top when loading */}
+      {currentPage === 'loading' && (
+        <LoadingPage onStart={handleStart} isDissolving={isLoadingPageDissolving} />
+      )}
+
+      {/* Show completion page */}
+      {currentPage === 'completion' && (
+        <div className="completion-container">
+          <ScoreCard
+            visitedCount={visitedCount}
+            totalPossibleSteps={totalPossibleSteps}
+            dailyProduction={dailyProduction}
+            onRestart={handleRestart}
           />
         </div>
       )}
