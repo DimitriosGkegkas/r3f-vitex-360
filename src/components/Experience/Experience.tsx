@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Header } from '../Header';
 import { InfoCard } from '../InfoCard';
 import { Menu } from '../Menu';
@@ -7,6 +7,7 @@ import { floors, Floor, getNextStep, getPreviousStep } from '../../config';
 import './Experience.css';
 import Image360Viewer from '../Image360Viewer';
 import { XRStore } from '@react-three/xr';
+import { VideoBackground } from '../VideoBackground';
 
 interface ExperienceProps {
   xrStore: XRStore;
@@ -15,6 +16,8 @@ interface ExperienceProps {
   onStateChange: (newFloorId: string) => void;
   onStepChange: (newStepId: string) => void;
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
+  isBackgroundMode?: boolean;
+  shouldStartVideo?: boolean;
 }
 
 export const Experience: React.FC<ExperienceProps> = ({
@@ -23,8 +26,14 @@ export const Experience: React.FC<ExperienceProps> = ({
   currentStepId,
   onStateChange,
   onStepChange,
-  onTooltipChange
+  onTooltipChange,
+  isBackgroundMode = false,
+  shouldStartVideo = false
 }) => {
+  // State for video visibility
+  const [showVideo, setShowVideo] = useState(!isBackgroundMode);
+  const [videoStarted, setVideoStarted] = useState(false);
+
   // Get current floor data
   const currentFloor: Floor = floors[currentFloorId];
 
@@ -86,8 +95,39 @@ export const Experience: React.FC<ExperienceProps> = ({
   const currentStepIndex = currentFloor.steps.findIndex(step => step.id === currentStepId);
   const totalStepsInFloor = currentFloor.steps.length;
 
+  // Handle video end
+  const handleVideoEnd = () => {
+    setShowVideo(false);
+  };
+
+  // Handle video skip
+  const handleVideoSkip = () => {
+    setShowVideo(false);
+  };
+
+  // Effect to start video when shouldStartVideo becomes true
+  React.useEffect(() => {
+    if (shouldStartVideo && !videoStarted) {
+      setVideoStarted(true);
+      setShowVideo(true);
+    }
+  }, [shouldStartVideo, videoStarted]);
+
   return (
-    <div className="experience-page">
+
+    <div className={`experience-page ${isBackgroundMode ? 'background-mode' : ''}`}>
+      {showVideo && (
+        <VideoBackground
+          videoSrc="/video/intro_drone.mp4"
+          className="loading-page-bg"
+          autoplay={videoStarted}
+          muted={true}
+          loop={false}
+          onVideoEnd={handleVideoEnd}
+          onSkip={handleVideoSkip}
+          showSkipButton={!isBackgroundMode}
+        />
+      )}
       <Image360Viewer
         currentFloorId={currentFloorId}
         currentStepId={currentStepId}
@@ -105,32 +145,38 @@ export const Experience: React.FC<ExperienceProps> = ({
         }}
       />
       <Header />
-      <div className="info-card-container">
-        <InfoCard
-          title={currentStep.title}
-          description={currentStep.description}
-          step={currentStep.stepName}
-          floor={currentFloor.floorNumber}
-          currentStep={currentStepIndex + 1}
-          totalSteps={totalStepsInFloor}
-          onNext={canGoNext() ? () => handleStepChange('next') : undefined}
-          onPrev={canGoPrevious() ? () => handleStepChange('prev') : undefined}
-        /></div>
+      {!showVideo && (
+        <div className="info-card-container">
+          <InfoCard
+            title={currentStep.title}
+            description={currentStep.description}
+            step={currentStep.stepName}
+            floor={currentFloor.floorNumber}
+            currentStep={currentStepIndex + 1}
+            totalSteps={totalStepsInFloor}
+            onNext={canGoNext() ? () => handleStepChange('next') : undefined}
+            onPrev={canGoPrevious() ? () => handleStepChange('prev') : undefined}
+          />
+        </div>
+      )}
 
-      <Menu floorPanel={
-        <FloorPanel
-          currentFloorId={currentFloorId}
-          experienceStates={floors}
-          stateOrder={floorOrder}
-          onStepChange={handleFloorChange}
-          canGoPrevious={canGoPrevious}
-          onClose={() => {
-            // This will close the floor panel by toggling the menu state
-            // The Menu component will handle this through its own state management
-          }}
-          onStateChange={onStateChange}
-        />
-      } />
+      <Menu 
+        floorPanel={
+          <FloorPanel
+            currentFloorId={currentFloorId}
+            experienceStates={floors}
+            stateOrder={floorOrder}
+            onStepChange={handleFloorChange}
+            canGoPrevious={canGoPrevious}
+            onClose={() => {
+              // This will close the floor panel by toggling the menu state
+              // The Menu component will handle this through its own state management
+            }}
+            onStateChange={onStateChange}
+          />
+        }
+        hideFloorsButton={showVideo}
+      />
     </div>
   );
 };
