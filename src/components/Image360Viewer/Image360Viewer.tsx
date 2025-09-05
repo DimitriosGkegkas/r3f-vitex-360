@@ -36,7 +36,6 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   currentStepId,
   xrStore,
   className = '',
-  useVideo = false,
   onTooltipChange,
   onStepChange,
 }) => {
@@ -62,7 +61,7 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
           />
           <ambientLight intensity={5} />
           <DragLookControls floor={floor} stepId={currentStepId} />
-          <PanoramaScene environment={environment} useVideo={useVideo} />
+          <PanoramaScene environment={environment} />
           {floor && <KeypointSpheres
             keypoints={environment?.keypoints || []}
             environmentId={environmentId || ''}
