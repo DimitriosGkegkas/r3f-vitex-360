@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Billboard, Image } from '@react-three/drei';
 import * as THREE from 'three';
 import { allSteps, Keypoint } from '../config';
 import TeleportMarker from './TeleportMarker';
+import HotspotMarker from './HotspotMarker';
 
 interface KeypointSpheresProps {
   keypoints: Keypoint[];
@@ -67,6 +67,21 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, teleporting, onCl
 
   const position = getPosition();
 
+  // Calculate rotation to face (0,0,0) - the camera position
+  const getRotation = () => {
+    const x = position[0];
+    const y = position[1];
+    const z = position[2];
+    
+    // Calculate the angle to face the origin
+    const yaw = Math.atan2(x, z);
+    const pitch = Math.atan2(-y, Math.sqrt(x * x + z * z));
+    
+    return [pitch, yaw, 0];
+  };
+
+  const rotation = getRotation();
+
   // Add subtle floating animation
   useFrame((state) => {
     if (meshRef.current) {
@@ -81,17 +96,13 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, teleporting, onCl
         onPointerOut={() => setHovered(false)}
         onClick={() => onClick(step.targetStep)} />
         :
-        <Billboard>
-          <Image
-            url={"/Hotspot.png"}
-            side={THREE.DoubleSide}
-            scale={0.5} // Larger scale for current step
-            transparent
-            onPointerOver={() => setHovered(true)}
-            onPointerOut={() => setHovered(false)}
-            onClick={() => onClick(step.targetStep)}
-          />
-        </Billboard>
+        <HotspotMarker
+          scale={0.5}
+          rotation={rotation as [number, number, number]}
+          onPointerOver={() => setHovered(true)}
+          onPointerOut={() => setHovered(false)}
+          onClick={() => onClick(step.targetStep)}
+        />
       }
 
     </group>

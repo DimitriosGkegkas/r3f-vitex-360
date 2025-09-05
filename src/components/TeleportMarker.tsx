@@ -1,7 +1,9 @@
 import * as THREE from "three";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { extend, useFrame } from "@react-three/fiber";
 import { shaderMaterial } from "@react-three/drei";
+import { useXR } from "@react-three/xr";
+import { teleportMarkerStates, MarkerState } from "../config/markerStates";
 
 /**
  * DissolveMaterial — vertical alpha falloff (top fades out)
@@ -78,16 +80,26 @@ export { DissolveMaterial };
 interface RingBaseProps {
   radius?: number;
   thickness?: number;
-  color?: number;
+  hovered?: boolean;
+  clicked?: boolean;
+  isPresenting?: boolean;
 }
 
-function RingBase({ radius = 0.5, thickness = 0.04, color = 0x1088F4 }: RingBaseProps) {
+function RingBase({ radius = 0.5, thickness = 0.04, hovered = false, clicked = false, isPresenting = false }: RingBaseProps) {
   const ringRef = useRef<THREE.Mesh>(null);
+  
+  // Determine current state
+  const currentState: MarkerState = clicked ? 'clicked' : hovered ? 'hover' : 'normal';
+  const config = teleportMarkerStates[currentState];
+  
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (!ringRef.current) return;
     // Gentle pulsing scale & slight rotation for life
-    const pulse = 1 + Math.sin(t * 2.0) * 0.03;
+    const basePulse = 1 + Math.sin(t * 2.0) * 0.03;
+    const statePulse = config.pulseMultiplier || 1.0;
+    const vrMultiplier = isPresenting ? 1.2 : 1.0;
+    const pulse = basePulse * statePulse * vrMultiplier;
     ringRef.current.scale.set(pulse, 1, pulse);
     ringRef.current.rotation.x = -Math.PI / 2; // flat on the ground
   });
@@ -98,13 +110,13 @@ function RingBase({ radius = 0.5, thickness = 0.04, color = 0x1088F4 }: RingBase
       <mesh ref={ringRef} position={[0, 0.01, 0]}>
         <ringGeometry args={[radius - thickness, radius, 128]} />
         <meshStandardMaterial
-          color={color}
-          emissive={new THREE.Color(color)}
-          emissiveIntensity={3.0}
+          color={config.outerColor}
+          emissive={new THREE.Color(config.outerColor)}
+          emissiveIntensity={config.emissiveIntensity || 3.0}
           metalness={0}
           roughness={0.35}
           transparent
-          opacity={0.8}
+          opacity={config.outerOpacity}
           side={THREE.DoubleSide}
         />
       </mesh>
@@ -112,7 +124,12 @@ function RingBase({ radius = 0.5, thickness = 0.04, color = 0x1088F4 }: RingBase
       {/* Faint inner disc for center glow */}
       <mesh position={[0, 0.009, 0]} rotation-x={-Math.PI / 2}>
         <circleGeometry args={[radius - thickness, 64]} />
-        <meshBasicMaterial color={color} transparent opacity={0.12} side={THREE.DoubleSide} />
+        <meshBasicMaterial 
+          color={config.innerColor} 
+          transparent 
+          opacity={config.innerOpacity} 
+          side={THREE.DoubleSide} 
+        />
       </mesh>
     </group>
   );
@@ -121,17 +138,28 @@ function RingBase({ radius = 0.5, thickness = 0.04, color = 0x1088F4 }: RingBase
 interface EnergyPillarProps {
   height?: number;
   radius?: number;
-  color?: number;
+  hovered?: boolean;
+  clicked?: boolean;
 }
 
-function EnergyPillar({ height = 2, radius = 0.3, color = 0x1088F4 }: EnergyPillarProps) {
+function EnergyPillar({ height = 2, radius = 0.3, hovered = false, clicked = false }: EnergyPillarProps) {
   const matRef = useRef<THREE.ShaderMaterial & { time?: number }>(null);
   const meshRef = useRef<THREE.Mesh>(null);
+
+  // Determine current state
+  const currentState: MarkerState = clicked ? 'clicked' : hovered ? 'hover' : 'normal';
+  const config = teleportMarkerStates[currentState];
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
     if (matRef.current) matRef.current.time = t;
-    if (meshRef.current) meshRef.current.rotation.y = t * 0.25;
+    if (meshRef.current) {
+      const rotationSpeed = clicked ? 1.0 : hovered ? 0.5 : 0.25;
+      meshRef.current.rotation.y = t * rotationSpeed;
+      // Add scale animation based on state
+      const scaleMultiplier = config.scale;
+      meshRef.current.scale.setScalar(scaleMultiplier);
+    }
   });
 
   return (
@@ -142,9 +170,9 @@ function EnergyPillar({ height = 2, radius = 0.3, color = 0x1088F4 }: EnergyPill
       <dissolveMaterial
         ref={matRef}
         attach="material"
-        color={new THREE.Color(color)}
+        color={new THREE.Color(config.innerColor)}
         height={height}
-        opacity={0.9}
+        opacity={config.innerOpacity}
         power={1.2}
         transparent
         depthWrite={false}
@@ -167,17 +195,37 @@ declare global {
 }
 
 interface TeleportMarkerProps {
-  color?: number;
   onPointerOver?: (event: any) => void;
   onPointerOut?: (event: any) => void;
   onClick?: (event: any) => void;
 }
 
-function TeleportMarker({ color, onPointerOver, onPointerOut, onClick }: TeleportMarkerProps) {
+function TeleportMarker({ onPointerOver, onPointerOut, onClick }: TeleportMarkerProps) {
+  const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
+  const { isPresenting } = useXR();
+
+  const handlePointerOver = (event: any) => {
+    setHovered(true);
+    onPointerOver?.(event);
+  };
+
+  const handlePointerOut = (event: any) => {
+    setHovered(false);
+    onPointerOut?.(event);
+  };
+
+  const handleClick = (event: any) => {
+    setClicked(true);
+    onClick?.(event);
+    // Reset clicked state after a short delay
+    setTimeout(() => setClicked(false), 1000);
+  };
+
   return (
-    <group onPointerOver={onPointerOver} onPointerOut={onPointerOut} onClick={onClick}>
-      <RingBase color={color} />
-      <EnergyPillar color={color} />
+    <group onPointerOver={handlePointerOver} onPointerOut={handlePointerOut} onClick={handleClick}>
+      <RingBase hovered={hovered} clicked={clicked} isPresenting={isPresenting} />
+      <EnergyPillar hovered={hovered} clicked={clicked} />
     </group>
   );
 }
