@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 import { Canvas, useThree, useFrame } from '@react-three/fiber';
 import { Environment, PerspectiveCamera, Html, Text, RoundedBox } from '@react-three/drei';
 import * as THREE from 'three';
@@ -102,12 +102,12 @@ const InfoCardBillboard: React.FC<{ infoCardData: InfoCardData; xrStore: XRStore
 
       // Check if we need to start moving (significant difference from current position)
       const distanceToTarget = currentPosition.current.distanceTo(billboardPosition);
-      
+
       // Start movement when distance exceeds threshold
       if (distanceToTarget > MOVEMENT_THRESHOLD && !isMoving.current) {
         isMoving.current = true;
       }
-      
+
       // Stop movement when distance goes below threshold
       if (distanceToTarget <= MOVEMENT_THRESHOLD && isMoving.current) {
         isMoving.current = false;
@@ -125,7 +125,7 @@ const InfoCardBillboard: React.FC<{ infoCardData: InfoCardData; xrStore: XRStore
       if (isMoving.current) {
         billboardRef.current.position.copy(currentPosition.current);
       } else {
-    
+
       }
       billboardRef.current.lookAt(targetPosition);
 
@@ -306,22 +306,27 @@ const DragLookControls: React.FC<{ floor?: Floor; stepId?: string }> = ({ floor,
     [isDragging]
   )
 
-  // 🔥 When floor or step changes, set new target pitch and yaw
-  useEffect(() => {
+  const environmentId = useMemo(() => {
     if (floor && stepId) {
       const step = floor.steps.find(s => s.id === stepId);
-      if (step) {
-        const environmentId = step?.environmentId;
-        const environment = environments[environmentId || ''];
-        if (environment.cameraAngle !== undefined) {
-          targetPitch.current = (environment.cameraAngle * Math.PI) / 180;
-        }
-        if (environment.cameraYaw !== undefined) {
-          targetYaw.current = (environment.cameraYaw * Math.PI) / 180;
-        }
-      }
+      return step?.environmentId;
     }
+    return null;
   }, [floor, stepId])
+
+  // 🔥 When floor or step changes, set new target pitch and yaw
+  useEffect(() => {
+    if (environmentId) {
+      const environment = environments[environmentId || ''];
+      if (environment.cameraAngle !== undefined) {
+        targetPitch.current = (environment.cameraAngle * Math.PI) / 180;
+      }
+      if (environment.cameraYaw !== undefined) {
+        targetYaw.current = (environment.cameraYaw * Math.PI) / 180;
+      }
+
+    }
+  }, [environmentId])
 
   // 🎥 Apply smooth rotation every frame
   useFrame(() => {
@@ -382,7 +387,7 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             makeDefault
             position={[0, 1.6, 0]}
             fov={85}
-            scale={[1,1,-1]}
+            scale={[1, 1, -1]}
             // Ensure camera updates properly in VR
             matrixAutoUpdate={true}
             matrixWorldAutoUpdate={true}
