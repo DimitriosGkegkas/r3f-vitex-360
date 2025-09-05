@@ -3,7 +3,8 @@ import { Header } from '../Header';
 import { InfoCard } from '../InfoCard';
 import { Menu } from '../Menu';
 import { FloorPanel } from '../FloorPanel';
-import { floors, Floor, getNextStep, getPreviousStep } from '../../config';
+import { floors, Floor } from '../../config';
+import { createStepChangeHandler } from '../../utils/stepNavigation';
 import './Experience.css';
 import Image360Viewer from '../Image360Viewer';
 import { XRStore } from '@react-three/xr';
@@ -53,42 +54,22 @@ export const Experience: React.FC<ExperienceProps> = ({
     }
   };
 
+  // Create step change handler with shared logic
+  const stepNavigation = createStepChangeHandler({
+    onStepChange,
+    onFloorChange: (floorId) => onStateChange(floorId)
+  });
+
   const handleStepChange = (direction: 'prev' | 'next') => {
-    if (direction === 'next') {
-      const nextStep = getNextStep(currentFloorId, currentStepId);
-      if (nextStep) {
-        onStepChange(nextStep.id);
-      } else {
-        // If no more steps in current floor, go to next floor
-        handleFloorChange('next');
-      }
-    } else if (direction === 'prev') {
-      const prevStep = getPreviousStep(currentFloorId, currentStepId);
-      if (prevStep) {
-        onStepChange(prevStep.id);
-      } else {
-        // If no more steps in current floor, go to previous floor
-        handleFloorChange('prev');
-      }
-    }
+    stepNavigation.handleStepChange(direction, currentFloorId, currentStepId);
   };
 
   const canGoNext = () => {
-    // Check if there's a next step in current floor or if we can go to next floor
-    const nextStep = getNextStep(currentFloorId, currentStepId);
-    if (nextStep) return true;
-
-    const currentIndex = floorOrder.indexOf(currentFloorId);
-    return currentIndex < floorOrder.length - 1;
+    return stepNavigation.canGoNext(currentFloorId, currentStepId);
   };
 
   const canGoPrevious = () => {
-    // Check if there's a previous step in current floor or if we can go to previous floor
-    const prevStep = getPreviousStep(currentFloorId, currentStepId);
-    if (prevStep) return true;
-
-    const currentIndex = floorOrder.indexOf(currentFloorId);
-    return currentIndex > 0;
+    return stepNavigation.canGoPrevious(currentFloorId, currentStepId);
   };
 
   // Get current step index within the floor
@@ -135,6 +116,8 @@ export const Experience: React.FC<ExperienceProps> = ({
         className="w-full h-full"
         onTooltipChange={onTooltipChange}
         onStepChange={onStepChange}
+        onFloorChange={onStateChange}
+        onNext={canGoNext() ? () => handleStepChange('next') : undefined}
         infoCardData={{
           title: currentStep.title,
           description: currentStep.description,
