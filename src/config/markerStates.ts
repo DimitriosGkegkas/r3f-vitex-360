@@ -69,3 +69,4 @@ export const teleportMarkerStates: MarkerStates = {
 };
 
 export type MarkerState = 'normal' | 'hover' | 'clicked';
+
