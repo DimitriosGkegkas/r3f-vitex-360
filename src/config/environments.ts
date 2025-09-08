@@ -730,13 +730,38 @@ export const environments: Record<string, Environment> = {
       {
         id: 'info_0_3_1-kp',
         yaw: 60,
-        pitch: -10,
-        zoom: 1.5,
+        pitch: -5,
+        zoom: 2,
         targetFloor: 'packaging',
-        targetStep: 'info_0_1_2',
+        targetStep: 'info_0_3_1',
         title: 'BINTEO ΓΙΑ ΔΙΑΔΡΟΜΟ'
       },
-
+      {
+        id: 'step_0_3_vid-kp',
+        yaw: 213,
+        pitch: -25,
+        zoom: 1.7,
+        targetFloor: 'packaging',
+        targetStep: 'step_0_3_vid',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΙΝΤΕΟ ΓΙΑ ΤΟΝ ΔΙΑΔΡΟΜΟ'
+      }
+    ]
+  },
+  'packaging-env_0_3_video': {
+    id: 'packaging-env_0_3',
+    environmentImage: '/video/0_3.mp4',
+    cameraAngle: 0,
+    cameraYaw: 35,
+    keypoints: [
+      {
+        id: 'step_0_3-kp',
+        yaw: 80,
+        pitch: -50,
+        zoom: 1.5,
+        targetFloor: 'packaging',
+        targetStep: 'step_0_3',
+        title: 'ΔΙΑΔΡΟΜΟΣ'
+      }
     ]
   },
   'packaging-env_0_4': {
