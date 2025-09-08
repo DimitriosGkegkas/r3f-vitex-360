@@ -386,9 +386,23 @@ export const floors: Record<string, Floor> = {
       {
         id: 'step_0_3',
         title: 'Μηχάνημα συσκευασίας',
+        description: '',
+        stepName: 'Τρίτο',
+        environmentId: 'packaging-env_0_3'
+      },
+      {
+        id: 'info_0_3_1',
+        title: 'Μηχάνημα συσκευασίας',
         description: 'Το πιο εντυπωσιακό μηχάνημα, όπου γίνεται η συσκευασία. Παρουσίαση με λεπτομέρειες της διαδικασίας.',
         stepName: 'Τρίτο',
         environmentId: 'packaging-env_0_3'
+      },
+      {
+        id: 'step_0_3_vid',
+        title: 'Βίντεο Μηχάνημα συσκευασίας',
+        description: '',
+        stepName: 'Τρίτο',
+        environmentId: 'packaging-env_0_3_video'
       },
       {
         id: 'step_0_4',
