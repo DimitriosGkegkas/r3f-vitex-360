@@ -259,31 +259,31 @@ export const environments: Record<string, Environment> = {
     cameraYaw: 50,
     keypoints: [
       {
-        id: 'material-classification-kp',
-        yaw: 60,
-        pitch: 25,
-        zoom: 1.1,
+        id: 'step_4_2-kp',
+        yaw: -20,
+        pitch: 7,
+        zoom: 2,
         targetFloor: 'sorting',
-        targetStep: 'material-classification',
-        title: 'Material Classification'
+        targetStep: 'step_4_2',
+        title: 'ΜΕΤΑΒΑΣΗ ΒΗΜΑ 4_2'
       },
       {
-        id: 'quality-assessment-kp',
-        yaw: 150,
-        pitch: -15,
-        zoom: 0.9,
+        id: 'step_4_3-kp',
+        yaw: 215,
+        pitch: -40,
+        zoom: 1.2,
         targetFloor: 'sorting',
-        targetStep: 'quality-assessment',
-        title: 'Quality Assessment'
+        targetStep: 'step_4_3',
+        title: 'ΜΕΤΑΒΑΣΗ ΒΗΜΑ 4_3'
       },
       {
-        id: 'precision-sorting-kp',
-        yaw: 240,
-        pitch: 10,
+        id: 'info_4_1_1-kp',
+        yaw: 0,
+        pitch: 30,
         zoom: 1.3,
         targetFloor: 'sorting',
-        targetStep: 'precision-sorting',
-        title: 'Precision Sorting'
+        targetStep: 'info_4_1_1',
+        title: 'Κείμενο κίτρινο σωλήνα'
       },
     ]
   },
@@ -294,13 +294,31 @@ export const environments: Record<string, Environment> = {
     cameraYaw: 50,
     keypoints: [
       {
-        id: 'material-classification-kp',
-        yaw: 60,
+        id: 'step_4_1-kp',
+        yaw: 40,
         pitch: 25,
-        zoom: 1.1,
+        zoom: 1.2,
         targetFloor: 'sorting',
-        targetStep: 'material-classification',
-        title: 'Material Classification'
+        targetStep: 'step_4_1',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/4_1'
+      },
+      {
+        id: 'step_4_4-kp',
+        yaw: 118,
+        pitch: 5,
+        zoom: 2,
+        targetFloor: 'sorting',
+        targetStep: 'step_4_4',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_4'
+      },
+      {
+        id: 'info_4_2_1-kp',
+        yaw: 12,
+        pitch: 22,
+        zoom: 1,
+        targetFloor: 'sorting',
+        targetStep: 'info_4_2_1',
+        title: 'ΚΙΤΡΙΝΑ ΧΩΝΙΑ'
       }
     ]
   },
@@ -311,13 +329,31 @@ export const environments: Record<string, Environment> = {
     cameraYaw: 50,
     keypoints: [
       {
-        id: 'material-classification-kp',
+        id: 'step_4_1-kp',
         yaw: 60,
         pitch: 25,
         zoom: 1.1,
         targetFloor: 'sorting',
-        targetStep: 'material-classification',
-        title: 'Material Classification'
+        targetStep: 'step_4_1',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_1'
+      },
+      {
+        id: 'step_4_4-kp',
+        yaw: 60,
+        pitch: 25,
+        zoom: 1.1,
+        targetFloor: 'sorting',
+        targetStep: 'step_4_4',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_4'
+      },
+      {
+        id: 'info_4_2_1-kp',
+        yaw: 60,
+        pitch: 25,
+        zoom: 1.1,
+        targetFloor: 'sorting',
+        targetStep: 'info_4_2_1',
+        title: 'ΜΠΛΕ ΜΗΧΑΝΗΜΑ'
       },
     ]
   },
@@ -328,14 +364,42 @@ export const environments: Record<string, Environment> = {
     cameraYaw: 50,
     keypoints: [
       {
-        id: 'material-classification-kp',
+        id: 'step_4_1-kp',
         yaw: 60,
         pitch: 25,
         zoom: 1.1,
         targetFloor: 'sorting',
-        targetStep: 'material-classification',
-        title: 'Material Classification'
-      }
+        targetStep: 'step_4_1',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_1'
+      },
+      {
+        id: 'step_4_3-kp',
+        yaw: 100,
+        pitch: -35,
+        zoom: 1.1,
+        targetFloor: 'sorting',
+        targetStep: 'step_4_3',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_3'
+      },
+      {
+        id: 'info_4_4_1-kp',
+        yaw: 230,
+        pitch: -20,
+        zoom: 1.5,
+        targetFloor: 'sorting',
+        targetStep: 'info_4_4_1',
+        title: 'ΜΗΧΑΝΗΜΑ ΓΚΡΙ ΜΙΚΡΟ'
+      },
+      {
+        id: 'info_4_4_2-kp',
+        yaw: -50,
+        pitch: 0,
+        zoom: 1.1,
+        targetFloor: 'sorting',
+        targetStep: 'info_4_3_2',
+        title: 'ΜΗΧΑΝΗΜΑ ΓΚΡΙ ΜΕΓΑΛΟ'
+      },
+
     ]
   },
   // sorting level
@@ -343,79 +407,97 @@ export const environments: Record<string, Environment> = {
   // quantities env
   'quantities-env_3_1': {
     id: 'quantities-env_3_1',
-    environmentImage: '/cubemap/quantities/3_2',
+    environmentImage: '/cubemap/quantities/3_1',
     cameraAngle: 0,
-    cameraYaw: 100,
+    cameraYaw: -100,
     keypoints: [
       {
-        id: 'quantity-optimization-kp',
-        yaw: 75,
-        pitch: 30,
-        zoom: 1.2,
+        id: 'step_3_2-kp',
+        yaw: 160,
+        pitch: 0,
+        zoom: 1.3,
         targetFloor: 'quantities',
-        targetStep: 'quantity-optimization',
-        title: 'Quantity Optimization'
+        targetStep: 'step_3_2',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΕΠΟΜΕΝΟ/3_2'
       },
       {
-        id: 'precise-measurements-kp',
-        yaw: 165,
-        pitch: -20,
-        zoom: 0.8,
+        id: 'info_3_1_1',
+        yaw: 225,
+        pitch: 20,
+        zoom: 1,
         targetFloor: 'quantities',
-        targetStep: 'precise-measurements',
-        title: 'Precise Measurements'
+        targetStep: 'info_3_1_1',
+        title: 'ΓΚΡΙ ΜΗΧΑΝΗΜΑ'
       },
       {
-        id: 'product-consistency-kp',
-        yaw: 255,
-        pitch: 15,
-        zoom: 1.4,
+        id: 'info_3_1_2-kp',
+        yaw: 95,
+        pitch: 20,
+        zoom: 1,
         targetFloor: 'quantities',
         targetStep: 'product-consistency',
-        title: 'Product Consistency'
-      },
-      {
-        id: 'efficiency-management-kp',
-        yaw: 345,
-        pitch: 5,
-        zoom: 1.0,
-        targetFloor: 'quantities',
-        targetStep: 'efficiency-management',
-        title: 'Efficiency Management'
+        title: 'ΜΠΛΕ ΧΩΝΙ'
       }
     ]
   },
   'quantities-env_3_2': {
     id: 'quantities-env_3_2',
     environmentImage: '/cubemap/quantities/3_2',
-    cameraAngle: 0,
-    cameraYaw: 100,
+    cameraAngle: 15,
+    cameraYaw: 0,
     keypoints: [
       {
-        id: 'quantity-optimization-kp',
-        yaw: 75,
-        pitch: 30,
+        id: 'step_3_1-kp',
+        yaw: 140,
+        pitch: -9,
         zoom: 1.2,
         targetFloor: 'quantities',
-        targetStep: 'quantity-optimization',
-        title: 'Quantity Optimization'
+        targetStep: 'step_3_1',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/3_!'
+      },
+      {
+        id: 'step_3_3-kp',
+        yaw: 225,
+        pitch: 0,
+        zoom: 2,
+        targetFloor: 'quantities',
+        targetStep: 'step_3_3',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΕΠΟΜΕΝΟ/3_3'
+      },
+      {
+        id: 'info_3_2_1-kp',
+        yaw: -27,
+        pitch: -5,
+        zoom: 1,
+        targetFloor: 'quantities',
+        targetStep: 'info_3_2_1',
+        title: 'ACMON SYSTEMS'
       },
     ]
   },
   'quantities-env_3_3': {
     id: 'quantities-env_3_3',
     environmentImage: '/cubemap/quantities/3_3',
-    cameraAngle: 0,
-    cameraYaw: 100,
+    cameraAngle: 10,
+    cameraYaw: 190,
     keypoints: [
       {
-        id: 'quantity-optimization-kp',
+        id: 'step_3_2-kp',
         yaw: 75,
-        pitch: 30,
-        zoom: 1.2,
+        pitch: 0,
+        zoom: 2,
         targetFloor: 'quantities',
-        targetStep: 'quantity-optimization',
-        title: 'Quantity Optimization'
+        targetStep: 'step_3_2',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/3_2'
+      },
+      {
+        id: 'info_3_3_1-kp',
+        yaw: 190,
+        pitch: 5,
+        zoom: 1,
+        targetFloor: 'quantities',
+        targetStep: 'info_3_3_1',
+        title: 'MHXANHMA'
       },
     ]
   },
@@ -425,61 +507,52 @@ export const environments: Record<string, Environment> = {
   'secrets-env_2_1': {
     id: 'secrets-env_2_1',
     environmentImage: '/cubemap/secrets/2_1',
-    cameraAngle: 0,
-    cameraYaw: 150,
+    cameraAngle: 10,
+    cameraYaw: 240,
     keypoints: [
       {
-        id: 'trade-secrets-kp',
-        yaw: 90,
-        pitch: 35,
-        zoom: 1.1,
+        id: 'step_2_2-kp',
+        yaw: 2400,
+        pitch: 0,
+        zoom: 1.5,
         targetFloor: 'secrets',
-        targetStep: 'trade-secrets',
-        title: 'Trade Secrets'
+        targetStep: 'step_2_2',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΕΠΟΜΕΝΟ/2_2'
       },
       {
-        id: 'traditional-techniques-kp',
-        yaw: 180,
-        pitch: -25,
+        id: 'info_2_1_1-kp',
+        yaw: 230,
+        pitch: -10,
         zoom: 0.9,
         targetFloor: 'secrets',
-        targetStep: 'traditional-techniques',
-        title: 'Traditional Techniques'
+        targetStep: 'info_2_1_1',
+        title: 'ΤΟΥΡΜΠΙΝΑ'
       },
-      {
-        id: 'innovation-methods-kp',
-        yaw: 270,
-        pitch: 20,
-        zoom: 1.3,
-        targetFloor: 'secrets',
-        targetStep: 'innovation-methods',
-        title: 'Innovation Methods'
-      },
-      {
-        id: 'unique-processes-kp',
-        yaw: 0,
-        pitch: 10,
-        zoom: 1.0,
-        targetFloor: 'secrets',
-        targetStep: 'unique-processes',
-        title: 'Unique Processes'
-      }
     ]
   },
   'secrets-env_2_2': {
     id: 'secrets-env_2_2',
     environmentImage: '/cubemap/secrets/2_2',
-    cameraAngle: 0,
-    cameraYaw: 150,
+    cameraAngle: 5,
+    cameraYaw: 100,
     keypoints: [
       {
-        id: 'trade-secrets-kp',
-        yaw: 90,
-        pitch: 35,
+        id: 'step_2_1-kp',
+        yaw: 126,
+        pitch: 0,
+        zoom: 2,
+        targetFloor: 'secrets',
+        targetStep: 'step_2_1',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/2_1'
+      },
+      {
+        id: 'info_2_2_1-kp',
+        yaw: 70,
+        pitch: 0,
         zoom: 1.1,
         targetFloor: 'secrets',
-        targetStep: 'trade-secrets',
-        title: 'Trade Secrets'
+        targetStep: 'info_2_2_1',
+        title: 'ΜΗΧΑΝΗΜΑ'
       },
     ]
   },
@@ -490,61 +563,61 @@ export const environments: Record<string, Environment> = {
   'mixing-env_1_1': {
     id: 'mixing-env_1_1',
     environmentImage: '/cubemap/mixing/1_1',
-    cameraAngle: 0,
-    cameraYaw: 200,
+    cameraAngle: 10,
+    cameraYaw: 150,
     keypoints: [
       {
-        id: 'perfect-blending-kp',
-        yaw: 105,
-        pitch: 40,
-        zoom: 1.2,
+        id: 'step_1_2-kp',
+        yaw: 150,
+        pitch: 0,
+        zoom: 2,
         targetFloor: 'mixing',
-        targetStep: 'perfect-blending',
-        title: 'Perfect Blending'
+        targetStep: 'step_1_2',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΕΠΟΜΕΝΟ/1_2'
       },
       {
-        id: 'component-integration-kp',
-        yaw: 195,
-        pitch: -30,
-        zoom: 0.8,
+        id: 'info_1_1_1-kp',
+        yaw: 92,
+        pitch: -20,
+        zoom: 1,
         targetFloor: 'mixing',
-        targetStep: 'component-integration',
-        title: 'Component Integration'
+        targetStep: 'info_1_1_1',
+        title: 'ΜΠΛΕ ΜΗΧΑΝΗΜΑ'
       },
       {
-        id: 'quality-mixing-kp',
-        yaw: 285,
-        pitch: 25,
+        id: 'info_1_1_2-kp',
+        yaw: 215,
+        pitch: 15,
         zoom: 1.4,
         targetFloor: 'mixing',
-        targetStep: 'quality-mixing',
-        title: 'Quality Mixing'
-      },
-      {
-        id: 'process-optimization-kp',
-        yaw: 15,
-        pitch: 15,
-        zoom: 1.0,
-        targetFloor: 'mixing',
-        targetStep: 'process-optimization',
-        title: 'Process Optimization'
+        targetStep: 'info_1_1_2',
+        title: 'ΓΚΡΙ ΜΗΧΑΝΗΜΑ'
       }
     ]
   },
   'mixing-env_1_2': {
     id: 'mixing-env_1_2',
     environmentImage: '/cubemap/mixing/1_2',
-    cameraAngle: 0,
-    cameraYaw: 200,
+    cameraAngle: 10,
+    cameraYaw: 120,
     keypoints: [
       {
-        id: 'perfect-blending-kp',
+        id: 'step_1_1-kp',
+        yaw: 275,
+        pitch: 5,
+        zoom: 2,
+        targetFloor: 'mixing',
+        targetStep: 'step_1_1',
+        title: 'ΠΡΟΗΓΟΥΜΕΝΟ ΒΗΜΑ/1_1'
+      },
+      {
+        id: 'info_1_2_1-kp',
         yaw: 105,
-        pitch: 40,
+        pitch: -10,
         zoom: 1.2,
         targetFloor: 'mixing',
-        targetStep: 'perfect-blending',
-        title: 'Perfect Blending'
+        targetStep: 'info_1_2_1',
+        title: 'ΑΝΑΚΥΚΛΩΣΗ'
       },
     ]
   },
@@ -554,44 +627,62 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_1': {
     id: 'packaging-env_0_1',
     environmentImage: '/cubemap/packaging/0_1',
-    cameraAngle: 0,
-    cameraYaw: 250,
+    cameraAngle: 10,
+    cameraYaw: -10,
     keypoints: [
       {
-        id: 'careful-packaging-kp',
-        yaw: 120,
-        pitch: 45,
-        zoom: 1.1,
+        id: 'step_0_4-kp',
+        yaw: 291,
+        pitch: -2,
+        zoom: 2,
         targetFloor: 'packaging',
-        targetStep: 'careful-packaging',
-        title: 'Careful Packaging'
+        targetStep: 'step_0_4',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_4'
       },
       {
-        id: 'quality-assurance-kp',
-        yaw: 210,
-        pitch: -35,
-        zoom: 0.9,
+        id: 'step_0_3-kp',
+        yaw: 150,
+        pitch: -20,
+        zoom: 2,
         targetFloor: 'packaging',
-        targetStep: 'quality-assurance',
-        title: 'Quality Assurance'
+        targetStep: 'step_0_3',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_3'
       },
       {
-        id: 'customer-satisfaction-kp',
-        yaw: 300,
-        pitch: 30,
-        zoom: 1.3,
+        id: 'step_0_2-kp',
+        yaw: 335,
+        pitch: -25,
+        zoom: 1.7,
         targetFloor: 'packaging',
-        targetStep: 'customer-satisfaction',
-        title: 'Customer Satisfaction'
+        targetStep: 'step_0_2',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_2'
       },
       {
-        id: 'final-inspection-kp',
+        id: 'info_0_1_1-kp',
+        yaw: 215,
+        pitch: -5,
+        zoom: 1.5,
+        targetFloor: 'packaging',
+        targetStep: 'info_0_1_1',
+        title: 'ΔΩΜΑΤΙΟ ΕΛΕΓΧΟΥ'
+      },
+      {
+        id: 'info_0_1_2-kp',
+        yaw: 122,
+        pitch: -30,
+        zoom: 1.5,
+        targetFloor: 'packaging',
+        targetStep: 'info_0_1_2',
+        title: 'ΔΙΑΔΡΟΜΟΣ'
+      },
+      {
+        id: 'info_0_1_3-kp',
         yaw: 30,
-        pitch: 20,
-        zoom: 1.0,
+        pitch: 0,
+        zoom: 2.0,
         targetFloor: 'packaging',
-        targetStep: 'final-inspection',
-        title: 'Final Inspection'
+        targetStep: 'info_0_1_3',
+        title: 'ΠΑΚΕΤΑ'
       }
     ]
   },
@@ -599,16 +690,25 @@ export const environments: Record<string, Environment> = {
     id: 'packaging-env_0_2',
     environmentImage: '/cubemap/packaging/0_2',
     cameraAngle: 0,
-    cameraYaw: 250,
+    cameraYaw: 0,
     keypoints: [
       {
-        id: 'careful-packaging-kp',
-        yaw: 120,
-        pitch: 45,
+        id: 'step_0_1-kp',
+        yaw: 90,
+        pitch: 0,
+        zoom: 2,
+        targetFloor: 'packaging',
+        targetStep: 'step_0_1',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_1'
+      },
+      {
+        id: 'info_0_2_1-kp',
+        yaw: -5,
+        pitch: -25,
         zoom: 1.1,
         targetFloor: 'packaging',
-        targetStep: 'careful-packaging',
-        title: 'Careful Packaging'
+        targetStep: 'info_0_2_1',
+        title: 'ΒΙΝΤΕΟ 360'
       },
     ]
   },
@@ -616,16 +716,25 @@ export const environments: Record<string, Environment> = {
     id: 'packaging-env_0_3',
     environmentImage: '/cubemap/packaging/0_3',
     cameraAngle: 0,
-    cameraYaw: 250,
+    cameraYaw: 35,
     keypoints: [
       {
-        id: 'careful-packaging-kp',
-        yaw: 120,
-        pitch: 45,
-        zoom: 1.1,
+        id: 'step_0_1-kp',
+        yaw: -5,
+        pitch: 0,
+        zoom: 1.5,
         targetFloor: 'packaging',
-        targetStep: 'careful-packaging',
-        title: 'Careful Packaging'
+        targetStep: 'step_0_1',
+        title: 'ΕΠΙΣΤΡΟΦΗ ΣΤΟ ΒΗΜΑ 0_1'
+      },
+      {
+        id: 'info_0_3_1-kp',
+        yaw: 60,
+        pitch: -10,
+        zoom: 1.5,
+        targetFloor: 'packaging',
+        targetStep: 'info_0_1_2',
+        title: 'BINTEO ΓΙΑ ΔΙΑΔΡΟΜΟ'
       },
 
     ]
@@ -634,13 +743,22 @@ export const environments: Record<string, Environment> = {
     id: 'packaging-env_0_4',
     environmentImage: '/cubemap/packaging/0_4',
     cameraAngle: 0,
-    cameraYaw: 250,
+    cameraYaw: -90,
     keypoints: [
       {
+        id: 'step_0_1-kp',
+        yaw: 20,
+        pitch: 10,
+        zoom: 1,
+        targetFloor: 'packaging',
+        targetStep: 'step_0_1',
+        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_1'
+      },
+      {
         id: 'careful-packaging-kp',
-        yaw: 120,
-        pitch: 45,
-        zoom: 1.1,
+        yaw:-90,
+        pitch: 10,
+        zoom: 2,
         targetFloor: 'packaging',
         targetStep: 'careful-packaging',
         title: 'Careful Packaging'
