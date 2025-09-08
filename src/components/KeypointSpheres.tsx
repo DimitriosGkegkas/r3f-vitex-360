@@ -1,25 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Billboard, Image } from '@react-three/drei';
 import * as THREE from 'three';
-import { Keypoint } from '../config';
+import { allSteps, Keypoint } from '../config';
+import TeleportMarker from './TeleportMarker';
+import HotspotMarker from './HotspotMarker';
 
 interface KeypointSpheresProps {
   keypoints: Keypoint[];
+  environmentId: string;
   onStepChange: (stepId: string) => void;
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
 }
 
 interface KeypointSphereProps {
   step: Keypoint;
+  teleporting: boolean;
   onClick: (stepId: string) => void;
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
 }
 
-const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, onClick, onTooltipChange }) => {
+const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, teleporting, onClick, onTooltipChange }) => {
   const [hovered, setHovered] = useState(false);
   const meshRef = React.useRef<THREE.Mesh>(null);
-
   // Change cursor when hovering
   useEffect(() => {
     if (hovered) {
@@ -56,14 +58,29 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, onClick, onToolti
 
     // Calculate position on a sphere relative to camera
     // Camera is at [0, 10, 0], so we offset from there
-    const x = (step.zoom/0.3) * Math.cos(pitchRad) * Math.sin(yawRad);
-    const y = 1.6 + (step.zoom/0.3) * Math.sin(pitchRad); // Offset by camera height
-    const z = (step.zoom/0.3) * Math.cos(pitchRad) * Math.cos(yawRad);
+    const x = (step.zoom / 0.3) * Math.cos(pitchRad) * Math.sin(yawRad);
+    const y = 1.6 + (step.zoom / 0.3) * Math.sin(pitchRad); // Offset by camera height
+    const z = (step.zoom / 0.3) * Math.cos(pitchRad) * Math.cos(yawRad);
 
     return [x, y, z];
   };
 
   const position = getPosition();
+
+  // Calculate rotation to face (0,0,0) - the camera position
+  const getRotation = () => {
+    const x = position[0];
+    const y = position[1];
+    const z = position[2];
+    
+    // Calculate the angle to face the origin
+    const yaw = Math.atan2(x, z);
+    const pitch = Math.atan2(-y, Math.sqrt(x * x + z * z));
+    
+    return [pitch, yaw, 0];
+  };
+
+  const rotation = getRotation();
 
   // Add subtle floating animation
   useFrame((state) => {
@@ -75,25 +92,29 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, onClick, onToolti
   return (
     <group position={position as [number, number, number]}  >
       {/* Main sphere */}
-      <Billboard>
-        <Image
-          url={"/Hotspot.png"}
-          side={THREE.DoubleSide}
-          scale={0.5} // Larger scale for current step
-          transparent
+      {teleporting ? <TeleportMarker color={0x1088F4} onPointerOver={() => setHovered(true)}
+        onPointerOut={() => setHovered(false)}
+        onClick={() => onClick(step.targetStep)} />
+        :
+        <HotspotMarker
+          scale={0.5}
+          rotation={rotation as [number, number, number]}
           onPointerOver={() => setHovered(true)}
           onPointerOut={() => setHovered(false)}
           onClick={() => onClick(step.targetStep)}
         />
-      </Billboard>
+      }
+
     </group>
   );
 };
 
-const KeypointSpheres: React.FC<KeypointSpheresProps> = ({ 
-  keypoints, 
-  onStepChange, 
-  onTooltipChange 
+
+const KeypointSpheres: React.FC<KeypointSpheresProps> = ({
+  keypoints,
+  environmentId,
+  onStepChange,
+  onTooltipChange,
 }) => {
   const handleStepClick = (stepId: string) => {
     console.log('Step clicked:', stepId);
@@ -102,10 +123,11 @@ const KeypointSpheres: React.FC<KeypointSpheresProps> = ({
 
   return (
     <group>
-      {keypoints.map((step) => (
+      {keypoints.map((keypoint) => (
         <KeypointSphere
-          key={step.id}
-          step={step}
+          key={keypoint.id}
+          step={keypoint}
+          teleporting={allSteps.find(s => s.id === keypoint.targetStep)?.environmentId !== environmentId}
           onClick={handleStepClick}
           onTooltipChange={onTooltipChange}
         />

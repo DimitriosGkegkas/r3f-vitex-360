@@ -14,3 +14,7 @@ export { default as KeypointSpheres } from './KeypointSpheres';
 export { default as Tooltip } from './Tooltip';
 export { VRToggle } from './VRToggle';
 export { default as ControllerLabels } from './ControllerLabels';
+export { default as VideoEnvironment } from './VideoEnvironment';
+export { default as PanoramaScene } from './PanoramaScene';
+export { default as InfoCardBillboard } from './InfoCardBillboard';
+export { default as DragLookControls } from './DragLookControls';
