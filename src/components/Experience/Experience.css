@@ -9,6 +9,10 @@
   z-index: 15;
 }
 
+.experience-page.background-mode {
+  pointer-events: none;
+}
+
 /* Background overlay to capture clicks and forward to canvas */
 .experience-background-overlay {
   position: absolute;

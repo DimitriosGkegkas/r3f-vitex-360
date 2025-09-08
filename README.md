@@ -5,6 +5,7 @@ A React Three Fiber application with a 360-degree image viewer and interactive e
 ## Features
 
 - **360-Degree Image Viewer**: Interactive panorama viewer with mouse/touch controls
+- **360-Degree Video Support**: Automatic video environment rendering for immersive experiences
 - **Experience Components**: Interactive state-based experience flow
 - **Responsive Design**: Works on desktop and mobile devices
 - **React Three Fiber**: Built with modern 3D web technologies
@@ -66,7 +67,7 @@ Each environment represents a 360° space with interactive keypoints. Here's how
 // Example: Creating a new "workshop" environment
 'workshop-env': {
   id: 'workshop-env',
-  environmentImage: '/cubemap/workshop', // Path to cubemap folder
+  environmentImage: '/cubemap/workshop', // Path to cubemap folder OR video file
   cameraAngle: 0,                        // Initial camera pitch (0 = horizon)
   cameraYaw: 90,                         // Initial camera yaw (90 = east)
   keypoints: [
@@ -144,7 +145,8 @@ const floorOrder = [
 ### Quick Configuration Guide
 
 1. **Add New Environment**: 
-   - Create cubemap images in `public/cubemap/your-environment/`
+   - **For Images**: Create cubemap images in `public/cubemap/your-environment/`
+   - **For Videos**: Place 360° video file in `public/cubemap/your-environment/`
    - Configure in `environments.ts` with keypoints
    - Set camera angles and zoom levels
 
@@ -189,6 +191,56 @@ For single panoramic images:
    - Place your image in the `public/` folder
    - Update the `imageUrl` prop in `src/App.tsx`
    - Example: `imageUrl="/your-image-name.jpg"`
+
+## Adding 360-Degree Videos
+
+### Video Environment Support
+The application automatically detects and renders 360° videos when the `environmentImage` path points to a video file.
+
+### Video Requirements
+1. **Supported Formats**:
+   - MP4 (recommended)
+   - WebM
+   - MOV
+
+2. **Video Specifications**:
+   - Format: 360° equirectangular projection
+   - Resolution: 1920x960 or higher recommended
+   - Duration: Any length (loops automatically)
+   - File Size: Keep under 50MB for optimal performance
+   - Codec: H.264 for MP4, VP9 for WebM
+
+3. **Setup**:
+   - Place your video file in the `public/` folder
+   - Update the `environmentImage` in your environment configuration
+   - Example: `environmentImage: '/cubemap/demo/0903.mp4'`
+
+### Video vs Image Detection
+The system automatically determines whether to render a video or image environment based on the file extension:
+- **Video files** (`.mp4`, `.webm`, `.mov`) → Renders `VideoEnvironment` component
+- **Image paths** (folders or other extensions) → Renders standard `Environment` with cubemap
+
+### Example Video Environment Configuration
+```typescript
+'demo-video-env': {
+  id: 'demo-video-env',
+  environmentImage: '/cubemap/demo/0903.mp4', // Direct path to video file
+  cameraAngle: 0,
+  cameraYaw: 0,
+  keypoints: [
+    // Keypoints work the same way for video environments
+    {
+      id: 'video-keypoint-1',
+      yaw: 90,
+      pitch: 0,
+      zoom: 1.0,
+      targetFloor: 'demo',
+      targetStep: 'video-step',
+      title: 'Video Interaction Point'
+    }
+  ]
+}
+```
 
 ## Controls
 

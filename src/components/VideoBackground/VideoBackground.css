@@ -1,0 +1,64 @@
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+  transition: opacity 1s ease-out;
+}
+
+.video-background.dissolving {
+  opacity: 0;
+}
+
+.video-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+}
+
+/* Ensure the video covers the entire background */
+.video-background.loading-page-bg {
+  z-index: 1;
+}
+
+.video-background.loading-page-bg .video-background-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Skip button styles */
+.skip-button {
+  position: absolute;
+  bottom: 80px;
+  right: 24px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  backdrop-filter: blur(10px);
+}
+
+.skip-button:hover {
+  background: rgba(0, 0, 0, 0.9);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.skip-button:active {
+  transform: translateY(0);
+}
+
