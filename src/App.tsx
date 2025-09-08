@@ -95,7 +95,7 @@ const App: React.FC = () => {
       // Mark the initial step as visited
       setVisitedSteps([{
         floorId: 'raw-materials',
-        stepId: 'sustainable-sourcing'
+        stepId: 'info_5_1_1'
       }]);
     }, 1000); // 1 second dissolve animation
   };
@@ -104,7 +104,7 @@ const App: React.FC = () => {
     console.log('Restarting the experience...');
     setVisitedSteps([]);
     setCurrentFloorId('raw-materials');
-    setCurrentStepId('sustainable-sourcing');
+    setCurrentStepId('info_5_1_1');
     setCurrentPage('experience');
   };
 

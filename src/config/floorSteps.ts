@@ -25,8 +25,8 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_5_1',
-        title: 'ΚΕΙΜΕΝΟ ΒΗΜΑ ΑΣΑΝΣΕΡ',
-        description: 'Discover how we carefully select environmentally responsible materials that meet our high quality standards while protecting our planet.',
+        title: 'ΒΗΜΑ ΑΣΑΝΣΕΡ/5_1',
+        description: '',
         stepName: 'Πρώτο',
         environmentId: 'raw-materials-env_5_1'
       },
@@ -46,8 +46,8 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'step_5_2',
-        title: 'ΚΕΙΜΕΝΟ ΒΗΜΑ 5_2',
-        description: 'Learn about our rigorous testing procedures and quality assurance protocols that ensure every material meets our exacting specifications.',
+        title: 'ΒΗΜΑ 5_2',
+        description: '',
         stepName: 'Δεύτερο',
         environmentId: 'raw-materials-env_5_2'
       },
@@ -55,13 +55,13 @@ export const floors: Record<string, Floor> = {
         id: 'info_5_2_1',
         title: 'Κείμενο κίτρινο στο πάτωμα',
         description: 'Discover how we carefully select environmentally responsible materials that meet our high quality standards while protecting our planet.',
-        stepName: 'Πρώτο',
+        stepName: 'Δεύτερο',
         environmentId: 'raw-materials-env_5_2'
       },
       {
         id: 'step_5_3',
-        title: 'Innovation in Material Selection',
-        description: 'Explore cutting-edge materials and advanced technologies that give our products their unique properties and performance.',
+        title: 'ΒΗΜΑ 5_3',
+        description: '',
         stepName: 'Τρίτο',
         environmentId: 'raw-materials-env_5_3'
       },
@@ -69,20 +69,13 @@ export const floors: Record<string, Floor> = {
         id: 'info_5_3_1',
         title: 'Πληροφορίες για τους σωλήνες',
         description: 'Discover how we carefully select environmentally responsible materials that meet our high quality standards while protecting our planet.',
-        stepName: 'Πρώτο',
+        stepName: 'Τρίτο',
         environmentId: 'raw-materials-env_5_3'
       },
       {
         id: 'step_5_4',
-        title: 'Craftsmanship Principles',
-        description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
-        stepName: 'Τέταρτο',
-        environmentId: 'raw-materials-env_5_4'
-      },
-      {
-        id: 'info_5_4_1',
-        title: 'Κίτρινο',
-        description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
+        title: 'ΒΗΜΑ 5_4',
+        description: '',
         stepName: 'Τέταρτο',
         environmentId: 'raw-materials-env_5_4'
       },
@@ -94,31 +87,38 @@ export const floors: Record<string, Floor> = {
         environmentId: 'raw-materials-env_5_4'
       },
       {
+        id: 'info_5_4_1',
+        title: 'Κίτρινο',
+        description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
+        stepName: 'Τέταρτο',
+        environmentId: 'raw-materials-env_5_4'
+      },
+      {
         id: 'step_5_5',
         title: 'Craftsmanship Principles',
         description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
-        stepName: 'Τέταρτο',
+        stepName: 'Πέμπτο',
         environmentId: 'raw-materials-env_5_5'
       },
       {
         id: 'info_5_5_1',
-        title: 'Πράσινο',
+        title: 'Πέμπτο',
         description: 'Η αξία των σιλό, το ύψος τους, ο ρόλος τους στη διαχείριση των πρώτων υλών.',
         stepName: 'Τέταρτο',
         environmentId: 'raw-materials-env_5_5'
       },
       {
         id: 'step_5_6',
-        title: 'Craftsmanship Principles',
-        description: 'Understand the traditional techniques and artistic principles that guide our material selection and preparation process.',
-        stepName: 'Τέταρτο',
+        title: 'ΒΗΜΑ 5_6',
+        description: '',
+        stepName: 'Έκτο',
         environmentId: 'raw-materials-env_5_6'
       },
       {
         id: 'info_5_6_1',
         title: 'Κείμενο για θέα',
-        description: 'Πληροφορίες για τη θεα πιο αναλητικά',
-        stepName: 'Τέταρτο',
+        description: 'η Vitex αποτελεί ένα οικοσύστημα βιομηχανικών λύσεων. Στο campus φαίνονται και άλλες λύσεις/μονάδες που έχουν αναπτυχθεί, δείχνοντας το πώς λειτουργεί το σύνολο.',
+        stepName: 'Έκτο',
         environmentId: 'raw-materials-env_5_6'
       },
     ],
@@ -132,65 +132,65 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_4_1',
-        title: 'Material Classification',
-        description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
+        title: 'BHMA 4_1',
+        description: '',
         stepName: 'Πρώτο',
         environmentId: 'sorting-env_4_1'
       },
       {
         id: 'info_4_1_1',
-        title: 'Material Classification',
+        title: 'ΚΙΤΡΙΝΟΣ ΣΩΛΗΝΑΣ',
         description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
         stepName: 'Πρώτο',
         environmentId: 'sorting-env_4_1'
       },
       {
         id: 'step_4_2',
-        title: 'Material Classification',
-        description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
-        stepName: 'Πρώτο',
+        title: 'ΒΗΜΑ 4_2',
+        description: '',
+        stepName: 'Δεύτερο',
         environmentId: 'sorting-env_4_2'
       },
       {
         id: 'info_4_2_1',
         title: 'ΚΕΙΜΕΝΟ ΓΙΑ ΤΑ ΚΙΤΡΙΝΑ ΧΩΝΙΑ',
         description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
-        stepName: 'Πρώτο',
+        stepName: 'Δεύτερο',
         environmentId: 'sorting-env_4_2'
       },
       {
         id: 'step_4_3',
-        title: 'Quality Assessment',
+        title: 'ΒΗΜΑ 4_3',
         description: 'Witness our comprehensive evaluation process that ensures only the finest materials proceed to the next stage.',
-        stepName: 'Δεύτερο',
+        stepName: 'Τρίτο',
         environmentId: 'sorting-env_4_3'
       },
       {
         id: 'info_4_3_1',
-        title: 'ΜΗΧΑΝΗΜΑ ΓΚΡΙ ΜΙΚΡΟ',
+        title: 'ΜΗΧΑΝΗΜΑ ΜΠΛΕ',
         description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
-        stepName: 'Πρώτο',
+        stepName: 'Τρίτο',
         environmentId: 'sorting-env_4_3'
       },
       {
         id: 'step_4_4',
-        title: 'Precision Sorting',
+        title: 'ΒΗΜΑ 4_4',
         description: 'Observe the exacting standards and attention to detail that make our sorting process so effective.',
-        stepName: 'Τρίτο',
+        stepName: 'Τέταρτο',
         environmentId: 'sorting-env_4_4'
       },
       {
         id: 'info_4_4_1',
         title: 'ΜΗΧΑΝΗΜΑ ΓΚΡΙ ΜΙΚΡΟ',
         description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
-        stepName: 'Πρώτο',
+        stepName: 'Τέταρτο',
         environmentId: 'sorting-env_4_4'
       },
       {
         id: 'info_4_4_2',
         title: 'ΜΗΧΑΝΗΜΑ ΓΚΡΙ ΜΕΓΑΛΟ',
         description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
-        stepName: 'Πρώτο',
+        stepName: 'Τέταρτο',
         environmentId: 'sorting-env_4_4'
       },
     ],
@@ -203,30 +203,30 @@ export const floors: Record<string, Floor> = {
     description: 'Discover the science of quantity management and optimization. Learn how precise measurements and calculations ensure perfect product consistency.',
     steps: [
       {
+        id: 'step_3_1',
+        title: 'ΒΗΜΑ 3_1',
+        description: '',
+        stepName: 'Πρώτο',
+        environmentId: 'quantities-env_3_1'
+      },
+      {
         id: 'info_3_1_1',
         title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΚΡΙ ΜΗΧΑΝΗΜΑ',
-        description: 'Explore how we calculate the perfect ratios and quantities to achieve consistent product quality every time.',
+        description: 'Επεξήγηση της βασικής μίξης: φαίνονται δύο σημεία όπου «πέφτουν» τα υλικά και πού καταλήγουν για να αναμειχθούν.',
         stepName: 'Πρώτο',
         environmentId: 'quantities-env_3_1'
       },
       {
         id: 'info_3_1_2',
         title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΜΠΛΕ ΧΩΝΙ',
-        description: 'Explore how we calculate the perfect ratios and quantities to achieve consistent product quality every time.',
-        stepName: 'Πρώτο',
-        environmentId: 'quantities-env_3_1'
-      },
-      {
-        id: 'step_3_1',
-        title: 'ΕΠΟΜΕΝΟ ΒΗΜΑ',
-        description: 'Explore how we calculate the perfect ratios and quantities to achieve consistent product quality every time.',
+        description: 'Οι σωλήνες μεταφέρουν τα υλικά από πάνω.',
         stepName: 'Πρώτο',
         environmentId: 'quantities-env_3_1'
       },
       {
         id: 'step_3_2',
-        title: 'Precise Measurements',
-        description: 'Discover the advanced measuring equipment and techniques that ensure accuracy down to the smallest detail.',
+        title: 'ΒΗΜΑ 3_2',
+        description: '',
         stepName: 'Δεύτερο',
         environmentId: 'quantities-env_3_2'
       },
@@ -239,15 +239,15 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'step_3_3',
-        title: 'Product Consistency',
-        description: 'Learn how our quantity management systems guarantee that every batch meets the same high standards.',
+        title: 'ΒΗΜΑ 3_3',
+        description: '',
         stepName: 'Τρίτο',
         environmentId: 'quantities-env_3_3'
       },
       {
         id: 'info_3_3_1',
         title: 'KEIMENO MHXANHMA',
-        description: 'Learn how our quantity management systems guarantee that every batch meets the same high standards.',
+        description: 'το κεντρικό μηχάνημα διαχείρισης. Επεξήγηση του τρόπου που ελέγχει και ρυθμίζει την όλη διαδικασία.',
         stepName: 'Τρίτο',
         environmentId: 'quantities-env_3_3'
       },
@@ -262,22 +262,22 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_2_1',
-        title: 'Trade Secrets',
-        description: 'Discover the closely guarded techniques and processes that have been perfected over generations.',
+        title: 'ΒΗΜΑ 2_1',
+        description: '',
         stepName: 'Πρώτο',
         environmentId: 'secrets-env_2_1'
       },
       {
         id: 'info_2_1_1',
         title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΙΑ ΤΗΝ ΤΟΥΡΜΠΙΝΑ',
-        description: 'Η τουρμπίνα παίρνει μπρος, ποιος το πιάνει το καμό.',
+        description: 'Αναλυτικό κείμενο για την τουρμπίνα',
         stepName: 'Πρώτο',
         environmentId: 'secrets-env_2_1'
       },
       {
         id: 'step_2_2',
         title: 'ΒΗΜΑ 2_2',
-        description: 'Learn about the time-honored methods that form the foundation of our craft and quality.',
+        description: '',
         stepName: 'Δεύτερο',
         environmentId: 'secrets-env_2_2'
       },
@@ -299,7 +299,7 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_1_1',
-        title: 'ΒΗΜΑ 1_1',
+        title: 'Κεντρικό μηχάνημα',
         description: 'Observe the precise techniques that ensure every component is perfectly integrated for optimal results.',
         stepName: 'Πρώτο',
         environmentId: 'mixing-env_1_1'
@@ -307,29 +307,29 @@ export const floors: Record<string, Floor> = {
       {
         id: 'info_1_1_1',
         title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΙΑ ΤΟ ΜΠΛΕ ΜΗΧΑΝΗΜΑ',
-        description: 'Learn how we carefully combine different elements to create a harmonious and effective final product.',
-        stepName: 'Δεύτερο',
+        description: 'Μπλε μηχάνημα/στοιχείο, το οποίο πρέπει να εξηγηθεί (π.χ. ρόλος στη διαδικασία, γιατί είναι σημαντικό).',
+        stepName: 'Πρώτο',
         environmentId: 'mixing-env_1_1'
       },
       {
         id: 'info_1_1_2',
-        title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΙΑ ΤΟ ΓΚΡΙ ΜΗΧΑΝΗΜΑ',
-        description: 'Discover the quality control measures that ensure every batch meets our exacting standards.',
-        stepName: 'Τρίτο',
+        title: 'Κεντρικό μηχάνημα',
+        description: 'πληροφορίες για εντρικό μηχάνημα ανάμειξης',
+        stepName: 'Πρώτο',
         environmentId: 'mixing-env_1_1'
       },
       {
         id: 'step_1_2',
-        title: 'BHMA 1_2',
-        description: 'See how we continuously improve our mixing processes for better efficiency and quality.',
-        stepName: 'Τέταρτο',
+        title: 'Ανακύκλωση',
+        description: '',
+        stepName: 'Δεύτερο',
         environmentId: 'mixing-env_1_2'
       },
       {
         id: 'info_1_2_1',
         title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΙΑ ΤΗΝ ΑΝΑΚΥΚΛΩΣΗ',
-        description: 'See how we continuously improve our mixing processes for better efficiency and quality.',
-        stepName: 'Τέταρτο',
+        description: 'Επεξήγηση της διαδικασίας και του ρόλου της στην παραγωγή.',
+        stepName: 'Δεύτερο',
         environmentId: 'mixing-env_1_2'
       }
     ],
@@ -343,57 +343,64 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_0_1',
-        title: 'BHMA 0_1',
-        description: 'Witness the meticulous attention to detail that goes into every package to ensure safe delivery.',
+        title: 'Κεντρικός χώρος',
+        description: '',
+        stepName: 'Πρώτο',
+        environmentId: 'packaging-env_0_1'
+      },
+      {
+        id: 'info_0_1_3',
+        title: 'ΚΕΙΜΕΝΟ ΓΙΑ ΤΑ ΠΑΚΕΤΑ',
+        description: 'Αποθήκη πρώτων υλών.',
         stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
       {
         id: 'info_0_1_1',
         title: 'ΚΕΙΜΕΝΟ ΔΩΜΑΤΙΟ ΕΛΕΓΧΟΥ',
-        description: 'See our final quality checks that ensure every product meets our standards before shipping.',
-        stepName: 'Δεύτερο',
+        description: 'η «ψυχή» του εργοστασίου: εδώ αποφασίζεται τι γίνεται και γίνεται ο έλεγχος.',
+        stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
       {
         id: 'info_0_1_2',
         title: 'ΒΙΝΤΕΟ ΕΡΓΑΣΙΑΣ ΣΤΟ ΔΙΑΔΡΟΜΟ',
         description: 'Learn how our packaging design prioritizes both protection and an excellent unboxing experience.',
-        stepName: 'Τρίτο',
-        environmentId: 'packaging-env_0_1'
-      },
-      {
-        id: 'info_0_1_3',
-        title: 'ΚΕΙΜΕΝΟ ΓΙΑ ΤΑ ΠΑΚΕΤΑ',
-        description: 'Observe the comprehensive final review process that guarantees excellence in every detail.',
-        stepName: 'Τέταρτο',
+        stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
       {
         id: 'step_0_2',
-        title: 'ΒΗΜΑ 0_2',
-        description: 'Observe the comprehensive final review process that guarantees excellence in every detail.',
-        stepName: 'Τέταρτο',
+        title: 'Παλετοποίηση',
+        description: 'Βίντεο με την κεντρική λειτουργία που συνδέει το συσκευαστήριο με την παλετοποίηση.',
+        stepName: 'Δεύτερο',
         environmentId: 'packaging-env_0_2'
       },
       {
         id: 'info_0_2_1',
         title: 'BINTEO 360',
-        description: 'Observe the comprehensive final review process that guarantees excellence in every detail.',
-        stepName: 'Τέταρτο',
+        description: '',
+        stepName: 'Δεύτερο',
         environmentId: 'packaging-env_0_2'
       },
       {
         id: 'step_0_3',
-        title: 'Final Inspection',
-        description: 'Observe the comprehensive final review process that guarantees excellence in every detail.',
-        stepName: 'Τέταρτο',
+        title: 'Μηχάνημα συσκευασίας',
+        description: 'Το πιο εντυπωσιακό μηχάνημα, όπου γίνεται η συσκευασία. Παρουσίαση με λεπτομέρειες της διαδικασίας.',
+        stepName: 'Τρίτο',
         environmentId: 'packaging-env_0_3'
       },
       {
         id: 'step_0_4',
-        title: 'Final Inspection',
-        description: 'Observe the comprehensive final review process that guarantees excellence in every detail.',
+        title: 'Εξωτερικός χώρος',
+        description: '',
+        stepName: 'Τέταρτο',
+        environmentId: 'packaging-env_0_4'
+      },
+      {
+        id: 'info_0_4_1',
+        title: 'Εξω πληροφορίες',
+        description: 'Δίνει θέα προς τα έξω με πανοραμική εικόνα του εργοστασίου και του περιβάλλοντος χώρου.',
         stepName: 'Τέταρτο',
         environmentId: 'packaging-env_0_4'
       }
