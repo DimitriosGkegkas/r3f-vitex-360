@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './InfoCard.css';
 import { AnimatedIcon } from '../AnimatedIcon';
 
@@ -29,8 +29,14 @@ export const InfoCard: React.FC<InfoCardProps> = ({
   onPrev,
   billboard = false
 }) => {
+  const [isOpen, setIsOpen] = useState(true);
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, [currentStep]);
+
   return (
-    <div className={`info-card ${billboard ? 'billboard' : ''} ${className}`}>
+    <div className={`info-card ${billboard ? 'billboard' : ''} ${className}`} style={{ "display": isOpen ? "flex" : "none" }}>
       {(step || floor) && (
         <div className="info-meta">
           {step && (
@@ -55,7 +61,7 @@ export const InfoCard: React.FC<InfoCardProps> = ({
               <span className="meta-value">{floor}</span>
             </div>
           )}
-          <div className="info-close">
+          <div className="info-close" onClick={() => setIsOpen(false)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M13.067 12.1828C13.1251 12.2409 13.1712 12.3098 13.2026 12.3857C13.234 12.4616 13.2502 12.5429 13.2502 12.625C13.2502 12.7071 13.234 12.7885 13.2026 12.8643C13.1712 12.9402 13.1251 13.0091 13.067 13.0672C13.009 13.1253 12.94 13.1713 12.8642 13.2028C12.7883 13.2342 12.707 13.2504 12.6249 13.2504C12.5427 13.2504 12.4614 13.2342 12.3855 13.2028C12.3097 13.1713 12.2407 13.1253 12.1827 13.0672L6.99986 7.88361L1.81705 13.0672C1.69977 13.1845 1.54071 13.2504 1.37486 13.2504C1.20901 13.2504 1.04995 13.1845 0.932672 13.0672C0.815396 12.9499 0.749512 12.7909 0.749512 12.625C0.749512 12.4592 0.815396 12.3001 0.932672 12.1828L6.11627 7.00001L0.932672 1.8172C0.815396 1.69992 0.749512 1.54086 0.749512 1.37501C0.749512 1.20916 0.815396 1.0501 0.932672 0.932824C1.04995 0.815549 1.20901 0.749664 1.37486 0.749664C1.54071 0.749664 1.69977 0.815549 1.81705 0.932824L6.99986 6.11642L12.1827 0.932824C12.2999 0.815549 12.459 0.749664 12.6249 0.749664C12.7907 0.749664 12.9498 0.815549 13.067 0.932824C13.1843 1.0501 13.2502 1.20916 13.2502 1.37501C13.2502 1.54086 13.1843 1.69992 13.067 1.8172L7.88345 7.00001L13.067 12.1828Z" fill="#4D4D4D" />
             </svg>

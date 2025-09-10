@@ -1,14 +1,27 @@
 import React, { useState } from 'react';
 import { HelpPanel } from './HelpPanel';
 import './Menu.css';
+import { FloorPanel } from '../FloorPanel';
 
 export interface MenuProps {
   className?: string;
-  floorPanel?: React.ReactNode;
   hideFloorsButton?: boolean;
+  currentFloorId: string;
+  floors: Record<string, any>;
+  floorOrder: string[];
+  onStateChange: (stateId: string) => void;
+  canGoPrevious: () => boolean;
 }
 
-export const Menu: React.FC<MenuProps> = ({ className = '', floorPanel, hideFloorsButton = false }) => {
+export const Menu: React.FC<MenuProps> = ({ 
+  className = '', 
+  hideFloorsButton = false,
+  currentFloorId,
+  floors,
+  floorOrder,
+  onStateChange,
+  canGoPrevious
+}) => {
   const [isFloorPanelOpen, setIsFloorPanelOpen] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [isHelpActive, setIsHelpActive] = useState(false);
@@ -45,10 +58,10 @@ export const Menu: React.FC<MenuProps> = ({ className = '', floorPanel, hideFloo
       <div className="menu-buttons">
         {!hideFloorsButton && (
           <>
-                         <button
-               className={`menu-button ${isFloorPanelOpen ? 'active' : ''}`}
-               onClick={toggleFloorMenu}
-             >
+            <button
+              className={`menu-button ${isFloorPanelOpen ? 'active' : ''}`}
+              onClick={toggleFloorMenu}
+            >
               <div className="button-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <path d="M16.8375 16.6609L12.8524 5.70312L13.5625 3.75H14.375C14.5408 3.75 14.6998 3.68415 14.817 3.56694C14.9342 3.44973 15 3.29076 15 3.125C15 2.95924 14.9342 2.80027 14.817 2.68306C14.6998 2.56585 14.5408 2.5 14.375 2.5H6.87503C6.70927 2.5 6.5503 2.56585 6.43309 2.68306C6.31588 2.80027 6.25003 2.95924 6.25003 3.125C6.25003 3.29076 6.31588 3.44973 6.43309 3.56694C6.5503 3.68415 6.70927 3.75 6.87503 3.75H7.23284L2.53753 16.6609C2.5094 16.7381 2.49676 16.8201 2.50035 16.9022C2.50394 16.9843 2.52368 17.0649 2.55843 17.1393C2.59319 17.2138 2.64229 17.2806 2.70291 17.3361C2.76354 17.3915 2.8345 17.4345 2.91175 17.4625C2.98017 17.4871 3.05231 17.4998 3.12503 17.5C3.25338 17.5 3.37862 17.4605 3.48373 17.3868C3.58884 17.3132 3.66873 17.2089 3.71253 17.0883L4.4719 15H8.14378L7.53909 16.6609C7.51096 16.7381 7.49833 16.8201 7.50191 16.9022C7.5055 16.9843 7.52524 17.0649 7.56 17.1393C7.59475 17.2138 7.64385 17.2806 7.70448 17.3361C7.7651 17.3915 7.83606 17.4345 7.91331 17.4625C7.98124 17.4869 8.05284 17.4996 8.12503 17.5C8.25338 17.5 8.37862 17.4605 8.48373 17.3868C8.58884 17.3132 8.66873 17.2089 8.71253 17.0883L10.1563 13.125H14.2188L15.6602 17.0883C15.7041 17.2093 15.7844 17.3138 15.8899 17.3875C15.9955 17.4612 16.1213 17.5005 16.25 17.5C16.3227 17.4998 16.3949 17.4871 16.4633 17.4625C16.5406 17.4345 16.6115 17.3915 16.6721 17.3361C16.7328 17.2806 16.7819 17.2138 16.8166 17.1393C16.8514 17.0649 16.8711 16.9843 16.8747 16.9022C16.8783 16.8201 16.8657 16.7381 16.8375 16.6609ZM9.96253 10H6.29065L7.19925 7.5H10.8711L9.96253 10ZM12.2352 3.75L11.3235 6.25H7.65628L8.56253 3.75H12.2352ZM4.92659 13.75L5.83596 11.25H9.50784L8.59378 13.75H4.92659ZM10.6078 11.875L12.1875 7.53203L13.7664 11.875H10.6078Z" fill="#1A1A1A" />
@@ -56,7 +69,17 @@ export const Menu: React.FC<MenuProps> = ({ className = '', floorPanel, hideFloo
               </div>
               <span className="button-text">Όροφοι</span>
             </button>
-                         {isFloorPanelOpen && floorPanel}
+            {isFloorPanelOpen && (
+              <FloorPanel
+                currentFloorId={currentFloorId}
+                experienceStates={floors}
+                stateOrder={floorOrder}
+                onStepReset={() => onStateChange(floorOrder[0])}
+                canGoPrevious={canGoPrevious}
+                onClose={() => setIsFloorPanelOpen(false)}
+                onStateChange={onStateChange}
+              />
+            )}
           </>
         )}
 
