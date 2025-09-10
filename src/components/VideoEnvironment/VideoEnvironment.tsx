@@ -17,8 +17,8 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
   
   // Quality presets for different performance levels
   const qualitySettings = {
-    low: { resolution: 512, segments: [32, 16] },
-    medium: { resolution: 1024, segments: [64, 32] },
+    low: { resolution: 512, segments: [128, 64] },
+    medium: { resolution: 1024, segments: [128, 64] },
     high: { resolution: 2048, segments: [128, 64] }
   };
   

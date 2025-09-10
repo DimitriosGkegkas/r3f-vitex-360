@@ -140,6 +140,29 @@ export const cinematicColorSpaceConfig: ColorSpaceConfig = {
   },
 };
 
+// VR-optimized configuration for better VR headset compatibility
+export const vrColorSpaceConfig: ColorSpaceConfig = {
+  ...defaultColorSpaceConfig,
+  renderer: {
+    ...defaultColorSpaceConfig.renderer,
+    outputColorSpace: 'srgb-linear', // Better for VR displays
+    toneMapping: 'LinearToneMapping', // More predictable in VR
+    toneMappingExposure: 1.2, // Slightly brighter for VR
+    physicallyCorrectLights: true,
+  },
+  environment: {
+    ...defaultColorSpaceConfig.environment,
+    resolution: 2048, // Balanced quality/performance for VR
+    environmentIntensity: 1.1, // Slightly more intense for VR
+  },
+  videoEnvironment: {
+    ...defaultColorSpaceConfig.videoEnvironment,
+    colorSpace: 'srgb-linear', // Better for VR video
+    toneMapped: true,
+    encoding: 'LinearEncoding', // Better for VR
+  },
+};
+
 // Export the active configuration (can be changed at runtime)
 export let activeColorSpaceConfig: ColorSpaceConfig = defaultColorSpaceConfig;
 
