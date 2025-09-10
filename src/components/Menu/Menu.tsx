@@ -11,6 +11,7 @@ export interface MenuProps {
   floorOrder: string[];
   onStateChange: (stateId: string) => void;
   canGoPrevious: () => boolean;
+  onShowScoreCard?: () => void;
 }
 
 export const Menu: React.FC<MenuProps> = ({ 
@@ -20,7 +21,8 @@ export const Menu: React.FC<MenuProps> = ({
   floors,
   floorOrder,
   onStateChange,
-  canGoPrevious
+  canGoPrevious,
+  onShowScoreCard
 }) => {
   const [isFloorPanelOpen, setIsFloorPanelOpen] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
@@ -78,6 +80,7 @@ export const Menu: React.FC<MenuProps> = ({
                 canGoPrevious={canGoPrevious}
                 onClose={() => setIsFloorPanelOpen(false)}
                 onStateChange={onStateChange}
+                onShowScoreCard={onShowScoreCard}
               />
             )}
           </>

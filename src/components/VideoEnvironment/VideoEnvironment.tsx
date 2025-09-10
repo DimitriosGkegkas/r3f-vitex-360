@@ -59,8 +59,15 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
     t.minFilter = THREE.LinearFilter;
     t.magFilter = THREE.LinearFilter;
     t.generateMipmaps = false;
-    t.colorSpace = colorSpaceConfig.videoEnvironment.colorSpace as any;
-    t.encoding = colorSpaceConfig.videoEnvironment.encoding as any;
+    
+    // Ensure proper color space handling for VR
+    if (colorSpaceConfig.videoEnvironment.colorSpace === 'srgb') {
+      t.colorSpace = THREE.SRGBColorSpace;
+    } else if (colorSpaceConfig.videoEnvironment.colorSpace === 'srgb-linear') {
+      t.colorSpace = THREE.LinearSRGBColorSpace;
+    } else {
+      t.colorSpace = colorSpaceConfig.videoEnvironment.colorSpace as any;
+    }
     
     // Store texture reference for cleanup
     textureRef.current = t;
@@ -99,7 +106,6 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
         map={videoTex} 
         side={THREE.FrontSide} 
         toneMapped={colorSpaceConfig.videoEnvironment.toneMapped}
-        colorSpace={colorSpaceConfig.videoEnvironment.colorSpace}
       />
     </mesh>
   );

@@ -4,8 +4,9 @@ import { Environment as EnvironmentType } from '../../config';
 import { getColorSpaceConfig } from '../../config/colorSpace';
 import VideoEnvironment from '../VideoEnvironment';
 import { ImagePreloader, ImageLoadResult } from '../../utils/imagePreloader';
-import { DoubleSide, Mesh, MeshBasicMaterial } from 'three';
+import { Mesh, MeshBasicMaterial } from 'three';
 import { useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 
 interface PanoramaSceneProps {
   environment: EnvironmentType;
@@ -132,8 +133,18 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
     
     console.log('🖼️ PanoramaScene: Loading environment images:', files);
     console.log('📁 Environment base path:', currentEnvironment);
+    console.log('🎨 Color space config:', colorSpaceConfig.environment);
     
-    return { files };
+    return { 
+      files,
+      // Add VR-specific environment settings with memory optimization
+      background: true,
+      resolution: Math.min(colorSpaceConfig.environment.resolution, 2048), // Limit resolution to prevent memory issues
+      environmentIntensity: colorSpaceConfig.environment.environmentIntensity,
+      environmentRotation: colorSpaceConfig.environment.environmentRotation,
+      // Memory optimization: limit resolution to prevent context loss
+      // Note: Environment component handles encoding internally
+    };
   };
 
   return (
@@ -149,15 +160,17 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
           {/* Image environment (default) */}
           <Environment
             {...getEnvironmentProps()}
-            background={true}
-            resolution={colorSpaceConfig.environment.resolution}
             ground={{
               height: 1.7,
               radius: 60,
               scale: 100,
             }}
-            environmentIntensity={colorSpaceConfig.environment.environmentIntensity}
-            environmentRotation={colorSpaceConfig.environment.environmentRotation}
+          />
+          {/* Fallback environment in case main environment fails */}
+          <Environment
+            preset="sunset"
+            background={false}
+            environmentIntensity={0.5}
           />
         </>
       )}

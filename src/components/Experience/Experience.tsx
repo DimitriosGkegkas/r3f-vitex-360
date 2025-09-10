@@ -22,6 +22,7 @@ interface ExperienceProps {
   isPreloading?: boolean;
   onPreloadComplete?: (results: ImageLoadResult[]) => void;
   onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
+  onShowScoreCard?: () => void;
 }
 
 export const Experience: React.FC<ExperienceProps> = ({
@@ -35,7 +36,8 @@ export const Experience: React.FC<ExperienceProps> = ({
   shouldStartVideo = false,
   isPreloading = false,
   onPreloadComplete,
-  onPreloadProgress
+  onPreloadProgress,
+  onShowScoreCard
 }) => {
   // State for video visibility
   const [showVideo, setShowVideo] = useState(!isBackgroundMode);
@@ -150,6 +152,7 @@ export const Experience: React.FC<ExperienceProps> = ({
         floorOrder={floorOrder}
         onStateChange={onStateChange}
         canGoPrevious={canGoPrevious}
+        onShowScoreCard={onShowScoreCard}
       />
     </div>
   );

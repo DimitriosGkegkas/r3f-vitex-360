@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { XR, XRStore } from '@react-three/xr';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
+// import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { getFloorById, environments } from '../../config';
 import { getColorSpaceConfig, setColorSpaceConfig, vrColorSpaceConfig, defaultColorSpaceConfig } from '../../config/colorSpace';
@@ -39,11 +39,58 @@ interface InfoCardData {
   totalSteps?: number;
 }
 
+// Component to handle renderer settings and context loss
+const RendererSettings: React.FC<{ colorSpaceConfig: any }> = ({ colorSpaceConfig }) => {
+  const { gl } = useThree();
+  
+  // useEffect(() => {
+  //   if (gl) {
+  //     // Apply color space settings
+  //     gl.outputColorSpace = colorSpaceConfig.renderer.outputColorSpace;
+  //     gl.toneMapping = THREE[colorSpaceConfig.renderer.toneMapping as keyof typeof THREE] as THREE.ToneMapping;
+  //     gl.toneMappingExposure = colorSpaceConfig.renderer.toneMappingExposure;
+      
+  //     console.log('🎨 Applied color space settings to renderer:', {
+  //       outputColorSpace: gl.outputColorSpace,
+  //       toneMapping: gl.toneMapping,
+  //       toneMappingExposure: gl.toneMappingExposure
+  //     });
+
+  //     // Handle WebGL context loss
+  //     const handleContextLost = (event: Event) => {
+  //       console.warn('⚠️ WebGL context lost, preventing default behavior');
+  //       event.preventDefault();
+  //     };
+
+  //     const handleContextRestored = () => {
+  //       console.log('✅ WebGL context restored');
+  //       // Reapply settings after context restoration
+  //       gl.outputColorSpace = colorSpaceConfig.renderer.outputColorSpace;
+  //       gl.toneMapping = THREE[colorSpaceConfig.renderer.toneMapping as keyof typeof THREE] as THREE.ToneMapping;
+  //       gl.toneMappingExposure = colorSpaceConfig.renderer.toneMappingExposure;
+  //     };
+
+  //     // Add event listeners
+  //     gl.domElement.addEventListener('webglcontextlost', handleContextLost);
+  //     gl.domElement.addEventListener('webglcontextrestored', handleContextRestored);
+
+  //     // Cleanup
+  //     return () => {
+  //       gl.domElement.removeEventListener('webglcontextlost', handleContextLost);
+  //       gl.domElement.removeEventListener('webglcontextrestored', handleContextRestored);
+  //     };
+  //   }
+  // }, [gl, colorSpaceConfig]);
+  
+  return null;
+};
+
 
 const Image360Viewer: React.FC<Image360ViewerProps> = ({
   currentFloorId,
   currentStepId,
   xrStore,
+  infoCardData,
   className = '',
   onTooltipChange,
   onStepChange,
@@ -60,57 +107,45 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   const environmentId = step?.environmentId;
   const environment = environments[environmentId || ''];
   const colorSpaceConfig = getColorSpaceConfig();
+  
+  // Debug logging for VR
+  useEffect(() => {
+    const xrSession = xrStore.getState()?.session;
+    console.log('🔍 VR Debug Info:', {
+      isInVR: !!xrSession,
+      currentFloorId,
+      currentStepId,
+      environmentId,
+      environment: environment ? 'Found' : 'Missing',
+      environmentImage: environment?.environmentImage,
+      colorSpaceConfig: colorSpaceConfig.renderer.outputColorSpace,
+      step: step ? 'Found' : 'Missing',
+      floor: floor ? 'Found' : 'Missing'
+    });
+    
+    // Additional VR-specific debugging
+    if (xrSession) {
+      console.log('🥽 VR Session Details:', {
+        session: xrSession,
+        inputSources: xrSession.inputSources?.length || 0,
+        referenceSpace: xrSession.requestReferenceSpace ? 'Available' : 'Missing'
+      });
+    }
+  }, [xrStore.getState()?.session, currentFloorId, currentStepId, environmentId, environment, colorSpaceConfig, step, floor]);
 
   useEffect(() => {
     if (xrStore.getState()?.session)
       setShowInfo(true);
   }, [currentStepId])
 
-  // Switch to VR color space when entering VR mode
+  // Force re-render when color space config changes
+  const [colorSpaceKey, setColorSpaceKey] = useState(0);
   useEffect(() => {
-    const xrSession = xrStore.getState()?.session;
-    if (xrSession) {
-      console.log('🥽 Entering VR mode - switching to VR color space');
-      setColorSpaceConfig(vrColorSpaceConfig);
-    } else {
-      console.log('🖥️ Exiting VR mode - switching to default color space');
-      setColorSpaceConfig(defaultColorSpaceConfig);
-    }
-  }, [xrStore.getState()?.session]);
+    setColorSpaceKey(prev => prev + 1);
+  }, [colorSpaceConfig]);
 
-  // Set renderer properties after canvas creation and when entering VR
-  useEffect(() => {
-    const applyRendererSettings = () => {
-      const canvas = document.querySelector('canvas');
-      if (canvas) {
-        const renderer = (canvas as any).__r3f?.gl;
-        if (renderer) {
-          // Apply color space settings
-          renderer.outputColorSpace = colorSpaceConfig.renderer.outputColorSpace;
-          renderer.toneMapping = colorSpaceConfig.renderer.toneMapping as any;
-          renderer.toneMappingExposure = colorSpaceConfig.renderer.toneMappingExposure;
-          renderer.useLegacyLights = !colorSpaceConfig.renderer.physicallyCorrectLights;
-          
-          console.log('🎨 Applied color space settings to renderer:', {
-            outputColorSpace: renderer.outputColorSpace,
-            toneMapping: renderer.toneMapping,
-            toneMappingExposure: renderer.toneMappingExposure,
-            useLegacyLights: renderer.useLegacyLights
-          });
-        }
-      }
-    };
+  // Note: Renderer settings are now handled by the RendererSettings component inside the Canvas
 
-    // Apply settings immediately
-    applyRendererSettings();
-
-    // Also apply when XR session changes (entering/exiting VR)
-    const xrSession = xrStore.getState()?.session;
-    if (xrSession) {
-      // Apply settings when entering VR
-      applyRendererSettings();
-    }
-  }, [colorSpaceConfig, xrStore]);
 
   // Handle show information
   const handleShowInfo = () => {
@@ -121,16 +156,24 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   return (
     <>
       <Canvas 
+        key={colorSpaceKey}
         className={className} 
         gl={{ 
           antialias: true, 
           alpha: false,
           outputColorSpace: colorSpaceConfig.renderer.outputColorSpace,
-          toneMapping: colorSpaceConfig.renderer.toneMapping as any,
-          toneMappingExposure: colorSpaceConfig.renderer.toneMappingExposure
+          toneMapping: THREE[colorSpaceConfig.renderer.toneMapping as keyof typeof THREE] as THREE.ToneMapping,
+          toneMappingExposure: colorSpaceConfig.renderer.toneMappingExposure,
+          // Add context loss prevention settings
+          preserveDrawingBuffer: false,
+          powerPreference: "high-performance",
+          failIfMajorPerformanceCaveat: false
         }}
+        dpr={[1, 2]} // Limit device pixel ratio to prevent excessive memory usage
+        performance={{ min: 0.5 }} // Maintain 50% performance target
       >
         <XR store={xrStore}>
+          <RendererSettings colorSpaceConfig={colorSpaceConfig} />
           <PerspectiveCamera
             ref={cameraRef}
             makeDefault
@@ -141,19 +184,37 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             matrixAutoUpdate={true}
             matrixWorldAutoUpdate={true}
           />
+          {/* Enhanced lighting for VR */}
           {/* Sunlight simulation - directional light from above */}
           <directionalLight
             position={[0, 50, 0]}
-            intensity={2}
+            intensity={xrStore.getState()?.session ? 3 : 2}
+            castShadow={false}
           />
 
           {/* Ambient light for overall scene illumination */}
-          <ambientLight intensity={0.3} />
+          <ambientLight intensity={xrStore.getState()?.session ? 0.5 : 0.3} />
 
           {/* Hemisphere light for realistic sky lighting */}
           <hemisphereLight
-            args={["#87CEEB", "#8B4513", 0.4]}
+            args={["#87CEEB", "#8B4513", xrStore.getState()?.session ? 0.6 : 0.4]}
           />
+
+          {/* Additional VR-specific lighting */}
+          {xrStore.getState()?.session && (
+            <>
+              <directionalLight
+                position={[10, 10, 10]}
+                intensity={1}
+                color="#ffffff"
+              />
+              <pointLight
+                position={[0, 2, 0]}
+                intensity={0.5}
+                color="#ffffff"
+              />
+            </>
+          )}
 
           <DragLookControls floor={floor} stepId={currentStepId} />
           <PanoramaScene 
@@ -196,26 +257,14 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
               isVisible={showInfo}
             />
           )}
+
         </XR>
         
-        {/* Post-processing effects for enhanced realism */}
-        <EffectComposer>
-          <Bloom
-            intensity={colorSpaceConfig.postProcessing.bloom.intensity}
-            luminanceThreshold={colorSpaceConfig.postProcessing.bloom.luminanceThreshold}
-            luminanceSmoothing={colorSpaceConfig.postProcessing.bloom.luminanceSmoothing}
-            mipmapBlur={colorSpaceConfig.postProcessing.bloom.mipmapBlur}
-          />
-          <ChromaticAberration
-            offset={new THREE.Vector2(...colorSpaceConfig.postProcessing.chromaticAberration.offset)}
-            radialModulation={colorSpaceConfig.postProcessing.chromaticAberration.radialModulation}
-            modulationOffset={colorSpaceConfig.postProcessing.chromaticAberration.modulationOffset}
-          />
-        </EffectComposer>
       </Canvas>
     </>
   );
 };
 
 export default Image360Viewer;
+
 
