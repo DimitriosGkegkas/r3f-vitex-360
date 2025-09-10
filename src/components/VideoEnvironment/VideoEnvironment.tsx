@@ -27,14 +27,18 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
   
   // Create video texture only when src changes
   const videoTex = useMemo(() => {
+    console.log('🎥 VideoEnvironment: Creating video texture for src:', src);
+    
     // Clean up previous video and texture
     if (videoRef.current) {
       videoRef.current.pause();
-      videoRef.current.src = '';
+      videoRef.current.removeAttribute('src');
       videoRef.current.load();
+      videoRef.current = null;
     }
     if (textureRef.current) {
       textureRef.current.dispose();
+      textureRef.current = null;
     }
     
     const video = document.createElement('video');
@@ -50,8 +54,14 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
     videoRef.current = video;
     
     // Add error handling
-    video.onerror = () => {
-      console.error('Video loading error');
+    video.onerror = (error) => {
+      console.error('Video loading error:', error);
+      console.error('Video src:', src);
+      console.error('Video error details:', {
+        networkState: video.networkState,
+        readyState: video.readyState,
+        error: video.error
+      });
     };
     
     const t = new THREE.VideoTexture(video);
@@ -72,15 +82,33 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
     // Store texture reference for cleanup
     textureRef.current = t;
     
-    // Start playing the video
-    (async () => { 
-      try { 
-        await video.play(); 
-        console.log('Video started playing successfully');
-      } catch (error) {
-        console.error('Video play error:', error);
-      }
-    })();
+    videoRef.current.play();
+    
+    // // Start playing the video
+    // (async () => { 
+    //   try { 
+    //     await video.play(); 
+    //     console.log('Video started playing successfully');
+    //   } catch (error) {
+    //     console.error('Video play error:', error);
+    //     // Try to play again after a short delay (helps with VR and some browsers)
+    //     // setTimeout(async () => {
+    //     //   try {
+    //     //     // For retry, ensure video is ready
+    //     //     if (video.readyState < 3) {
+    //     //       video.load();
+    //     //       await new Promise((resolve) => {
+    //     //         video.oncanplay = () => resolve(void 0);
+    //     //       });
+    //     //     }
+    //     //     await video.play();
+    //     //     console.log('Video started playing on retry');
+    //     //   } catch (retryError) {
+    //     //     console.error('Video play retry failed:', retryError);
+    //     //   }
+    //     // }, 1000);
+    //   }
+    // })();
     
     return t;
   }, [src]); // Only depend on src, not onError
@@ -90,21 +118,23 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
     return () => {
       if (videoRef.current) {
         videoRef.current.pause();
-        videoRef.current.src = '';
+        videoRef.current.removeAttribute('src');
         videoRef.current.load();
+        videoRef.current = null;
       }
       if (textureRef.current) {
         textureRef.current.dispose();
+        textureRef.current = null;
       }
     };
   }, []);
 
   return (
-    <mesh ref={sphereRef} rotation={[0, Math.PI, 0]}>
+    <mesh ref={sphereRef} rotation={[0, Math.PI, 0]} scale={1}>
       <sphereGeometry args={[50, settings.segments[0], settings.segments[1]]} />
       <meshBasicMaterial 
         map={videoTex} 
-        side={THREE.FrontSide} 
+        side={THREE.BackSide} 
         toneMapped={colorSpaceConfig.videoEnvironment.toneMapped}
       />
     </mesh>

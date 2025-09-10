@@ -150,7 +150,15 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   return (
     <group>
       {/* Check if environment is video or image */}
-      {isVideoEnvironment(currentEnvironment) ? (
+      {(() => {
+        const isVideo = isVideoEnvironment(currentEnvironment);
+        console.log('🎬 PanoramaScene: Environment check:', {
+          currentEnvironment,
+          isVideo,
+          environmentType: isVideo ? 'VIDEO' : 'IMAGE'
+        });
+        return isVideo;
+      })() ? (
         <VideoEnvironment 
           src={currentEnvironment} 
           quality="medium"
