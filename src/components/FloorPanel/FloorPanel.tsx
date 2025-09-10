@@ -6,7 +6,7 @@ interface FloorPanelProps {
   currentFloorId: string;
   experienceStates: Record<string, Floor>;
   stateOrder: string[];
-  onStepChange: (direction: 'next' | 'prev') => void;
+  onStepReset: () => void;
   canGoPrevious: () => boolean;
   onClose?: () => void;
   onStateChange: (stateId: string) => void;
@@ -16,7 +16,7 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
   currentFloorId,
   experienceStates,
   stateOrder,
-  onStepChange,
+  onStepReset,
   canGoPrevious,
   onClose,
   onStateChange
@@ -35,7 +35,7 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
         <div className="panel-controls">
           <button
             className="control-button"
-            onClick={() => onStepChange('prev')}
+            onClick={() => onStepReset()}
             disabled={!canGoPrevious()}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

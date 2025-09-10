@@ -212,6 +212,7 @@
   align-items: center;
   gap: 8px;
   display: inline-flex;
+  cursor: pointer;
 }
 
 .close-icon {

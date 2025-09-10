@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Header } from '../Header';
 import { InfoCard } from '../InfoCard';
 import { Menu } from '../Menu';
-import { FloorPanel } from '../FloorPanel';
 import { floors, Floor } from '../../config';
 import { createStepChangeHandler } from '../../utils/stepNavigation';
 import './Experience.css';
@@ -51,15 +50,6 @@ export const Experience: React.FC<ExperienceProps> = ({
   // Define floor order for navigation
   const floorOrder = ['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging'];
 
-  const handleFloorChange = (direction: 'prev' | 'next') => {
-    const currentIndex = floorOrder.indexOf(currentFloorId);
-
-    if (direction === 'next' && currentIndex < floorOrder.length - 1) {
-      onStateChange(floorOrder[currentIndex + 1]);
-    } else if (direction === 'prev' && currentIndex > 0) {
-      onStateChange(floorOrder[currentIndex - 1]);
-    }
-  };
 
   // Create step change handler with shared logic
   const stepNavigation = createStepChangeHandler({
@@ -154,21 +144,12 @@ export const Experience: React.FC<ExperienceProps> = ({
       )}
 
       <Menu 
-        floorPanel={
-          <FloorPanel
-            currentFloorId={currentFloorId}
-            experienceStates={floors}
-            stateOrder={floorOrder}
-            onStepChange={handleFloorChange}
-            canGoPrevious={canGoPrevious}
-            onClose={() => {
-              // This will close the floor panel by toggling the menu state
-              // The Menu component will handle this through its own state management
-            }}
-            onStateChange={onStateChange}
-          />
-        }
         hideFloorsButton={showVideo}
+        currentFloorId={currentFloorId}
+        floors={floors}
+        floorOrder={floorOrder}
+        onStateChange={onStateChange}
+        canGoPrevious={canGoPrevious}
       />
     </div>
   );
