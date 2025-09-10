@@ -104,69 +104,69 @@ export class ImagePreloader {
    * Preload all environment images
    */
   public async preloadAllImages(): Promise<ImageLoadResult[]> {
-    console.log('🚀 ImagePreloader: Starting preload process...');
+    // console.log('🚀 ImagePreloader: Starting preload process...');
     
-    const imagePaths = this.getAllImagePaths();
-    const totalImages = imagePaths.length;
-    let loadedCount = 0;
-    let failedCount = 0;
+    // const imagePaths = this.getAllImagePaths();
+    // const totalImages = imagePaths.length;
+    // let loadedCount = 0;
+    // let failedCount = 0;
 
-    // Update progress with initial state
-    this.updateProgress(totalImages, 0, 0, '');
+    // // Update progress with initial state
+    // this.updateProgress(totalImages, 0, 0, '');
 
-    try {
-      // Load images in batches to avoid overwhelming the browser
-      const batchSize = 6; // Load 6 images at a time (one environment)
-      const results: ImageLoadResult[] = [];
+    // try {
+    //   // Load images in batches to avoid overwhelming the browser
+    //   const batchSize = 6; // Load 6 images at a time (one environment)
+    //   const results: ImageLoadResult[] = [];
 
-      for (let i = 0; i < imagePaths.length; i += batchSize) {
-        const batch = imagePaths.slice(i, i + batchSize);
-        const batchPromises = batch.map(url => this.loadImage(url));
+    //   for (let i = 0; i < imagePaths.length; i += batchSize) {
+    //     const batch = imagePaths.slice(i, i + batchSize);
+    //     const batchPromises = batch.map(url => this.loadImage(url));
         
-        console.log(`📦 Loading batch ${Math.floor(i / batchSize) + 1}:`, batch);
+    //     console.log(`📦 Loading batch ${Math.floor(i / batchSize) + 1}:`, batch);
         
-        const batchResults = await Promise.all(batchPromises);
-        results.push(...batchResults);
+    //     const batchResults = await Promise.all(batchPromises);
+    //     results.push(...batchResults);
         
-        // Update counts
-        batchResults.forEach(result => {
-          if (result.loaded) {
-            loadedCount++;
-          } else {
-            failedCount++;
-          }
-        });
+    //     // Update counts
+    //     batchResults.forEach(result => {
+    //       if (result.loaded) {
+    //         loadedCount++;
+    //       } else {
+    //         failedCount++;
+    //       }
+    //     });
 
-        // Update progress
-        this.updateProgress(totalImages, loadedCount, failedCount, batch[0]);
+    //     // Update progress
+    //     this.updateProgress(totalImages, loadedCount, failedCount, batch[0]);
         
-        // Small delay between batches to prevent overwhelming
-        if (i + batchSize < imagePaths.length) {
-          await new Promise(resolve => setTimeout(resolve, 100));
-        }
-      }
+    //     // Small delay between batches to prevent overwhelming
+    //     if (i + batchSize < imagePaths.length) {
+    //       await new Promise(resolve => setTimeout(resolve, 100));
+    //     }
+    //   }
 
-      console.log('🎉 ImagePreloader: Preload completed!');
-      console.log(`📊 Results: ${loadedCount} loaded, ${failedCount} failed out of ${totalImages} total`);
+    //   console.log('🎉 ImagePreloader: Preload completed!');
+    //   console.log(`📊 Results: ${loadedCount} loaded, ${failedCount} failed out of ${totalImages} total`);
       
-      // Log detailed results for debugging
-      this.logDetailedResults(results);
+    //   // Log detailed results for debugging
+    //   this.logDetailedResults(results);
       
-      if (this.onComplete) {
-        this.onComplete(results);
-      }
+    //   if (this.onComplete) {
+    //     this.onComplete(results);
+    //   }
 
-      return results;
-    } catch (error) {
-      const errorMessage = `Preload failed: ${error}`;
-      console.error('💥 ImagePreloader Error:', errorMessage);
+    //   return results;
+    // } catch (error) {
+    //   const errorMessage = `Preload failed: ${error}`;
+    //   console.error('💥 ImagePreloader Error:', errorMessage);
       
-      if (this.onError) {
-        this.onError(errorMessage);
-      }
+    //   if (this.onError) {
+    //     this.onError(errorMessage);
+    //   }
       
-      throw error;
-    }
+    //   throw error;
+    // }
   }
 
   /**

@@ -5,7 +5,7 @@ import { XR, XRStore } from '@react-three/xr';
 import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { getFloorById, environments } from '../../config';
-import { getColorSpaceConfig } from '../../config/colorSpace';
+import { getColorSpaceConfig, setColorSpaceConfig, vrColorSpaceConfig, defaultColorSpaceConfig } from '../../config/colorSpace';
 import KeypointSpheres from '../KeypointSpheres';
 import ControllerLabels from '../ControllerLabels';
 import VRInfoDisplay from '../ControllerLabels/VRInfoDisplay';
@@ -66,16 +66,51 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
       setShowInfo(true);
   }, [currentStepId])
 
-  // Set renderer properties after canvas creation
+  // Switch to VR color space when entering VR mode
   useEffect(() => {
-    const canvas = document.querySelector('canvas');
-    if (canvas) {
-      const renderer = (canvas as any).__r3f?.gl;
-      if (renderer) {
-        renderer.useLegacyLights = !colorSpaceConfig.renderer.physicallyCorrectLights;
-      }
+    const xrSession = xrStore.getState()?.session;
+    if (xrSession) {
+      console.log('🥽 Entering VR mode - switching to VR color space');
+      setColorSpaceConfig(vrColorSpaceConfig);
+    } else {
+      console.log('🖥️ Exiting VR mode - switching to default color space');
+      setColorSpaceConfig(defaultColorSpaceConfig);
     }
-  }, [colorSpaceConfig.renderer.physicallyCorrectLights]);
+  }, [xrStore.getState()?.session]);
+
+  // Set renderer properties after canvas creation and when entering VR
+  useEffect(() => {
+    const applyRendererSettings = () => {
+      const canvas = document.querySelector('canvas');
+      if (canvas) {
+        const renderer = (canvas as any).__r3f?.gl;
+        if (renderer) {
+          // Apply color space settings
+          renderer.outputColorSpace = colorSpaceConfig.renderer.outputColorSpace;
+          renderer.toneMapping = colorSpaceConfig.renderer.toneMapping as any;
+          renderer.toneMappingExposure = colorSpaceConfig.renderer.toneMappingExposure;
+          renderer.useLegacyLights = !colorSpaceConfig.renderer.physicallyCorrectLights;
+          
+          console.log('🎨 Applied color space settings to renderer:', {
+            outputColorSpace: renderer.outputColorSpace,
+            toneMapping: renderer.toneMapping,
+            toneMappingExposure: renderer.toneMappingExposure,
+            useLegacyLights: renderer.useLegacyLights
+          });
+        }
+      }
+    };
+
+    // Apply settings immediately
+    applyRendererSettings();
+
+    // Also apply when XR session changes (entering/exiting VR)
+    const xrSession = xrStore.getState()?.session;
+    if (xrSession) {
+      // Apply settings when entering VR
+      applyRendererSettings();
+    }
+  }, [colorSpaceConfig, xrStore]);
 
   // Handle show information
   const handleShowInfo = () => {

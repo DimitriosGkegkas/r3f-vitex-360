@@ -142,7 +142,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
       {isVideoEnvironment(currentEnvironment) ? (
         <VideoEnvironment 
           src={currentEnvironment} 
-          quality="low"
+          quality="medium"
         />
       ) : (
         <>
@@ -163,10 +163,10 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
       )}
 
       {/* Fade overlay mesh */}
-      <mesh ref={fadeMeshRef} position={[0, 1.6, 0]}>
+      {/* <mesh ref={fadeMeshRef} position={[0, 1.6, 0]}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshBasicMaterial color="white" transparent opacity={0} side={DoubleSide} depthWrite={false}/>
-      </mesh>
+      </mesh> */}
     </group>
   );
 };
