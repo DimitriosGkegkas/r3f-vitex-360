@@ -25,15 +25,15 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_5_1',
-        title: 'ΒΗΜΑ ΑΣΑΝΣΕΡ/5_1',
-        description: '',
+        title: 'Πέμπτος Όροφος',
+        description: 'Επίπεδο φίλτρων silo.',
         stepName: 'Πρώτο',
         environmentId: 'raw-materials-env_5_1'
       },
       {
         id: 'info_5_1_1',
-        title: 'Κείμενο Ασανσέρ',
-        description: 'Μηχανισμός του Ασανσέρ.',
+        title: `Αναβατόριο παραλαβής Α' υλών.`,
+        description: `Αναβατόριο παραλαβής Α' υλών.`,
         stepName: 'Πρώτο',
         environmentId: 'raw-materials-env_5_1'
       },
@@ -53,8 +53,8 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'info_5_2_1',
-        title: 'Κείμενο κίτρινο στο πάτωμα',
-        description: 'Discover how we carefully select environmentally responsible materials that meet our high quality standards while protecting our planet.',
+        title: 'Καπάκι επόπτευσης εσωτερικού των silo',
+        description: 'Καπάκι επόπτευσης εσωτερικού των silo.',
         stepName: 'Δεύτερο',
         environmentId: 'raw-materials-env_5_2'
       },
@@ -132,8 +132,8 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_4_1',
-        title: 'BHMA 4_1',
-        description: '',
+        title: 'Τέταρτος Όροφος',
+        description: 'Επίπεδο τροφοδοσίας big bag station.',
         stepName: 'Πρώτο',
         environmentId: 'sorting-env_4_1'
       },
@@ -167,8 +167,8 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'info_4_3_1',
-        title: 'ΜΗΧΑΝΗΜΑ ΜΠΛΕ',
-        description: 'See how we systematically categorize materials based on their properties, composition, and intended use.',
+        title: 'Καδοζυγοί',
+        description: 'Οι καδοζυγοί τροφοδοτούνται μέσω κοχλιών και εδώ ζυγίζονται τα υλικά που απαιτούνται να πάνε προς ανάδευση και παραγωγή έτοιμων.',
         stepName: 'Τρίτο',
         environmentId: 'sorting-env_4_3'
       },
@@ -204,8 +204,8 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_3_1',
-        title: 'ΒΗΜΑ 3_1',
-        description: '',
+        title: 'Τρίτος Όροφος',
+        description: 'Επίπεδο προσθήκης πρόσθετων προζυγισμένων χημικών.',
         stepName: 'Πρώτο',
         environmentId: 'quantities-env_3_1'
       },
@@ -232,8 +232,8 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'info_3_2_1',
-        title: 'KEIMENO MHXANHMA ACMON SYSTEMS',
-        description: 'Discover the advanced measuring equipment and techniques that ensure accuracy down to the smallest detail.',
+        title: 'Σταθμός ρίψης προζυγισμένων πρόσθετων.',
+        description: 'Εδώ ο εργαζόμενος παραγωγής του ορόφου,μέσω ενός τερματικου πάνελ ενημερώνεται για την ρίψη των προζυγισμένων που οδηγούνται προς ανάδευση.',
         stepName: 'Δεύτερο',
         environmentId: 'quantities-env_3_2'
       },
@@ -246,8 +246,8 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'info_3_3_1',
-        title: 'KEIMENO MHXANHMA',
-        description: 'το κεντρικό μηχάνημα διαχείρισης. Επεξήγηση του τρόπου που ελέγχει και ρυθμίζει την όλη διαδικασία.',
+        title: 'Σταθμός ρίψης προζυγισμένων πρόσθετων.',
+        description: 'Εδώ ο εργαζόμενος παραγωγής του ορόφου,μέσω ενός τερματικου πάνελ ενημερώνεται για την ρίψη των προζυγισμένων που οδηγούνται προς ανάδευση.',
         stepName: 'Τρίτο',
         environmentId: 'quantities-env_3_3'
       },
@@ -262,15 +262,15 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_2_1',
-        title: 'ΒΗΜΑ 2_1',
-        description: '',
+        title: 'Δεύτερος Όροφος',
+        description: 'Επίπεδο mixer',
         stepName: 'Πρώτο',
         environmentId: 'secrets-env_2_1'
       },
       {
         id: 'info_2_1_1',
-        title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΙΑ ΤΗΝ ΤΟΥΡΜΠΙΝΑ',
-        description: 'Αναλυτικό κείμενο για την τουρμπίνα',
+        title: 'Mixer ανάδευσης',
+        description: 'Mixer ανάδευσης ημιέτοιμων,εδώ γίνεται η ανάμιξη των ξηρών κονιαμάτων,σε οριζόντια θέση και με ταχύτητα περιστροφής 50hz.',
         stepName: 'Πρώτο',
         environmentId: 'secrets-env_2_1'
       },
@@ -283,7 +283,7 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'info_2_2_1',
-        title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΜΗΧΑΝΗΜΑ',
+        title: 'Σταθμός αποκονίωσης.',
         description: 'Learn about the time-honored methods that form the foundation of our craft and quality.',
         stepName: 'Δεύτερο',
         environmentId: 'secrets-env_2_2'
@@ -299,22 +299,22 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_1_1',
-        title: 'Κεντρικό μηχάνημα',
-        description: 'Observe the precise techniques that ensure every component is perfectly integrated for optimal results.',
+        title: 'Πρώτος Όροφος',
+        description: 'Σε αυτόν τον όροφο βρίσκονται τα blower τών συσκευαστικών,τα buffer ετοίμων προς συσκευασία.',
         stepName: 'Πρώτο',
         environmentId: 'mixing-env_1_1'
       },
       {
         id: 'info_1_1_1',
-        title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΙΑ ΤΟ ΜΠΛΕ ΜΗΧΑΝΗΜΑ',
+        title: 'Blower αερομεταφοράς συσκευαστικής.',
         description: 'Μπλε μηχάνημα/στοιχείο, το οποίο πρέπει να εξηγηθεί (π.χ. ρόλος στη διαδικασία, γιατί είναι σημαντικό).',
         stepName: 'Πρώτο',
         environmentId: 'mixing-env_1_1'
       },
       {
         id: 'info_1_1_2',
-        title: 'Κεντρικό μηχάνημα',
-        description: 'πληροφορίες για εντρικό μηχάνημα ανάμειξης',
+        title: 'Buffer γραμμών παραγωγής',
+        description: 'Buffer γραμμών παραγωγής,εδώ καταλήγει το έτοιμο προιόν για τις δύο γραμμές παραγωγής,πριν την τελική συσκευασία.',
         stepName: 'Πρώτο',
         environmentId: 'mixing-env_1_1'
       },
@@ -327,8 +327,8 @@ export const floors: Record<string, Floor> = {
       },
       {
         id: 'info_1_2_1',
-        title: 'ΠΛΗΡΟΦΟΡΙΕΣ ΓΙΑ ΤΗΝ ΑΝΑΚΥΚΛΩΣΗ',
-        description: 'Επεξήγηση της διαδικασίας και του ρόλου της στην παραγωγή.',
+        title: 'Αποκονίωση εγκατάστασης',
+        description: 'Αποκονίωση εγκατάστασης.Εδώ συλλέγονται όλα τα παραγωγά τριβής των υλικών αλλά και αιωρούμενα σωματιδία που συλλέγει το σύστημα αποκονίωσης της εγκατάστασης,αυτά μέσω ενός συστήματος αερομεταφράς και με την βοήθεια αεροφράχτη συλλέγονται σε μεγάσακους με σκοπό την ανακύκλωση και χρήση τους στην παραγωγή εκ νέου.',
         stepName: 'Δεύτερο',
         environmentId: 'mixing-env_1_2'
       }
@@ -343,45 +343,45 @@ export const floors: Record<string, Floor> = {
     steps: [
       {
         id: 'step_0_1',
-        title: 'Κεντρικός χώρος',
-        description: '',
+        title: 'Ισόγειο',
+        description: 'Χωρος συσκευασίας,αποθήκευσης,και παλετοποίησης ετοίμων.',
         stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
       {
         id: 'info_0_1_3',
-        title: 'ΚΕΙΜΕΝΟ ΓΙΑ ΤΑ ΠΑΚΕΤΑ',
-        description: 'Αποθήκη πρώτων υλών.',
+        title: 'Αποθήκη',
+        description: 'Παλετοθέσεις αποθήκευσης αναλώσιμων και Α υλών.',
         stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
       {
         id: 'info_0_1_1',
-        title: 'ΚΕΙΜΕΝΟ ΔΩΜΑΤΙΟ ΕΛΕΓΧΟΥ',
-        description: 'η «ψυχή» του εργοστασίου: εδώ αποφασίζεται τι γίνεται και γίνεται ο έλεγχος.',
+        title: 'Χώρος γραφείων.',
+        description: 'Στο κτήριο εντός του επιπέδου της συσκευασίας(ισόγειο)στεγάζεται το control room,το meeting room,το δωμάτιο πινάκων των γραφείων,το γραφείο εργασίας του τμήματος ΙΤ,το εργαστήριο ποιοτικού ελέγχου,και το γραφείο κίνησης.',
         stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
       {
         id: 'info_0_1_2',
-        title: 'ΒΙΝΤΕΟ ΕΡΓΑΣΙΑΣ ΣΤΟ ΔΙΑΔΡΟΜΟ',
-        description: 'Learn how our packaging design prioritizes both protection and an excellent unboxing experience.',
+        title: 'Παλετοποίηση',
+        description: 'Ταινιόδρομος μεταφοράς ετοίμων προ παλετοποίηση.',
         stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
       {
         id: 'step_0_2',
         title: 'Παλετοποίηση',
-        description: 'Βίντεο με την κεντρική λειτουργία που συνδέει το συσκευαστήριο με την παλετοποίηση.',
+        description: 'Εισαγωγή παλέτων προς τύλιξη.',
         stepName: 'Δεύτερο',
         environmentId: 'packaging-env_0_2'
       },
       {
-        id: 'info_0_2_1',
+        id: 'step_0_2_vid',
         title: 'BINTEO 360',
-        description: '',
+        description: 'Εισαγωγή παλέτων προς τύλιξη.',
         stepName: 'Δεύτερο',
-        environmentId: 'packaging-env_0_2'
+        environmentId: 'packaging-env_0_2_video'
       },
       {
         id: 'step_0_3',
@@ -391,16 +391,16 @@ export const floors: Record<string, Floor> = {
         environmentId: 'packaging-env_0_3'
       },
       {
-        id: 'info_0_3_1',
+        id: 'step_0_3_1_vid',
         title: 'Μηχάνημα συσκευασίας',
         description: 'Το πιο εντυπωσιακό μηχάνημα, όπου γίνεται η συσκευασία. Παρουσίαση με λεπτομέρειες της διαδικασίας.',
         stepName: 'Τρίτο',
-        environmentId: 'packaging-env_0_3'
+        environmentId: 'packaging-env_0_3_1_video'
       },
       {
         id: 'step_0_3_vid',
-        title: 'Βίντεο Μηχάνημα συσκευασίας',
-        description: '',
+        title: 'Συσκευαστική ξηρού κονιάματος',
+        description: 'Συσκευαστική ξηρού κονιάματος.Συσκευασία τελικού προιόντος,με χρήση αερομεταφοράς.Για την συσκευασία του τελικού προιόντος ένας ρομποτικός βραχίονας(αρπάγη),πιάνει τους χαρτόσακους έναν έναν και ανοίγει την βαλβίδα τους ώστε να την εφαρμόσει στην παροχή της συσκευαστικής,ώστε να γίνει η πλήρωση των σάκων με την χρήση αερομεταφοράς.',
         stepName: 'Τρίτο',
         environmentId: 'packaging-env_0_3_video'
       },

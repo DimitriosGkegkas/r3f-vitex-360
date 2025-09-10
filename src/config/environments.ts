@@ -32,7 +32,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.8,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_1_1',
-        title: 'Ασανσέρ'
+        title: 'Αναβατόριο'
       },
       {
         id: 'step_5_2-kp',
@@ -353,7 +353,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'sorting',
         targetStep: 'info_4_3_1',
-        title: 'ΜΠΛΕ ΜΗΧΑΝΗΜΑ'
+        title: 'Καδοζυγοί'
       },
     ]
   },
@@ -471,7 +471,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'quantities',
         targetStep: 'info_3_2_1',
-        title: 'ACMON SYSTEMS'
+        title: 'Σταθμός ρίψης προζυγισμένων πρόσθετων.'
       },
     ]
   },
@@ -682,7 +682,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2.5,
         targetFloor: 'packaging',
         targetStep: 'info_0_1_3',
-        title: 'ΠΑΚΕΤΑ'
+        title: 'Αποθήκη'
       }
     ]
   },
@@ -702,14 +702,31 @@ export const environments: Record<string, Environment> = {
         title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_1'
       },
       {
-        id: 'info_0_2_1-kp',
+        id: 'step_0_2_vid-kp',
         yaw: -5,
         pitch: -25,
         zoom: 2,
         targetFloor: 'packaging',
-        targetStep: 'info_0_2_1',
+        targetStep: 'step_0_2_vid',
         title: 'ΒΙΝΤΕΟ 360'
       },
+    ]
+  },
+  'packaging-env_0_2_video': {
+    id: 'packaging-env_0_2_video',
+    environmentImage: '/video/0_2.mp4',
+    cameraAngle: 10,
+    cameraYaw: 60,
+    keypoints: [
+      {
+        id: 'step_0_2-kp',
+        yaw: 250,
+        pitch: -40,
+        zoom: 1.5,
+        targetFloor: 'packaging',
+        targetStep: 'step_0_2',
+        title: 'ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ/ΒΗΜΑ 0_2'
+      }
     ]
   },
   'packaging-env_0_3': {
@@ -728,12 +745,12 @@ export const environments: Record<string, Environment> = {
         title: 'ΕΠΙΣΤΡΟΦΗ ΣΤΟ ΒΗΜΑ 0_1'
       },
       {
-        id: 'info_0_3_1-kp',
-        yaw: 60,
-        pitch: -5,
+        id: 'step_0_3_1_vid-kp',
+        yaw: 50,
+        pitch: -20,
         zoom: 2,
         targetFloor: 'packaging',
-        targetStep: 'info_0_3_1',
+        targetStep: 'step_0_3_1_vid',
         title: 'BINTEO ΓΙΑ ΔΙΑΔΡΟΜΟ'
       },
       {
@@ -748,7 +765,7 @@ export const environments: Record<string, Environment> = {
     ]
   },
   'packaging-env_0_3_video': {
-    id: 'packaging-env_0_3',
+    id: 'packaging-env_0_3_video',
     environmentImage: '/video/0_3.mp4',
     cameraAngle: 0,
     cameraYaw: 35,
@@ -761,6 +778,23 @@ export const environments: Record<string, Environment> = {
         targetFloor: 'packaging',
         targetStep: 'step_0_3',
         title: 'ΔΙΑΔΡΟΜΟΣ'
+      }
+    ]
+  },
+  'packaging-env_0_3_1_video': {
+    id: 'packaging-env_0_3_1_video',
+    environmentImage: '/video/0_3_1.mp4',
+    cameraAngle: 10,
+    cameraYaw: 225,
+    keypoints: [
+      {
+        id: 'step_0_3-kp',
+        yaw: 200,
+        pitch: -20,
+        zoom: 1.5,
+        targetFloor: 'packaging',
+        targetStep: 'step_0_3',
+        title: 'ΕΠΙΣΤΡΟΦΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/0_3'
       }
     ]
   },
