@@ -35,12 +35,13 @@ const App: React.FC = () => {
     total: 0,
     percentage: 0
   });
+  const [showScoreCard, setShowScoreCard] = useState(false);
 
   // Calculate total possible steps
   const totalPossibleSteps = Object.values(floors).reduce((total, floor) => total + floor.steps.length, 0);
 
   // Check if we're at the last step of the last floor
-  const isAtLastStep = currentFloorId === 'packaging' && currentStepId === 'final-inspection';
+  const isAtLastStep = currentFloorId === 'packaging' && currentStepId === 'info_0_4_1';
 
   // Calculate score (visited steps vs total possible steps)
   const visitedCount = visitedSteps.length;
@@ -93,6 +94,13 @@ const App: React.FC = () => {
       setCurrentPage('completion');
     }
   }, [isAtLastStep, currentPage]);
+
+  // Show score card when reaching the last step
+  useEffect(() => {
+    if (isAtLastStep) {
+      setShowScoreCard(true);
+    }
+  }, [isAtLastStep]);
 
   const handleStart = () => {
     console.log('🎯 App: Starting the experience...');
@@ -148,6 +156,15 @@ const App: React.FC = () => {
     setCurrentFloorId('raw-materials');
     setCurrentStepId('info_5_1_1');
     setCurrentPage('experience');
+    setShowScoreCard(false);
+  };
+
+  const handleShowScoreCard = () => {
+    setShowScoreCard(true);
+  };
+
+  const handleCloseScoreCard = () => {
+    setShowScoreCard(false);
   };
 
   const handleStateChange = (newFloorId: string) => {
@@ -207,6 +224,7 @@ const App: React.FC = () => {
             isPreloading={isPreloading}
             onPreloadComplete={handlePreloadComplete}
             onPreloadProgress={handlePreloadProgress}
+            onShowScoreCard={handleShowScoreCard}
           />
 
           {/* Render tooltip outside the canvas */}
@@ -237,6 +255,29 @@ const App: React.FC = () => {
             dailyProduction={dailyProduction}
             onRestart={handleRestart}
           />
+        </div>
+      )}
+
+      {/* Show score card overlay when showScoreCard is true */}
+      {showScoreCard && currentPage !== 'completion' && (
+        <div className="score-card-overlay">
+          <div className="score-card-container">
+            <button 
+              className="score-card-close" 
+              onClick={handleCloseScoreCard}
+              aria-label="Close score card"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </button>
+            <ScoreCard
+              visitedCount={visitedCount}
+              totalPossibleSteps={totalPossibleSteps}
+              dailyProduction={dailyProduction}
+              onRestart={handleRestart}
+            />
+          </div>
         </div>
       )}
     </div>

@@ -3,22 +3,19 @@ import { Text } from '@react-three/drei'
 import { useMemo, useCallback } from 'react'
 import { useFrame } from '@react-three/fiber'
 
-// Button mapping configuration for different controller types
+// Button mapping configuration for left and right controllers
 const BUTTON_MAPPINGS = {
-  // Standard mapping for most controllers (Oculus, Vive, etc.)
-  standard: {
+  left: {
     trigger: { index: 0, position: [0.01, -0.04, -0.03], color: 'cyan', label: 'Επιλογή', rotation: [0, Math.PI, Math.PI], key: 'trigger' },
     buttonA: { index: 4, position: [-0.007, 0.01, -0.019], color: 'lime', label: 'Πληροφορίες', rotation: [Math.PI/3, Math.PI, Math.PI], key: 'buttonB' },
     buttonB: { index: 5, position: [-0.02, 0.001, -0.03], color: 'orange', label: 'Επόμενο', rotation: [Math.PI/3, Math.PI, Math.PI], key: 'buttonA' },
     grip: { index: 1, position: [0.01, -0.02, -0.01], color: 'red', label: 'Προηγούμενο', rotation: [0, Math.PI, Math.PI], key: 'grip' },
   },
-  // Alternative mapping for different controller layouts
-  alternative: {
-    trigger: { index: 0, position: [0, -0.08, -0.02], color: 'orange', label: 'Επιλογή', rotation: [0, 0, 0] },
-    buttonA: { index: 2, position: [-0.03, 0.02, -0.01], color: 'lime', label: 'Επόμενο', rotation: [0, 0, 0] },
-    buttonB: { index: 3, position: [0.03, 0.02, -0.01], color: 'cyan', label: 'Πληροφορίες', rotation: [0, 0, 0] },
-    buttonBIndicator: { index: 3, position: [0.03, 0.035, -0.005], color: 'cyan', label: 'B', rotation: [0, 0, 0] },
-    grip: { index: 1, position: [0, -0.05, -0.01], color: 'red', label: 'Προηγούμενο', rotation: [0, 0, 0] },
+  right: {
+    trigger: { index: 0, position: [0.01, -0.04, -0.03], color: 'cyan', label: 'Επιλογή', rotation: [0, Math.PI, Math.PI], key: 'trigger' },
+    buttonA: { index: 4, position: [-0.007, 0.01, -0.019], color: 'lime', label: 'Επόμενο', rotation: [Math.PI/3, Math.PI, Math.PI], key: 'buttonB' },
+    buttonB: { index: 5, position: [-0.02, 0.001, -0.03], color: 'orange', label: 'Πληροφορίες', rotation: [Math.PI/3, Math.PI, Math.PI], key: 'buttonA' },
+    grip: { index: 1, position: [0.01, -0.02, -0.01], color: 'red', label: 'Προηγούμενο', rotation: [0, Math.PI, Math.PI], key: 'grip' },
   }
 }
 
@@ -43,26 +40,10 @@ function ControllerLabels({
 }: ControllerLabelsProps) {
   const state = useXRInputSourceState('controller', handedness)
 
-  // Detect controller type and get appropriate button mapping
+  // Get button mapping for the specified handedness
   const buttonMapping = useMemo(() => {
-    if (!state?.inputSource?.gamepad) return BUTTON_MAPPINGS.standard
-
-    const gamepad = state.inputSource.gamepad
-    const buttons = gamepad.buttons || []
-    
-    // Detect controller type based on available buttons and their properties
-    // This is a simplified detection - you can expand this based on your needs
-    if (buttons.length >= 6) {
-      // Check if this looks like a standard controller layout
-      const hasStandardLayout = buttons[4] && buttons[5] && 
-                               typeof buttons[4].pressed === 'boolean' && 
-                               typeof buttons[5].pressed === 'boolean'
-      
-      return hasStandardLayout ? BUTTON_MAPPINGS.standard : BUTTON_MAPPINGS.alternative
-    }
-    
-    return BUTTON_MAPPINGS.standard
-  }, [state?.inputSource?.gamepad])
+    return BUTTON_MAPPINGS[handedness]
+  }, [handedness])
 
   // Get available buttons based on the controller's gamepad
   const availableButtons = useMemo(() => {

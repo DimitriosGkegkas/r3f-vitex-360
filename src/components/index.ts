@@ -19,3 +19,7 @@ export { default as VideoEnvironment } from './VideoEnvironment';
 export { default as PanoramaScene } from './PanoramaScene';
 export { default as InfoCardBillboard } from './InfoCardBillboard';
 export { default as DragLookControls } from './DragLookControls';
+export { FilledButton } from './FilledButton';
+export { QuizCard } from './QuizCard';
+export { QuizQuestion } from './QuizQuestion';
+export { QuizResult } from './QuizResult';
