@@ -9,6 +9,7 @@ import './Experience.css';
 import Image360Viewer from '../Image360Viewer';
 import { XRStore } from '@react-three/xr';
 import { VideoBackground } from '../VideoBackground';
+import { ImageLoadResult } from '../../utils/imagePreloader';
 
 interface ExperienceProps {
   xrStore: XRStore;
@@ -19,6 +20,9 @@ interface ExperienceProps {
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
   isBackgroundMode?: boolean;
   shouldStartVideo?: boolean;
+  isPreloading?: boolean;
+  onPreloadComplete?: (results: ImageLoadResult[]) => void;
+  onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
 }
 
 export const Experience: React.FC<ExperienceProps> = ({
@@ -29,7 +33,10 @@ export const Experience: React.FC<ExperienceProps> = ({
   onStepChange,
   onTooltipChange,
   isBackgroundMode = false,
-  shouldStartVideo = false
+  shouldStartVideo = false,
+  isPreloading = false,
+  onPreloadComplete,
+  onPreloadProgress
 }) => {
   // State for video visibility
   const [showVideo, setShowVideo] = useState(!isBackgroundMode);
@@ -118,6 +125,9 @@ export const Experience: React.FC<ExperienceProps> = ({
         onStepChange={onStepChange}
         onFloorChange={onStateChange}
         onNext={canGoNext() ? () => handleStepChange('next') : undefined}
+        isPreloading={isPreloading}
+        onPreloadComplete={onPreloadComplete}
+        onPreloadProgress={onPreloadProgress}
         infoCardData={{
           title: currentStep.title,
           description: currentStep.description,

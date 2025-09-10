@@ -9,6 +9,7 @@ export { InfoCard } from './InfoCard';
 export { Menu } from './Menu';
 export { Experience } from './Experience';
 export { FloorPanel } from './FloorPanel';
+export { ProgressBar } from './ProgressBar';
 export { default as Image360Viewer } from './Image360Viewer';
 export { default as KeypointSpheres } from './KeypointSpheres';
 export { default as Tooltip } from './Tooltip';

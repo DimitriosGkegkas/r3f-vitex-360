@@ -4,12 +4,13 @@ import './StartButton.css';
 interface StartButtonProps {
   onClick?: () => void;
   text?: string;
+  loadingPercentage?: number;
 }
 
-export const StartButton: React.FC<StartButtonProps> = ({ onClick, text = "Ας ξεκινήσουμε" }) => {
+export const StartButton: React.FC<StartButtonProps> = ({ onClick, text = "Ας ξεκινήσουμε" , loadingPercentage}) => {
   return (
     <div className="start-button" onClick={onClick}>
-      <div className="button-background"></div>
+      <div className="button-background" style={{ width: `${loadingPercentage}%` }}></div>
       <div className="button-content">
         <span className="button-text">{text}</span>
         <div className="button-arrow">

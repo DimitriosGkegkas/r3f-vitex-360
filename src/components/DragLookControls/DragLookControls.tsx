@@ -56,18 +56,38 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId }) =>
     return null;
   }, [floor, stepId]);
 
+  // Track previous environment ID to detect changes
+  const prevEnvironmentId = useRef<string | null>(null);
+
   // When floor or step changes, set new target pitch and yaw
   useEffect(() => {
     if (environmentId) {
       const environment = environments[environmentId || ''];
-      if (environment.cameraAngle !== undefined) {
-        targetPitch.current = (environment.cameraAngle * Math.PI) / 180;
+      const environmentChanged = prevEnvironmentId.current !== environmentId;
+      
+      if (environmentChanged) {
+        // Environment changed: use environment's default camera angles
+        if (environment.cameraAngle !== undefined) {
+          targetPitch.current = (environment.cameraAngle * Math.PI) / 180;
+        }
+        if (environment.cameraYaw !== undefined) {
+          targetYaw.current = (environment.cameraYaw * Math.PI) / 180;
+        }
+      } else {
+        // Environment didn't change but step might have: look for keypoint with matching targetStep
+        if (stepId) {
+          const keypoint = environment.keypoints.find(kp => kp.targetStep === stepId);
+          if (keypoint) {
+            targetPitch.current = -(keypoint.pitch * Math.PI) / 180;
+            targetYaw.current = (keypoint.yaw * Math.PI) / 180;
+          }
+        }
       }
-      if (environment.cameraYaw !== undefined) {
-        targetYaw.current = (environment.cameraYaw * Math.PI) / 180;
-      }
+      
+      // Update previous environment ID
+      prevEnvironmentId.current = environmentId;
     }
-  }, [environmentId]);
+  }, [environmentId, stepId]);
 
   // Apply smooth rotation every frame
   useFrame(() => {

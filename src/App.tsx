@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { LoadingPage, Experience, Tooltip, ScoreCard } from './components';
 import { floors } from './config';
+import { ImageLoadResult } from './utils/imagePreloader';
 import './App.css';
 import { CustomVRButton } from './components/VRExperience/VRExperience';
 import { createXRStore } from '@react-three/xr';
@@ -20,12 +21,20 @@ const xrStore = createXRStore(
 );
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<'loading' | 'experience' | 'completion'>('loading');
+  const [currentPage, setCurrentPage] = useState<'welcome' | 'experience' | 'completion'>('welcome');
   const [currentFloorId, setCurrentFloorId] = useState<string>('raw-materials');
   const [currentStepId, setCurrentStepId] = useState<string>('step_5_1'); // Start with first step of raw-materials
   const [tooltip, setTooltip] = useState<TooltipData | null>(null);
   const [visitedSteps, setVisitedSteps] = useState<VisitedStep[]>([]);
-  const [isLoadingPageDissolving, setIsLoadingPageDissolving] = useState(false);
+  const [isWelcomeDissolving, setIsWelcomeDissolving] = useState(false);
+  const [preloadResults, setPreloadResults] = useState<ImageLoadResult[]>([]);
+  const [imagesPreloaded, setImagesPreloaded] = useState(false);
+  const [isPreloading, setIsPreloading] = useState(true);
+  const [preloadProgress, setPreloadProgress] = useState<{ loaded: number; total: number; percentage: number; currentImage?: string }>({
+    loaded: 0,
+    total: 0,
+    percentage: 0
+  });
 
   // Calculate total possible steps
   const totalPossibleSteps = Object.values(floors).reduce((total, floor) => total + floor.steps.length, 0);
@@ -68,6 +77,7 @@ const App: React.FC = () => {
       // If both parameters are provided, start directly in experience mode
       if (floorIdParam && stepIdParam) {
         setCurrentPage('experience');
+        setIsPreloading(false);
         // Mark the initial step as visited
         setVisitedSteps([{
           floorId: floorIdParam,
@@ -85,9 +95,12 @@ const App: React.FC = () => {
   }, [isAtLastStep, currentPage]);
 
   const handleStart = () => {
-    console.log('Starting the experience...');
+    console.log('🎯 App: Starting the experience...');
+    console.log('📊 App: Preload results:', preloadResults);
+    console.log('🖼️ App: Images preloaded:', imagesPreloaded);
+    
     // Start dissolve animation
-    setIsLoadingPageDissolving(true);
+    setIsWelcomeDissolving(true);
     
     // After dissolve animation completes, transition to experience
     setTimeout(() => {
@@ -99,6 +112,35 @@ const App: React.FC = () => {
       }]);
     }, 1000); // 1 second dissolve animation
   };
+
+  const handlePreloadProgress = useCallback((progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => {
+    console.log('📊 App: Preload progress update', progress);
+    setPreloadProgress(progress);
+  }, []);
+
+  const handlePreloadComplete = useCallback((results: ImageLoadResult[]) => {
+    console.log('🎉 App: Preload completed with results:', results);
+    setPreloadResults(results);
+    setImagesPreloaded(true);
+    setIsPreloading(false);
+    
+    // Log detailed preload statistics
+    const loaded = results.filter(r => r.loaded).length;
+    const failed = results.filter(r => !r.loaded).length;
+    const total = results.length;
+    
+    console.log(`📈 App: Preload Statistics - ${loaded}/${total} loaded, ${failed} failed`);
+    
+    // Log failed images for debugging
+    if (failed > 0) {
+      console.warn('⚠️ App: Failed to preload images:', results.filter(r => !r.loaded));
+    }
+    
+    // Expose preload results to window for debugging
+    (window as any).preloadResults = results;
+    (window as any).imagesPreloaded = true;
+    console.log('🔧 Debug: Preload results available at window.preloadResults');
+  }, []);
 
   const handleRestart = () => {
     console.log('Restarting the experience...');
@@ -160,8 +202,11 @@ const App: React.FC = () => {
             onStateChange={handleStateChange}
             onStepChange={handleStepChange}
             onTooltipChange={setTooltip}
-            isBackgroundMode={currentPage === 'loading'}
-            shouldStartVideo={isLoadingPageDissolving}
+            isBackgroundMode={currentPage === 'welcome'}
+            shouldStartVideo={isWelcomeDissolving}
+            isPreloading={isPreloading}
+            onPreloadComplete={handlePreloadComplete}
+            onPreloadProgress={handlePreloadProgress}
           />
 
           {/* Render tooltip outside the canvas */}
@@ -172,9 +217,15 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Show LoadingPage on top when loading */}
-      {currentPage === 'loading' && (
-        <LoadingPage onStart={handleStart} isDissolving={isLoadingPageDissolving} />
+      {/* Show WelcomeCard on top when welcome */}
+      {currentPage === 'welcome' && (
+        <LoadingPage 
+          onStart={handleStart} 
+          isDissolving={isWelcomeDissolving}
+          isPreloading={isPreloading}
+          preloadResults={preloadResults}
+          preloadProgress={preloadProgress}
+        />
       )}
 
       {/* Show completion page */}

@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
-import { useXR, XR, XRStore } from '@react-three/xr';
+import { XR, XRStore } from '@react-three/xr';
+import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { getFloorById, environments } from '../../config';
-import { createStepChangeHandler } from '../../utils/stepNavigation';
+import { getColorSpaceConfig } from '../../config/colorSpace';
 import KeypointSpheres from '../KeypointSpheres';
 import ControllerLabels from '../ControllerLabels';
 import VRInfoDisplay from '../ControllerLabels/VRInfoDisplay';
 import PanoramaScene from '../PanoramaScene';
 import DragLookControls from '../DragLookControls';
+import { ImageLoadResult } from '../../utils/imagePreloader';
 
 interface Image360ViewerProps {
   currentFloorId: string;
@@ -22,6 +24,9 @@ interface Image360ViewerProps {
   onStepChange: (stepId: string) => void;
   onFloorChange?: (floorId: string) => void;
   onNext?: () => void;
+  isPreloading?: boolean;
+  onPreloadComplete?: (results: ImageLoadResult[]) => void;
+  onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
 }
 
 // Extract InfoCard data interface
@@ -42,8 +47,10 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   className = '',
   onTooltipChange,
   onStepChange,
-  onFloorChange,
-  onNext
+  onNext,
+  isPreloading = false,
+  onPreloadComplete,
+  onPreloadProgress
 }) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const [showInfo, setShowInfo] = useState(false);
@@ -52,11 +59,23 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   const step = floor?.steps.find(s => s.id === currentStepId);
   const environmentId = step?.environmentId;
   const environment = environments[environmentId || ''];
+  const colorSpaceConfig = getColorSpaceConfig();
 
   useEffect(() => {
     if (xrStore.getState()?.session)
       setShowInfo(true);
   }, [currentStepId])
+
+  // Set renderer properties after canvas creation
+  useEffect(() => {
+    const canvas = document.querySelector('canvas');
+    if (canvas) {
+      const renderer = (canvas as any).__r3f?.gl;
+      if (renderer) {
+        renderer.useLegacyLights = !colorSpaceConfig.renderer.physicallyCorrectLights;
+      }
+    }
+  }, [colorSpaceConfig.renderer.physicallyCorrectLights]);
 
   // Handle show information
   const handleShowInfo = () => {
@@ -66,7 +85,16 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
 
   return (
     <>
-      <Canvas className={className} gl={{ antialias: true, alpha: false }}>
+      <Canvas 
+        className={className} 
+        gl={{ 
+          antialias: true, 
+          alpha: false,
+          outputColorSpace: colorSpaceConfig.renderer.outputColorSpace,
+          toneMapping: colorSpaceConfig.renderer.toneMapping as any,
+          toneMappingExposure: colorSpaceConfig.renderer.toneMappingExposure
+        }}
+      >
         <XR store={xrStore}>
           <PerspectiveCamera
             ref={cameraRef}
@@ -93,7 +121,12 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
           />
 
           <DragLookControls floor={floor} stepId={currentStepId} />
-          <PanoramaScene environment={environment} />
+          <PanoramaScene 
+            environment={environment} 
+            isPreloading={isPreloading}
+            onPreloadComplete={onPreloadComplete}
+            onPreloadProgress={onPreloadProgress}
+          />
           {floor && <KeypointSpheres
             keypoints={environment?.keypoints || []}
             environmentId={environmentId || ''}
@@ -129,6 +162,21 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             />
           )}
         </XR>
+        
+        {/* Post-processing effects for enhanced realism */}
+        <EffectComposer>
+          <Bloom
+            intensity={colorSpaceConfig.postProcessing.bloom.intensity}
+            luminanceThreshold={colorSpaceConfig.postProcessing.bloom.luminanceThreshold}
+            luminanceSmoothing={colorSpaceConfig.postProcessing.bloom.luminanceSmoothing}
+            mipmapBlur={colorSpaceConfig.postProcessing.bloom.mipmapBlur}
+          />
+          <ChromaticAberration
+            offset={new THREE.Vector2(...colorSpaceConfig.postProcessing.chromaticAberration.offset)}
+            radialModulation={colorSpaceConfig.postProcessing.chromaticAberration.radialModulation}
+            modulationOffset={colorSpaceConfig.postProcessing.chromaticAberration.modulationOffset}
+          />
+        </EffectComposer>
       </Canvas>
     </>
   );

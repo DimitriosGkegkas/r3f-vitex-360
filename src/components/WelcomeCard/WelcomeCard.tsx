@@ -6,9 +6,10 @@ import './WelcomeCard.css';
 
 interface WelcomeCardProps {
   onStart?: () => void;
+  loadingPercentage?: number;
 }
 
-export const WelcomeCard: React.FC<WelcomeCardProps> = ({ onStart }) => {
+export const WelcomeCard: React.FC<WelcomeCardProps> = ({ onStart , loadingPercentage}) => {
   const bulletPoints = [
     'Ακολούθησε τα βήματα για να δεις πώς φτάνουμε από την πρώτη ύλη στο τελικό προϊόν',
     'Ακολούθησε τα βήματα ή περιηγήσου ελεύθερα στον χώρο',
@@ -34,7 +35,7 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = ({ onStart }) => {
           <BulletPoint key={index} text={point} />
         ))}
       </div>
-      <StartButton onClick={onStart} />
+      <StartButton onClick={onStart} loadingPercentage={loadingPercentage} />
     </div>
   );
 };
