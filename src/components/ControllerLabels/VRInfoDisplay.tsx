@@ -123,7 +123,7 @@ const VRInfoDisplay: React.FC<VRInfoDisplayProps> = ({
 
       {/* Title */}
       <Text
-        position={[0, 0.6, 0]}
+        position={[0, 0.7, 0]}
         fontSize={0.15}
         fontWeight={700}
         color="#1A1A1A"
@@ -193,6 +193,33 @@ const VRInfoDisplay: React.FC<VRInfoDisplayProps> = ({
         </Text>
       )}
 
+      {/* Navigation instructions */}
+      {/* Previous button instruction - left side */}
+      <Text
+        position={[-0.8, -0.8, 0]}
+        fontSize={0.06}
+        color="#666666"
+        maxWidth={0.4}
+        textAlign="center"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Πατήστε A για προηγούμενο
+      </Text>
+
+      {/* Next button instruction - right side */}
+      <Text
+        position={[0.8, -0.8, 0]}
+        fontSize={0.06}
+        color="#666666"
+        maxWidth={0.4}
+        textAlign="center"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Πατήστε B για επόμενο
+      </Text>
+
       {/* Close instruction */}
       <Text
         position={[0, -1.0, 0]}
@@ -203,7 +230,7 @@ const VRInfoDisplay: React.FC<VRInfoDisplayProps> = ({
         anchorX="center"
         anchorY="middle"
       >
-        Πατήστε A για κλείσιμο
+        Πατήστε grip για κλείσιμο
       </Text>
     </group>
   )

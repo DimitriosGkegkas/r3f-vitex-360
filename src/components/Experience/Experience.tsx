@@ -117,6 +117,7 @@ export const Experience: React.FC<ExperienceProps> = ({
         onStepChange={onStepChange}
         onFloorChange={onStateChange}
         onNext={canGoNext() ? () => handleStepChange('next') : undefined}
+        onPrevious={canGoPrevious() ? () => handleStepChange('prev') : undefined}
         isPreloading={isPreloading}
         onPreloadComplete={onPreloadComplete}
         onPreloadProgress={onPreloadProgress}

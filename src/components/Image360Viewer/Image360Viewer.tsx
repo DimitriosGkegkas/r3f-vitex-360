@@ -4,13 +4,14 @@ import { PerspectiveCamera } from '@react-three/drei';
 import { XR, XRStore } from '@react-three/xr';
 // import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import * as THREE from 'three';
-import { getFloorById, environments } from '../../config';
+import { getFloorById, environments, floors } from '../../config';
 import { getColorSpaceConfig, setColorSpaceConfig, vrColorSpaceConfig, defaultColorSpaceConfig } from '../../config/colorSpace';
 import KeypointSpheres from '../KeypointSpheres';
 import ControllerLabels from '../ControllerLabels';
 import VRInfoDisplay from '../ControllerLabels/VRInfoDisplay';
 import PanoramaScene from '../PanoramaScene';
 import DragLookControls from '../DragLookControls';
+import FloorInfoPanel from '../FloorInfoPanel';
 import { ImageLoadResult } from '../../utils/imagePreloader';
 
 interface Image360ViewerProps {
@@ -24,6 +25,7 @@ interface Image360ViewerProps {
   onStepChange: (stepId: string) => void;
   onFloorChange?: (floorId: string) => void;
   onNext?: () => void;
+  onPrevious?: () => void;
   isPreloading?: boolean;
   onPreloadComplete?: (results: ImageLoadResult[]) => void;
   onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
@@ -92,15 +94,18 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   xrStore,
   infoCardData,
   className = '',
+  onFloorChange,
   onTooltipChange,
   onStepChange,
   onNext,
+  onPrevious,
   isPreloading = false,
   onPreloadComplete,
   onPreloadProgress
 }) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const [showInfo, setShowInfo] = useState(false);
+  const [showFloorPanel, setShowFloorPanel] = useState(false);
 
   const floor = getFloorById(currentFloorId);
   const step = floor?.steps.find(s => s.id === currentStepId);
@@ -137,6 +142,27 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
     if (xrStore.getState()?.session)
       setShowInfo(true);
   }, [currentStepId])
+
+  const handleShowFloorPanel = () => {
+    setShowFloorPanel(!showFloorPanel);
+  };
+
+  // Floor navigation functions
+  const handleNextFloor = () => {
+    const floorOrder = ['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging'];
+    const currentIndex = floorOrder.indexOf(currentFloorId);
+    if (currentIndex < floorOrder.length - 1) {
+      onFloorChange?.(floorOrder[currentIndex + 1]);
+    }
+  };
+
+  const handlePreviousFloor = () => {
+    const floorOrder = ['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging'];
+    const currentIndex = floorOrder.indexOf(currentFloorId);
+    if (currentIndex > 0) {
+      onFloorChange?.(floorOrder[currentIndex - 1]);
+    }
+  };
 
   // Force re-render when color space config changes
   const [colorSpaceKey, setColorSpaceKey] = useState(0);
@@ -180,6 +206,8 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             position={[0, 1.6, 0]}
             fov={85}
             scale={[1, 1, -1]}
+            near={0.1}
+            far={3000}
             // Ensure camera updates properly in VR
             matrixAutoUpdate={true}
             matrixWorldAutoUpdate={true}
@@ -232,14 +260,18 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
           <ControllerLabels
             handedness="right"
             onNextStep={onNext}
+            onPreviousStep={onPrevious}
             onShowInfo={handleShowInfo}
             isInfoVisible={showInfo}
           />
           <ControllerLabels
             handedness="left"
             onNextStep={onNext}
-            onShowInfo={handleShowInfo}
-            isInfoVisible={showInfo}
+            onPreviousStep={onPrevious}
+            onShowInfo={handleShowFloorPanel}
+            isInfoVisible={showFloorPanel}
+            onNextFloor={handleNextFloor}
+            onPreviousFloor={handlePreviousFloor}
           />
 
           {/* VR Information Display */}
@@ -257,6 +289,15 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
               isVisible={showInfo}
             />
           )}
+
+          {/* Floor Info Panel for Left Controller */}
+          <FloorInfoPanel
+            currentFloorId={currentFloorId}
+            experienceStates={floors}
+            stateOrder={['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging']}
+            isVisible={showFloorPanel}
+            handedness="left"
+          />
 
         </XR>
         

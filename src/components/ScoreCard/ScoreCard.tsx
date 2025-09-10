@@ -114,6 +114,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
       return score + (answer === QUIZ_QUESTIONS[index].correctAnswer ? 1 : 0);
     }, 0);
   };
+  console.log(currentState)
 
   if (currentState === 'quiz') {
     const currentQuestion = QUIZ_QUESTIONS[currentQuestionIndex];
