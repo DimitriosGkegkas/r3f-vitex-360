@@ -7,8 +7,8 @@
   background: transparent;
   overflow: hidden;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   background-image: url('/intro_cover.jpg');
   background-size: cover;
@@ -21,4 +21,58 @@
 
 .loading-page.dissolving {
   opacity: 0;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.loading-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(16, 136, 244, 0.2);
+  border-top: 4px solid #1088F4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-error {
+  background: rgba(231, 76, 60, 0.1);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  color: #e74c3c;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 500px;
+  margin-top: 16px;
+}
+
+.loading-error p {
+  margin: 0 0 8px 0;
+}
+
+.loading-error p:last-child {
+  margin-bottom: 0;
+  font-size: 12px;
+  opacity: 0.8;
 }

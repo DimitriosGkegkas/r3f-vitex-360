@@ -1,5 +1,6 @@
 import React, { useMemo, useRef, useEffect } from 'react';
 import * as THREE from 'three';
+import { getColorSpaceConfig } from '../../config/colorSpace';
 
 interface VideoEnvironmentProps {
   src: string;
@@ -22,6 +23,7 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
   };
   
   const settings = qualitySettings[quality];
+  const colorSpaceConfig = getColorSpaceConfig();
   
   // Create video texture only when src changes
   const videoTex = useMemo(() => {
@@ -57,7 +59,8 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
     t.minFilter = THREE.LinearFilter;
     t.magFilter = THREE.LinearFilter;
     t.generateMipmaps = false;
-    t.colorSpace = THREE.SRGBColorSpace;
+    t.colorSpace = colorSpaceConfig.videoEnvironment.colorSpace as any;
+    t.encoding = colorSpaceConfig.videoEnvironment.encoding as any;
     
     // Store texture reference for cleanup
     textureRef.current = t;
@@ -95,7 +98,8 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
       <meshBasicMaterial 
         map={videoTex} 
         side={THREE.FrontSide} 
-        toneMapped={false}
+        toneMapped={colorSpaceConfig.videoEnvironment.toneMapped}
+        colorSpace={colorSpaceConfig.videoEnvironment.colorSpace}
       />
     </mesh>
   );
