@@ -5,7 +5,7 @@ import { XR, XRStore } from '@react-three/xr';
 // import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import * as THREE from 'three';
 import { getFloorById, environments, floors } from '../../config';
-import { getColorSpaceConfig, setColorSpaceConfig, vrColorSpaceConfig, defaultColorSpaceConfig } from '../../config/colorSpace';
+import { getColorSpaceConfig } from '../../config/colorSpace';
 import ControllerLabels from '../ControllerLabels';
 import VRInfoDisplay from '../ControllerLabels/VRInfoDisplay';
 import PanoramaScene from '../PanoramaScene';
@@ -41,8 +41,8 @@ interface InfoCardData {
 }
 
 // Component to handle renderer settings and context loss
-const RendererSettings: React.FC<{ colorSpaceConfig: any }> = ({ colorSpaceConfig }) => {
-  const { gl } = useThree();
+const RendererSettings: React.FC<{ colorSpaceConfig: any }> = ({ colorSpaceConfig: _colorSpaceConfig }) => {
+  const { gl: _gl } = useThree();
 
   // useEffect(() => {
   //   if (gl) {
