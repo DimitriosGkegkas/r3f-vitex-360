@@ -104,8 +104,8 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   onPreloadProgress
 }) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
-  const [showInfo, setShowInfo] = useState(false);
-  const [showFloorPanel, setShowFloorPanel] = useState(false);
+  const [showInfo, setShowInfo] = useState(true);
+  const [showFloorPanel, setShowFloorPanel] = useState(true);
 
   const floor = getFloorById(currentFloorId);
   const step = floor?.steps.find(s => s.id === currentStepId);
@@ -201,110 +201,109 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
         <XR store={xrStore}>
           <RendererSettings colorSpaceConfig={colorSpaceConfig} />
           <PerspectiveCamera
+            position={[0, 1.6, 0]} scale={[1, 1, -1]}
             ref={cameraRef}
             makeDefault
-            position={[0, 1.6, 0]}
             fov={85}
-            scale={[1, 1, -1]}
             near={0.1}
             far={3000}
             // Ensure camera updates properly in VR
             matrixAutoUpdate={true}
             matrixWorldAutoUpdate={true}
           />
-          {/* Enhanced lighting for VR */}
-          {/* Sunlight simulation - directional light from above */}
-          <directionalLight
-            position={[0, 50, 0]}
-            intensity={xrStore.getState()?.session ? 3 : 2}
-            castShadow={false}
-          />
+        {/* Enhanced lighting for VR */}
+        {/* Sunlight simulation - directional light from above */}
+        <directionalLight
+          position={[0, 50, 0]}
+          intensity={xrStore.getState()?.session ? 3 : 2}
+          castShadow={false}
+        />
 
-          {/* Ambient light for overall scene illumination */}
-          <ambientLight intensity={xrStore.getState()?.session ? 0.5 : 0.3} />
+        {/* Ambient light for overall scene illumination */}
+        <ambientLight intensity={xrStore.getState()?.session ? 0.5 : 0.3} />
 
-          {/* Hemisphere light for realistic sky lighting */}
-          <hemisphereLight
-            args={["#87CEEB", "#8B4513", xrStore.getState()?.session ? 0.6 : 0.4]}
-          />
+        {/* Hemisphere light for realistic sky lighting */}
+        <hemisphereLight
+          args={["#87CEEB", "#8B4513", xrStore.getState()?.session ? 0.6 : 0.4]}
+        />
 
-          {/* Additional VR-specific lighting */}
-          {xrStore.getState()?.session && (
-            <>
-              <directionalLight
-                position={[10, 10, 10]}
-                intensity={1}
-                color="#ffffff"
-              />
-              <pointLight
-                position={[0, 2, 0]}
-                intensity={0.5}
-                color="#ffffff"
-              />
-            </>
-          )}
-
-          <DragLookControls floor={floor} stepId={currentStepId} />
-          <PanoramaScene
-            environment={environment}
-            isPreloading={isPreloading}
-            onPreloadComplete={onPreloadComplete}
-            onPreloadProgress={onPreloadProgress}
-          />
-          {floor && <KeypointSpheres
-            keypoints={environment?.keypoints || []}
-            environmentId={environmentId || ''}
-            onStepChange={onStepChange}
-            onTooltipChange={onTooltipChange}
-          />}
-          <ControllerLabels
-            handedness="right"
-            onNextStep={onNext}
-            onPreviousStep={onPrevious}
-            onShowInfo={handleShowInfo}
-            isInfoVisible={showInfo}
-          />
-          <ControllerLabels
-            handedness="left"
-            onNextStep={onNext}
-            onPreviousStep={onPrevious}
-            onShowInfo={handleShowFloorPanel}
-            isInfoVisible={showFloorPanel}
-            onNextFloor={handleNextFloor}
-            onPreviousFloor={handlePreviousFloor}
-          />
-
-          {/* VR Information Display */}
-          {step && (
-            <VRInfoDisplay
-              stepData={{
-                id: step.id,
-                title: step.title,
-                description: step.description,
-                stepName: step.stepName,
-                floor: infoCardData.floor,
-                currentStep: (floor?.steps.findIndex(s => s.id === currentStepId) ?? -1) + 1,
-                totalSteps: floor?.steps.length
-              }}
-              position={[-0.0, -0., -0.17]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.5, 0.5, 0.005]}
-              isVisible={showInfo}
-              handedness="right"
+        {/* Additional VR-specific lighting */}
+        {xrStore.getState()?.session && (
+          <>
+            <directionalLight
+              position={[10, 10, 10]}
+              intensity={1}
+              color="#ffffff"
             />
-          )}
+            <pointLight
+              position={[0, 2, 0]}
+              intensity={0.5}
+              color="#ffffff"
+            />
+          </>
+        )}
 
-          {/* Floor Info Panel for Left Controller */}
-          <FloorInfoPanel
-            currentFloorId={currentFloorId}
-            experienceStates={floors}
-            stateOrder={['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging']}
-            isVisible={showFloorPanel}
-            handedness="left"
-            onFloorChange={onFloorChange}
+        <DragLookControls floor={floor} stepId={currentStepId} />
+        <PanoramaScene
+          environment={environment}
+          isPreloading={isPreloading}
+          onPreloadComplete={onPreloadComplete}
+          onPreloadProgress={onPreloadProgress}
+        />
+        {floor && <KeypointSpheres
+          keypoints={environment?.keypoints || []}
+          environmentId={environmentId || ''}
+          onStepChange={onStepChange}
+          onTooltipChange={onTooltipChange}
+        />}
+        <ControllerLabels
+          handedness="right"
+          onNextStep={onNext}
+          onPreviousStep={onPrevious}
+          onShowInfo={handleShowInfo}
+          isInfoVisible={showInfo}
+        />
+        <ControllerLabels
+          handedness="left"
+          onNextStep={onNext}
+          onPreviousStep={onPrevious}
+          onShowInfo={handleShowFloorPanel}
+          isInfoVisible={showFloorPanel}
+          onNextFloor={handleNextFloor}
+          onPreviousFloor={handlePreviousFloor}
+        />
+
+        {/* VR Information Display */}
+        {step && (
+          <VRInfoDisplay
+            stepData={{
+              id: step.id,
+              title: step.title,
+              description: step.description,
+              stepName: step.stepName,
+              floor: infoCardData.floor,
+              currentStep: (floor?.steps.findIndex(s => s.id === currentStepId) ?? -1) + 1,
+              totalSteps: floor?.steps.length
+            }}
+            position={[-0.0, -0., -0.17]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.5, 0.5, 0.005]}
+            isVisible={showInfo}
+            handedness="right"
           />
+        )}
 
-        </XR>
+        {/* Floor Info Panel for Left Controller */}
+        <FloorInfoPanel
+          currentFloorId={currentFloorId}
+          experienceStates={floors}
+          stateOrder={['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging']}
+          isVisible={showFloorPanel}
+          handedness="left"
+          onFloorChange={onFloorChange}
+        />
 
-      </Canvas>
+      </XR>
+
+    </Canvas >
     </>
   );
 };
