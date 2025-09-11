@@ -88,26 +88,35 @@ export const Experience: React.FC<ExperienceProps> = ({
   // Effect to start video when shouldStartVideo becomes true
   React.useEffect(() => {
     if (shouldStartVideo && !videoStarted) {
+      console.log('🎬 Experience: Starting video - shouldStartVideo:', shouldStartVideo, 'videoStarted:', videoStarted);
       setVideoStarted(true);
       setShowVideo(true);
     }
   }, [shouldStartVideo, videoStarted]);
 
+  // Effect to ensure video starts when showVideo becomes true
+  React.useEffect(() => {
+    if (showVideo && videoStarted) {
+      // Video will be controlled by VideoBackground component
+      console.log('🎬 Experience: Video should start playing - showVideo:', showVideo, 'videoStarted:', videoStarted);
+    }
+  }, [showVideo, videoStarted]);
+
   return (
 
     <div className={`experience-page ${isBackgroundMode ? 'background-mode' : ''}`}>
-      {showVideo && (
-        <VideoBackground
-          videoSrc="/video/intro_drone.mp4"
-          className="loading-page-bg"
-          autoplay={videoStarted}
-          muted={true}
-          loop={false}
-          onVideoEnd={handleVideoEnd}
-          onSkip={handleVideoSkip}
-          showSkipButton={!isBackgroundMode}
-        />
-      )}
+
+      <VideoBackground
+        videoSrc="/video/intro_drone.mp4"
+        className="loading-page-bg"
+        muted={true}
+        loop={false}
+        onVideoEnd={handleVideoEnd}
+        onSkip={handleVideoSkip}
+        showSkipButton={!isBackgroundMode}
+        showVideo={showVideo}
+      />
+
       <Image360Viewer
         currentFloorId={currentFloorId}
         currentStepId={currentStepId}
@@ -146,7 +155,7 @@ export const Experience: React.FC<ExperienceProps> = ({
         </div>
       )}
 
-      <Menu 
+      <Menu
         hideFloorsButton={showVideo}
         currentFloorId={currentFloorId}
         floors={floors}
