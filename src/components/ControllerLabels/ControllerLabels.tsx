@@ -12,8 +12,8 @@ const BUTTON_MAPPINGS = {
   },
   right: {
     trigger: { index: 0, position: [0.01, -0.035, -0.03], color: 'lime', label: 'Επιλογή', rotation: [0, Math.PI, Math.PI], key: 'trigger' },
-    buttonB: { index: 4, position: [-0.007, 0.01, -0.019], color: 'lime', label: 'Προηγούμενο', rotation: [Math.PI / 3, Math.PI, Math.PI], key: 'buttonB' },
-    buttonA: { index: 5, position: [-0.02, 0.001, -0.03], color: 'orange', label: 'Επόμενο', rotation: [Math.PI / 3, Math.PI, Math.PI], key: 'buttonA' },
+    buttonB: { index: 4, position: [-0.007, 0.01, -0.019], color: 'lime', label: 'Προηγ.Βήμα', rotation: [Math.PI / 3, Math.PI, Math.PI], key: 'buttonB' },
+    buttonA: { index: 5, position: [-0.02, 0.001, -0.03], color: 'orange', label: 'Επόμ.Βήμα', rotation: [Math.PI / 3, Math.PI, Math.PI], key: 'buttonA' },
     grip: { index: 1, position: [-0.02, 0.04, 0.035], color: 'red', label: 'Πληροφορίες', rotation: [Math.PI / 1.6, -Math.PI/2, Math.PI], key: 'grip' },
   }
 }

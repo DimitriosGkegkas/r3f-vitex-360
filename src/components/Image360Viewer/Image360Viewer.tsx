@@ -44,14 +44,14 @@ interface InfoCardData {
 // Component to handle renderer settings and context loss
 const RendererSettings: React.FC<{ colorSpaceConfig: any }> = ({ colorSpaceConfig }) => {
   const { gl } = useThree();
-  
+
   // useEffect(() => {
   //   if (gl) {
   //     // Apply color space settings
   //     gl.outputColorSpace = colorSpaceConfig.renderer.outputColorSpace;
   //     gl.toneMapping = THREE[colorSpaceConfig.renderer.toneMapping as keyof typeof THREE] as THREE.ToneMapping;
   //     gl.toneMappingExposure = colorSpaceConfig.renderer.toneMappingExposure;
-      
+
   //     console.log('🎨 Applied color space settings to renderer:', {
   //       outputColorSpace: gl.outputColorSpace,
   //       toneMapping: gl.toneMapping,
@@ -83,7 +83,7 @@ const RendererSettings: React.FC<{ colorSpaceConfig: any }> = ({ colorSpaceConfi
   //     };
   //   }
   // }, [gl, colorSpaceConfig]);
-  
+
   return null;
 };
 
@@ -112,7 +112,7 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   const environmentId = step?.environmentId;
   const environment = environments[environmentId || ''];
   const colorSpaceConfig = getColorSpaceConfig();
-  
+
   // Debug logging for VR
   useEffect(() => {
     const xrSession = xrStore.getState()?.session;
@@ -127,7 +127,7 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
       step: step ? 'Found' : 'Missing',
       floor: floor ? 'Found' : 'Missing'
     });
-    
+
     // Additional VR-specific debugging
     if (xrSession) {
       console.log('🥽 VR Session Details:', {
@@ -181,11 +181,11 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
 
   return (
     <>
-      <Canvas 
+      <Canvas
         key={colorSpaceKey}
-        className={className} 
-        gl={{ 
-          antialias: true, 
+        className={className}
+        gl={{
+          antialias: true,
           alpha: false,
           outputColorSpace: colorSpaceConfig.renderer.outputColorSpace,
           toneMapping: THREE[colorSpaceConfig.renderer.toneMapping as keyof typeof THREE] as THREE.ToneMapping,
@@ -245,8 +245,8 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
           )}
 
           <DragLookControls floor={floor} stepId={currentStepId} />
-          <PanoramaScene 
-            environment={environment} 
+          <PanoramaScene
+            environment={environment}
             isPreloading={isPreloading}
             onPreloadComplete={onPreloadComplete}
             onPreloadProgress={onPreloadProgress}
@@ -282,11 +282,13 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
                 title: step.title,
                 description: step.description,
                 stepName: step.stepName,
-                floor: floor?.title,
+                floor: infoCardData.floor,
                 currentStep: (floor?.steps.findIndex(s => s.id === currentStepId) ?? -1) + 1,
                 totalSteps: floor?.steps.length
               }}
+              position={[-0.0, -0., -0.17]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.5, 0.5, 0.005]}
               isVisible={showInfo}
+              handedness="right"
             />
           )}
 
@@ -297,10 +299,11 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             stateOrder={['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging']}
             isVisible={showFloorPanel}
             handedness="left"
+            onFloorChange={onFloorChange}
           />
 
         </XR>
-        
+
       </Canvas>
     </>
   );
