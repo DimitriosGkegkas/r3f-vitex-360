@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Preloader Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        .log {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Preloader Test</h1>
+        <p>This test will verify that the image preloader is working correctly by loading all environment images.</p>
+        
+        <div>
+            <button id="startTest" onclick="startPreloadTest()">Start Preload Test</button>
+            <button id="clearLog" onclick="clearLog()">Clear Log</button>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div id="progressText">Ready to start...</div>
+        
+        <div class="log" id="log"></div>
+    </div>
+
+    <script type="module">
+        // Import the preloader (this would normally be done through your build system)
+        // For this test, we'll simulate the preloader functionality
+        
+        let logElement = document.getElementById('log');
+        let progressFill = document.getElementById('progressFill');
+        let progressText = document.getElementById('progressText');
+        
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.innerHTML += `[${timestamp}] ${message}<br>`;
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(message);
+        }
+        
+        function clearLog() {
+            logElement.innerHTML = '';
+        }
+        
+        function updateProgress(loaded, total, percentage, currentImage) {
+            progressFill.style.width = percentage + '%';
+            progressText.textContent = `Loading: ${loaded}/${total} (${percentage}%) - ${currentImage || 'Starting...'}`;
+        }
+        
+        // Simulate the environments data
+        const environments = {
+            'raw-materials-env_5_1': { environmentImage: '/cubemap/raw-materials/5_1' },
+            'raw-materials-env_5_2': { environmentImage: '/cubemap/raw-materials/5_2' },
+            'raw-materials-env_5_3': { environmentImage: '/cubemap/raw-materials/5_3' },
+            'raw-materials-env_5_4': { environmentImage: '/cubemap/raw-materials/5_4' },
+            'raw-materials-env_5_5': { environmentImage: '/cubemap/raw-materials/5_5' },
+            'raw-materials-env_5_6': { environmentImage: '/cubemap/raw-materials/5_6' },
+            'sorting-env_4_1': { environmentImage: '/cubemap/sorting/4_1' },
+            'sorting-env_4_2': { environmentImage: '/cubemap/sorting/4_2' },
+            'sorting-env_4_3': { environmentImage: '/cubemap/sorting/4_3' },
+            'sorting-env_4_4': { environmentImage: '/cubemap/sorting/4_4' },
+            'quantities-env_3_1': { environmentImage: '/cubemap/quantities/3_1' },
+            'quantities-env_3_2': { environmentImage: '/cubemap/quantities/3_2' },
+            'quantities-env_3_3': { environmentImage: '/cubemap/quantities/3_3' },
+            'secrets-env_2_1': { environmentImage: '/cubemap/secrets/2_1' },
+            'secrets-env_2_2': { environmentImage: '/cubemap/secrets/2_2' },
+            'mixing-env_1_1': { environmentImage: '/cubemap/mixing/1_1' },
+            'mixing-env_1_2': { environmentImage: '/cubemap/mixing/1_2' },
+            'packaging-env_0_1': { environmentImage: '/cubemap/packaging/0_1' },
+            'packaging-env_0_2': { environmentImage: '/cubemap/packaging/0_2' },
+            'packaging-env_0_3': { environmentImage: '/cubemap/packaging/0_3' },
+            'packaging-env_0_4': { environmentImage: '/cubemap/packaging/0_4' }
+        };
+        
+        function getAllImagePaths() {
+            const imagePaths = [];
+            const environmentPaths = new Set();
+            
+            // Get all unique environment image base paths
+            Object.values(environments).forEach(env => {
+                if (env.environmentImage && !env.environmentImage.endsWith('.mp4')) {
+                    environmentPaths.add(env.environmentImage);
+                }
+            });
+            
+            // For each environment path, add all 6 cubemap faces
+            environmentPaths.forEach(basePath => {
+                const faces = ['px', 'nx', 'py', 'ny', 'pz', 'nz'];
+                faces.forEach(face => {
+                    imagePaths.push(`${basePath}/${face}.jpg`);
+                });
+            });
+            
+            return imagePaths;
+        }
+        
+        function loadImage(url) {
+            return new Promise((resolve) => {
+                const startTime = Date.now();
+                const img = new Image();
+                
+                img.onload = () => {
+                    const loadTime = Date.now() - startTime;
+                    resolve({
+                        url,
+                        loaded: true,
+                        loadTime
+                    });
+                };
+                
+                img.onerror = () => {
+                    const loadTime = Date.now() - startTime;
+                    resolve({
+                        url,
+                        loaded: false,
+                        error: `Failed to load ${url}`,
+                        loadTime
+                    });
+                };
+                
+                img.crossOrigin = 'anonymous';
+                img.src = url;
+            });
+        }
+        
+        async function startPreloadTest() {
+            const startButton = document.getElementById('startTest');
+            startButton.disabled = true;
+            startButton.textContent = 'Loading...';
+            
+            log('🚀 Starting image preload test...');
+            
+            const imagePaths = getAllImagePaths();
+            const totalImages = imagePaths.length;
+            let loadedCount = 0;
+            let failedCount = 0;
+            
+            log(`📁 Found ${imagePaths.length} images to preload`);
+            log(`🏗️ Environment paths: ${Array.from(new Set(imagePaths.map(p => p.split('/').slice(0, -1).join('/')))).join(', ')}`);
+            
+            updateProgress(0, totalImages, 0, 'Starting...');
+            
+            try {
+                // Load images in batches
+                const batchSize = 6;
+                const results = [];
+                
+                for (let i = 0; i < imagePaths.length; i += batchSize) {
+                    const batch = imagePaths.slice(i, i + batchSize);
+                    log(`📦 Loading batch ${Math.floor(i / batchSize) + 1}: ${batch.join(', ')}`);
+                    
+                    const batchPromises = batch.map(url => loadImage(url));
+                    const batchResults = await Promise.all(batchPromises);
+                    results.push(...batchResults);
+                    
+                    // Update counts
+                    batchResults.forEach(result => {
+                        if (result.loaded) {
+                            loadedCount++;
+                            log(`✅ Loaded: ${result.url} (${result.loadTime}ms)`);
+                        } else {
+                            failedCount++;
+                            log(`❌ Failed: ${result.url} - ${result.error}`);
+                        }
+                    });
+                    
+                    const percentage = Math.round((loadedCount / totalImages) * 100);
+                    updateProgress(loadedCount, totalImages, percentage, batch[0]);
+                    
+                    // Small delay between batches
+                    if (i + batchSize < imagePaths.length) {
+                        await new Promise(resolve => setTimeout(resolve, 100));
+                    }
+                }
+                
+                log(`🎉 Preload completed!`);
+                log(`📊 Results: ${loadedCount} loaded, ${failedCount} failed out of ${totalImages} total`);
+                
+                // Group by environment for summary
+                const byEnvironment = new Map();
+                results.forEach(result => {
+                    const envPath = result.url.split('/').slice(0, -1).join('/');
+                    if (!byEnvironment.has(envPath)) {
+                        byEnvironment.set(envPath, []);
+                    }
+                    byEnvironment.get(envPath).push(result);
+                });
+                
+                log('🏗️ Results by environment:');
+                byEnvironment.forEach((envResults, envPath) => {
+                    const envLoaded = envResults.filter(r => r.loaded).length;
+                    const envTotal = envResults.length;
+                    log(`  ${envPath}: ${envLoaded}/${envTotal} loaded`);
+                });
+                
+            } catch (error) {
+                log(`💥 Preload failed: ${error}`);
+            } finally {
+                startButton.disabled = false;
+                startButton.textContent = 'Start Preload Test';
+            }
+        }
+        
+        // Make functions globally available
+        window.startPreloadTest = startPreloadTest;
+        window.clearLog = clearLog;
+        
+        log('✅ Test page loaded. Click "Start Preload Test" to begin.');
+    </script>
+</body>
+</html>
