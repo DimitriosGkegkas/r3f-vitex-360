@@ -134,7 +134,7 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
       <sphereGeometry args={[50, settings.segments[0], settings.segments[1]]} />
       <meshBasicMaterial 
         map={videoTex} 
-        side={THREE.BackSide} 
+        side={THREE.DoubleSide} 
         toneMapped={colorSpaceConfig.videoEnvironment.toneMapped}
       />
     </mesh>
