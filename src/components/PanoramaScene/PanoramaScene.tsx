@@ -7,19 +7,44 @@ import { ImagePreloader, ImageLoadResult } from '../../utils/imagePreloader';
 import { Mesh, MeshBasicMaterial } from 'three';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import KeypointSpheres from '../KeypointSpheres';
+
+// Component to handle image environment ready state
+const ImageEnvironmentReady: React.FC<{ onReady: () => void }> = ({ onReady }) => {
+  useEffect(() => {
+    // For image environments, we'll use a timeout since there's no direct loading callback
+    const timer = setTimeout(() => {
+      onReady();
+    }, 500); // 500ms delay for image loading
+
+    return () => clearTimeout(timer);
+  }, [onReady]);
+
+  return null;
+};
 
 interface PanoramaSceneProps {
   environment: EnvironmentType;
   isPreloading?: boolean;
   onPreloadComplete?: (results: ImageLoadResult[]) => void;
   onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
+  onEnvironmentReady?: () => void;
+  keypoints?: any[];
+  environmentId?: string;
+  onStepChange?: (stepId: string) => void;
+  onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
 }
 
 const PanoramaScene: React.FC<PanoramaSceneProps> = ({ 
   environment,
   isPreloading = false,
   onPreloadComplete,
-  onPreloadProgress
+  onPreloadProgress,
+  onEnvironmentReady,
+  keypoints = [],
+  environmentId = '',
+  onStepChange,
+  onTooltipChange
 }) => {
   const environmentImage = environment?.environmentImage;
   const [isPreloadComplete, setIsPreloadComplete] = useState(false);
@@ -27,6 +52,8 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   
   // Fade animation state
   const [currentEnvironment, setCurrentEnvironment] = useState(environmentImage);
+  const [isEnvironmentLoading, setIsEnvironmentLoading] = useState(false);
+  const [isEnvironmentReady, setIsEnvironmentReady] = useState(true);
   const fadeMeshRef = useRef<Mesh>(null);
   const fadeOpacity = useRef(0);
 
@@ -73,6 +100,10 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
     if (environmentImage !== currentEnvironment) {
       console.log('🔄 PanoramaScene: Environment changing, starting fade animation');
       
+      // Set loading state
+      setIsEnvironmentLoading(true);
+      setIsEnvironmentReady(false);
+      
       // Start fade in sequence
       const fadeIn = () => {
         fadeOpacity.current = 0;
@@ -85,16 +116,8 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
             // Change environment after fade in completes
             setCurrentEnvironment(environmentImage);
             
-            // Start fade out after a brief delay
-            setTimeout(() => {
-              const fadeOutInterval = setInterval(() => {
-                fadeOpacity.current -= 0.05; // Adjust speed as needed
-                if (fadeOpacity.current <= 0) {
-                  fadeOpacity.current = 0;
-                  clearInterval(fadeOutInterval);
-                }
-              }, 16); // ~60fps
-            }, 100); // Brief delay before fade out
+            // The fade out will be triggered by onEnvironmentReady callback
+            // when the environment content is actually loaded
           }
         }, 16); // ~60fps
       };
@@ -102,6 +125,23 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
       fadeIn();
     }
   }, [environmentImage, currentEnvironment]);
+
+  // Handle environment ready callback
+  useEffect(() => {
+    if (isEnvironmentReady && isEnvironmentLoading) {
+      console.log('✅ PanoramaScene: Environment ready, starting fade out');
+      
+      // Start fade out after environment is ready
+      const fadeOutInterval = setInterval(() => {
+        fadeOpacity.current -= 0.05; // Adjust speed as needed
+        if (fadeOpacity.current <= 0) {
+          fadeOpacity.current = 0;
+          clearInterval(fadeOutInterval);
+          setIsEnvironmentLoading(false);
+        }
+      }, 16); // ~60fps
+    }
+  }, [isEnvironmentReady, isEnvironmentLoading]);
 
   // Animation frame to update mesh opacity
   useFrame(() => {
@@ -114,6 +154,15 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   const isVideoEnvironment = (path: string | undefined): boolean => {
     if (!path) return false;
     return path.endsWith('.mp4') || path.endsWith('.webm') || path.endsWith('.mov');
+  };
+
+  // Function to trigger environment ready
+  const handleEnvironmentReady = () => {
+    console.log('🎬 PanoramaScene: Environment content loaded and ready');
+    setIsEnvironmentReady(true);
+    if (onEnvironmentReady) {
+      onEnvironmentReady();
+    }
   };
 
   const getEnvironmentProps = () => {
@@ -162,6 +211,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
         <VideoEnvironment 
           src={currentEnvironment} 
           quality="medium"
+          onReady={handleEnvironmentReady}
         />
       ) : (
         <>
@@ -174,20 +224,28 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
               scale: 100,
             }}
           />
-          {/* Fallback environment in case main environment fails */}
-          <Environment
-            preset="sunset"
-            background={false}
-            environmentIntensity={0.5}
-          />
+          {/* For image environments, trigger ready after a short delay */}
+          {isEnvironmentLoading && !isEnvironmentReady && (
+            <ImageEnvironmentReady onReady={handleEnvironmentReady} />
+          )}
         </>
       )}
 
+      {/* KeypointSpheres - only show when environment is fully visible (fade opacity = 0) */}
+      {fadeOpacity.current === 0 && keypoints && keypoints.length > 0 && onStepChange && onTooltipChange && (
+        <KeypointSpheres
+          keypoints={keypoints}
+          environmentId={environmentId}
+          onStepChange={onStepChange}
+          onTooltipChange={onTooltipChange}
+        />
+      )}
+
       {/* Fade overlay mesh */}
-      {/* <mesh ref={fadeMeshRef} position={[0, 1.6, 0]}>
+      <mesh ref={fadeMeshRef} position={[0, 1.6, 0]}>
         <sphereGeometry args={[1, 32, 32]} />
-        <meshBasicMaterial color="white" transparent opacity={0} side={DoubleSide} depthWrite={false}/>
-      </mesh> */}
+        <meshBasicMaterial color="white" transparent opacity={0} side={THREE.DoubleSide} depthTest={false} depthWrite/>
+      </mesh>
     </group>
   );
 };
