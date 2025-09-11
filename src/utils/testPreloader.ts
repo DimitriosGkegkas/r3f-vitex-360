@@ -16,7 +16,7 @@ export const testImagePreloader = () => {
   
   // Group by environment for verification
   const byEnvironment = new Map<string, string[]>();
-  imagePaths.forEach(path => {
+  imagePaths.forEach((path: string) => {
     const envPath = path.split('/').slice(0, -1).join('/');
     if (!byEnvironment.has(envPath)) {
       byEnvironment.set(envPath, []);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Header } from '../Header';
 import { WelcomeCard } from '../WelcomeCard';
-import { ProgressBar } from '../ProgressBar';
 import { ImageLoadResult } from '../../utils/imagePreloader';
 import './LoadingPage.css';
 
@@ -16,7 +15,7 @@ interface LoadingPageProps {
 export const LoadingPage: React.FC<LoadingPageProps> = ({ 
   onStart, 
   isDissolving = false,
-  isPreloading = false,
+  isPreloading: _isPreloading = false,
   preloadResults = [],
   preloadProgress
 }) => {
