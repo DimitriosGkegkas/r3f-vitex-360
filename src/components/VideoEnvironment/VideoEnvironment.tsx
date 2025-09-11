@@ -5,11 +5,13 @@ import { getColorSpaceConfig } from '../../config/colorSpace';
 interface VideoEnvironmentProps {
   src: string;
   quality?: 'low' | 'medium' | 'high'; // Quality preset
+  onReady?: () => void;
 }
 
 const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({ 
   src, 
-  quality = 'medium'
+  quality = 'medium',
+  onReady
 }) => {
   const sphereRef = useRef<THREE.Mesh>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -62,6 +64,18 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
         readyState: video.readyState,
         error: video.error
       });
+    };
+
+    // Add ready event handlers
+    video.oncanplay = () => {
+      console.log('🎬 VideoEnvironment: Video can play, calling onReady');
+      if (onReady) {
+        onReady();
+      }
+    };
+
+    video.onloadeddata = () => {
+      console.log('🎬 VideoEnvironment: Video data loaded');
     };
     
     const t = new THREE.VideoTexture(video);

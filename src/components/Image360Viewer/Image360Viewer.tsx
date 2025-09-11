@@ -6,7 +6,6 @@ import { XR, XRStore } from '@react-three/xr';
 import * as THREE from 'three';
 import { getFloorById, environments, floors } from '../../config';
 import { getColorSpaceConfig, setColorSpaceConfig, vrColorSpaceConfig, defaultColorSpaceConfig } from '../../config/colorSpace';
-import KeypointSpheres from '../KeypointSpheres';
 import ControllerLabels from '../ControllerLabels';
 import VRInfoDisplay from '../ControllerLabels/VRInfoDisplay';
 import PanoramaScene from '../PanoramaScene';
@@ -249,13 +248,14 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
           isPreloading={isPreloading}
           onPreloadComplete={onPreloadComplete}
           onPreloadProgress={onPreloadProgress}
-        />
-        {floor && <KeypointSpheres
+          onEnvironmentReady={() => {
+            console.log('🎬 Image360Viewer: Environment ready callback received');
+          }}
           keypoints={environment?.keypoints || []}
           environmentId={environmentId || ''}
           onStepChange={onStepChange}
           onTooltipChange={onTooltipChange}
-        />}
+        />
         <ControllerLabels
           handedness="right"
           onNextStep={onNext}
