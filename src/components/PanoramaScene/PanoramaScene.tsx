@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Environment } from '@react-three/drei';
+import { Environment, useEnvironment } from '@react-three/drei';
 import { Environment as EnvironmentType } from '../../config';
 import { getColorSpaceConfig } from '../../config/colorSpace';
 import VideoEnvironment from '../VideoEnvironment';
@@ -35,7 +35,7 @@ interface PanoramaSceneProps {
   onTooltipChange?: (tooltip: { title: string; isVisible: boolean } | null) => void;
 }
 
-const PanoramaScene: React.FC<PanoramaSceneProps> = ({ 
+const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   environment,
   isPreloading = false,
   onPreloadComplete,
@@ -49,7 +49,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   const environmentImage = environment?.environmentImage;
   const [isPreloadComplete, setIsPreloadComplete] = useState(false);
   const colorSpaceConfig = getColorSpaceConfig();
-  
+
   // Fade animation state
   const [currentEnvironment, setCurrentEnvironment] = useState(environmentImage);
   const [isEnvironmentLoading, setIsEnvironmentLoading] = useState(false);
@@ -61,7 +61,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   useEffect(() => {
     if (isPreloading && !isPreloadComplete) {
       console.log('🚀 PanoramaScene: Starting image preloading...');
-      
+
       const preloader = new ImagePreloader(
         (progress) => {
           console.log('📊 PanoramaScene: Progress update', progress);
@@ -77,7 +77,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
         (results) => {
           console.log('🎉 PanoramaScene: Preload completed', results);
           setIsPreloadComplete(true);
-          
+
           if (onPreloadComplete) {
             onPreloadComplete(results);
           }
@@ -99,11 +99,11 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   useEffect(() => {
     if (environmentImage !== currentEnvironment) {
       console.log('🔄 PanoramaScene: Environment changing, starting fade animation');
-      
+
       // Set loading state
       setIsEnvironmentLoading(true);
       setIsEnvironmentReady(false);
-      
+
       // Start fade in sequence
       const fadeIn = () => {
         fadeOpacity.current = 0;
@@ -112,16 +112,16 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
           if (fadeOpacity.current >= 1) {
             fadeOpacity.current = 1;
             clearInterval(fadeInInterval);
-            
+
             // Change environment after fade in completes
             setCurrentEnvironment(environmentImage);
-            
+
             // The fade out will be triggered by onEnvironmentReady callback
             // when the environment content is actually loaded
           }
         }, 16); // ~60fps
       };
-      
+
       fadeIn();
     }
   }, [environmentImage, currentEnvironment]);
@@ -130,7 +130,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
   useEffect(() => {
     if (isEnvironmentReady && isEnvironmentLoading) {
       console.log('✅ PanoramaScene: Environment ready, starting fade out');
-      
+
       // Start fade out after environment is ready
       const fadeOutInterval = setInterval(() => {
         fadeOpacity.current -= 0.05; // Adjust speed as needed
@@ -170,18 +170,15 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
       console.log('🌅 PanoramaScene: Using default sunset preset');
       return { preset: 'sunset' as const };
     }
-    
+
     const files = [
       `${currentEnvironment}/panorama.jpg`,
     ];
-    
-    console.log('🖼️ PanoramaScene: Loading environment images:', files);
-    console.log('📁 Environment base path:', currentEnvironment);
-    console.log('🎨 Color space config:', colorSpaceConfig.environment);
-    
-    return { 
-      files,
+
+
+    return {
       // Add VR-specific environment settings with memory optimization
+      files,
       background: true,
       resolution: Math.min(colorSpaceConfig.environment.resolution, 2048), // Limit resolution to prevent memory issues
       environmentIntensity: colorSpaceConfig.environment.environmentIntensity,
@@ -203,8 +200,8 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
         });
         return isVideo;
       })() ? (
-        <VideoEnvironment 
-          src={currentEnvironment} 
+        <VideoEnvironment
+          src={currentEnvironment}
           quality="medium"
           onReady={handleEnvironmentReady}
         />
@@ -213,11 +210,11 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
           {/* Image environment (default) */}
           <Environment
             {...getEnvironmentProps()}
-            ground={{
-              height: 1.7,
-              radius: 60,
-              scale: 100,
-            }}
+          ground={{
+            height: 1.7,
+            radius: 60,
+            scale: 100,
+          }}
           />
           {/* For image environments, trigger ready after a short delay */}
           {isEnvironmentLoading && !isEnvironmentReady && (
@@ -239,7 +236,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
       {/* Fade overlay mesh */}
       <mesh ref={fadeMeshRef} position={[0, 1.6, 0]}>
         <sphereGeometry args={[1, 32, 32]} />
-        <meshBasicMaterial color="white" transparent opacity={0} side={THREE.DoubleSide} depthTest={false} depthWrite/>
+        <meshBasicMaterial color="white" transparent opacity={0} side={THREE.DoubleSide} depthTest={false} depthWrite />
       </mesh>
     </group>
   );
