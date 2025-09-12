@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Canvas, useThree } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { XR, XRStore } from '@react-three/xr';
 // import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';

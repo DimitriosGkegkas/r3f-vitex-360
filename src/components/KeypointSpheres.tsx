@@ -4,7 +4,6 @@ import * as THREE from 'three';
 import { allSteps, Keypoint } from '../config';
 import TeleportMarker from './TeleportMarker';
 import HotspotMarker from './HotspotMarker';
-import { Billboard, Text } from '@react-three/drei';
 
 interface KeypointSpheresProps {
   keypoints: Keypoint[];
