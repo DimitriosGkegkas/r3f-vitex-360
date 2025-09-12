@@ -35,12 +35,13 @@ const App: React.FC = () => {
     total: 0,
     percentage: 0
   });
+  const [showScoreCard, setShowScoreCard] = useState(false);
 
   // Calculate total possible steps
   const totalPossibleSteps = Object.values(floors).reduce((total, floor) => total + floor.steps.length, 0);
 
   // Check if we're at the last step of the last floor
-  const isAtLastStep = currentFloorId === 'packaging' && currentStepId === 'final-inspection';
+  const isAtLastStep = currentFloorId === 'packaging' && currentStepId === 'info_0_4_1';
 
   // Calculate score (visited steps vs total possible steps)
   const visitedCount = visitedSteps.length;
@@ -58,7 +59,7 @@ const App: React.FC = () => {
     // Validate floor ID
     if (floorIdParam && floors[floorIdParam]) {
       setCurrentFloorId(floorIdParam);
-      
+
       // If step ID is provided and valid for this floor, set it
       if (stepIdParam) {
         const floor = floors[floorIdParam];
@@ -73,7 +74,7 @@ const App: React.FC = () => {
         // If no step ID provided, default to first step of the floor
         setCurrentStepId(floors[floorIdParam].steps[0].id);
       }
-      
+
       // If both parameters are provided, start directly in experience mode
       if (floorIdParam && stepIdParam) {
         setCurrentPage('experience');
@@ -94,14 +95,21 @@ const App: React.FC = () => {
     }
   }, [isAtLastStep, currentPage]);
 
+  // Show score card when reaching the last step
+  useEffect(() => {
+    if (isAtLastStep) {
+      setShowScoreCard(true);
+    }
+  }, [isAtLastStep]);
+
   const handleStart = () => {
     console.log('🎯 App: Starting the experience...');
     console.log('📊 App: Preload results:', preloadResults);
     console.log('🖼️ App: Images preloaded:', imagesPreloaded);
-    
+
     // Start dissolve animation
     setIsWelcomeDissolving(true);
-    
+
     // After dissolve animation completes, transition to experience
     setTimeout(() => {
       setCurrentPage('experience');
@@ -123,19 +131,19 @@ const App: React.FC = () => {
     setPreloadResults(results);
     setImagesPreloaded(true);
     setIsPreloading(false);
-    
+
     // Log detailed preload statistics
     const loaded = results.filter(r => r.loaded).length;
     const failed = results.filter(r => !r.loaded).length;
     const total = results.length;
-    
+
     console.log(`📈 App: Preload Statistics - ${loaded}/${total} loaded, ${failed} failed`);
-    
+
     // Log failed images for debugging
     if (failed > 0) {
       console.warn('⚠️ App: Failed to preload images:', results.filter(r => !r.loaded));
     }
-    
+
     // Expose preload results to window for debugging
     (window as any).preloadResults = results;
     (window as any).imagesPreloaded = true;
@@ -148,6 +156,15 @@ const App: React.FC = () => {
     setCurrentFloorId('raw-materials');
     setCurrentStepId('info_5_1_1');
     setCurrentPage('experience');
+    setShowScoreCard(false);
+  };
+
+  const handleShowScoreCard = () => {
+    setShowScoreCard(true);
+  };
+
+  const handleCloseScoreCard = () => {
+    setShowScoreCard(false);
   };
 
   const handleStateChange = (newFloorId: string) => {
@@ -161,18 +178,18 @@ const App: React.FC = () => {
 
   const handleStepChange = (newStepId: string) => {
     setCurrentStepId(newStepId);
-    
+
     // Mark this step as visited
     const newVisitedStep: VisitedStep = {
       floorId: currentFloorId,
       stepId: newStepId
     };
-    
+
     // Check if this step is already visited
     const isAlreadyVisited = visitedSteps.some(
       step => step.floorId === newVisitedStep.floorId && step.stepId === newVisitedStep.stepId
     );
-    
+
     if (!isAlreadyVisited) {
       setVisitedSteps(prev => {
         const newVisitedSteps = [...prev, newVisitedStep];
@@ -187,40 +204,41 @@ const App: React.FC = () => {
   return (
     <div className="App">
       {/* Always render Experience in background */}
-      {currentPage !== 'completion' && (
-        <div className="experience-container">
-          {/* VR Toggle */}
-          <div className="vr-toggle-container">
-            <CustomVRButton xrStore={xrStore} />
-          </div>
 
-          {/* Render VR or Regular Experience */}
-          <Experience
-            xrStore={xrStore}
-            currentFloorId={currentFloorId}
-            currentStepId={currentStepId}
-            onStateChange={handleStateChange}
-            onStepChange={handleStepChange}
-            onTooltipChange={setTooltip}
-            isBackgroundMode={currentPage === 'welcome'}
-            shouldStartVideo={isWelcomeDissolving}
-            isPreloading={isPreloading}
-            onPreloadComplete={handlePreloadComplete}
-            onPreloadProgress={handlePreloadProgress}
-          />
-
-          {/* Render tooltip outside the canvas */}
-          <Tooltip
-            title={tooltip?.title}
-            isVisible={tooltip?.isVisible}
-          />
+      <div className="experience-container">
+        {/* VR Toggle */}
+        <div className="vr-toggle-container">
+          <CustomVRButton xrStore={xrStore} />
         </div>
-      )}
+
+        {/* Render VR or Regular Experience */}
+        <Experience
+          xrStore={xrStore}
+          currentFloorId={currentFloorId}
+          currentStepId={currentStepId}
+          onStateChange={handleStateChange}
+          onStepChange={handleStepChange}
+          onTooltipChange={setTooltip}
+          isBackgroundMode={currentPage === 'welcome'}
+          shouldStartVideo={isWelcomeDissolving}
+          isPreloading={isPreloading}
+          onPreloadComplete={handlePreloadComplete}
+          onPreloadProgress={handlePreloadProgress}
+          onShowScoreCard={handleShowScoreCard}
+        />
+
+        {/* Render tooltip outside the canvas */}
+        <Tooltip
+          title={tooltip?.title}
+          isVisible={tooltip?.isVisible}
+        />
+      </div>
+
 
       {/* Show WelcomeCard on top when welcome */}
       {currentPage === 'welcome' && (
-        <LoadingPage 
-          onStart={handleStart} 
+        <LoadingPage
+          onStart={handleStart}
           isDissolving={isWelcomeDissolving}
           isPreloading={isPreloading}
           preloadResults={preloadResults}
@@ -228,15 +246,26 @@ const App: React.FC = () => {
         />
       )}
 
-      {/* Show completion page */}
-      {currentPage === 'completion' && (
-        <div className="completion-container">
-          <ScoreCard
-            visitedCount={visitedCount}
-            totalPossibleSteps={totalPossibleSteps}
-            dailyProduction={dailyProduction}
-            onRestart={handleRestart}
-          />
+      {/* Show score card overlay when showScoreCard is true */}
+      {showScoreCard && (
+        <div className="score-card-overlay">
+          <div className="score-card-container">
+            <button
+              className="score-card-close"
+              onClick={handleCloseScoreCard}
+              aria-label="Close score card"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+            <ScoreCard
+              visitedCount={visitedCount}
+              totalPossibleSteps={totalPossibleSteps}
+              dailyProduction={dailyProduction}
+              onRestart={handleRestart}
+            />
+          </div>
         </div>
       )}
     </div>

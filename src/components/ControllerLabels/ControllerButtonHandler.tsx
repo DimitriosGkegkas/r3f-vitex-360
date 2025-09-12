@@ -15,7 +15,7 @@ export const useControllerButtonEvents = (
     const buttons = state.inputSource.gamepad.buttons
     
     // Check each button for press/release events
-    buttons.forEach((button, index) => {
+    buttons.forEach((button: GamepadButton, index: number) => {
       if (button.pressed && !button.touched) {
         // Button was just pressed
         const buttonName = getButtonName(index, handedness)
@@ -42,7 +42,7 @@ export const useControllerButtonEvents = (
 
 // Helper function to get button names based on index and handedness
 const getButtonName = (index: number, handedness: 'left' | 'right'): string => {
-  const buttonNames = {
+  const buttonNames: Record<'left' | 'right', Record<number, string>> = {
     left: {
       0: 'Trigger',
       1: 'Grip', 
@@ -97,7 +97,7 @@ export const detectControllerType = (gamepad: Gamepad | null): string => {
 
 // Button mapping for different controller types
 export const getButtonMapping = (controllerType: string, handedness: 'left' | 'right') => {
-  const mappings = {
+  const mappings: Record<string, Record<'left' | 'right', any>> = {
     oculus: {
       left: {
         trigger: { index: 0, position: [0, 0.02, 0.05], color: 'white', label: 'Trigger' },

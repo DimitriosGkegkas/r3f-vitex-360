@@ -3,23 +3,23 @@ import './VideoBackground.css';
 
 interface VideoBackgroundProps {
   videoSrc: string;
-  autoplay?: boolean;
   muted?: boolean;
   loop?: boolean;
   className?: string;
   onVideoEnd?: () => void;
   onSkip?: () => void;
+  showVideo?: boolean;
   showSkipButton?: boolean;
 }
 
 export const VideoBackground: React.FC<VideoBackgroundProps> = ({
   videoSrc,
-  autoplay = true,
   muted = true,
   loop = true,
   className = '',
   onVideoEnd,
   onSkip,
+  showVideo,
   showSkipButton = false
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -54,6 +54,21 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
     }
   }, []);
 
+  // Effect to handle showVideo prop changes
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video && showVideo) {
+      // When showVideo becomes true, start playing the video
+      console.log('🎬 VideoBackground: Starting video playback');
+      video.play().catch(error => {
+        console.error('Error playing video:', error);
+      });
+    } else if (video && !showVideo) {
+      // When showVideo becomes false, pause the video
+      console.log('🎬 VideoBackground: Pausing video playback');
+      video.pause();
+    }
+  }, [showVideo]);
   if (!isVisible) {
     return null;
   }
@@ -63,7 +78,7 @@ export const VideoBackground: React.FC<VideoBackgroundProps> = ({
       <video
         ref={videoRef}
         src={videoSrc}
-        autoPlay={autoplay}
+        autoPlay={false}
         muted={muted}
         loop={loop}
         playsInline

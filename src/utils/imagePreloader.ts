@@ -18,8 +18,8 @@ export interface PreloadProgress {
 export class ImagePreloader {
   private loadedImages: Map<string, ImageLoadResult> = new Map();
   private onProgress?: (progress: PreloadProgress) => void;
-  private onComplete?: (results: ImageLoadResult[]) => void;
-  private onError?: (error: string) => void;
+  private _onComplete?: (results: ImageLoadResult[]) => void;
+  private _onError?: (error: string) => void;
 
   constructor(
     onProgress?: (progress: PreloadProgress) => void,
@@ -27,14 +27,14 @@ export class ImagePreloader {
     onError?: (error: string) => void
   ) {
     this.onProgress = onProgress;
-    this.onComplete = onComplete;
-    this.onError = onError;
+    this._onComplete = onComplete;
+    this._onError = onError;
   }
 
   /**
    * Get all unique environment image paths that need to be preloaded
    */
-  private getAllImagePaths(): string[] {
+  private _getAllImagePaths(): string[] {
     const imagePaths: string[] = [];
     
     // Get all unique environment image base paths
@@ -62,7 +62,7 @@ export class ImagePreloader {
   /**
    * Load a single image and return a promise
    */
-  private loadImage(url: string): Promise<ImageLoadResult> {
+  private _loadImage(url: string): Promise<ImageLoadResult> {
     return new Promise((resolve) => {
       const startTime = Date.now();
       const img = new Image();
@@ -104,75 +104,75 @@ export class ImagePreloader {
    * Preload all environment images
    */
   public async preloadAllImages(): Promise<ImageLoadResult[]> {
-    // console.log('🚀 ImagePreloader: Starting preload process...');
+    console.log('🚀 ImagePreloader: Starting preload process...');
     
-    // const imagePaths = this.getAllImagePaths();
-    // const totalImages = imagePaths.length;
-    // let loadedCount = 0;
-    // let failedCount = 0;
+    const imagePaths = this._getAllImagePaths();
+    const totalImages = imagePaths.length;
+    let loadedCount = 0;
+    let failedCount = 0;
 
-    // // Update progress with initial state
-    // this.updateProgress(totalImages, 0, 0, '');
+    // Update progress with initial state
+    this._updateProgress(totalImages, 0, 0, '');
 
-    // try {
-    //   // Load images in batches to avoid overwhelming the browser
-    //   const batchSize = 6; // Load 6 images at a time (one environment)
-    //   const results: ImageLoadResult[] = [];
+    try {
+      // Load images in batches to avoid overwhelming the browser
+      const batchSize = 6; // Load 6 images at a time (one environment)
+      const results: ImageLoadResult[] = [];
 
-    //   for (let i = 0; i < imagePaths.length; i += batchSize) {
-    //     const batch = imagePaths.slice(i, i + batchSize);
-    //     const batchPromises = batch.map(url => this.loadImage(url));
+      for (let i = 0; i < imagePaths.length; i += batchSize) {
+        const batch = imagePaths.slice(i, i + batchSize);
+        const batchPromises = batch.map(url => this._loadImage(url));
         
-    //     console.log(`📦 Loading batch ${Math.floor(i / batchSize) + 1}:`, batch);
+        console.log(`📦 Loading batch ${Math.floor(i / batchSize) + 1}:`, batch);
         
-    //     const batchResults = await Promise.all(batchPromises);
-    //     results.push(...batchResults);
+        const batchResults = await Promise.all(batchPromises);
+        results.push(...batchResults);
         
-    //     // Update counts
-    //     batchResults.forEach(result => {
-    //       if (result.loaded) {
-    //         loadedCount++;
-    //       } else {
-    //         failedCount++;
-    //       }
-    //     });
+        // Update counts
+        batchResults.forEach(result => {
+          if (result.loaded) {
+            loadedCount++;
+          } else {
+            failedCount++;
+          }
+        });
 
-    //     // Update progress
-    //     this.updateProgress(totalImages, loadedCount, failedCount, batch[0]);
+        // Update progress
+        this._updateProgress(totalImages, loadedCount, failedCount, batch[0]);
         
-    //     // Small delay between batches to prevent overwhelming
-    //     if (i + batchSize < imagePaths.length) {
-    //       await new Promise(resolve => setTimeout(resolve, 100));
-    //     }
-    //   }
+        // Small delay between batches to prevent overwhelming
+        if (i + batchSize < imagePaths.length) {
+          await new Promise(resolve => setTimeout(resolve, 100));
+        }
+      }
 
-    //   console.log('🎉 ImagePreloader: Preload completed!');
-    //   console.log(`📊 Results: ${loadedCount} loaded, ${failedCount} failed out of ${totalImages} total`);
+      console.log('🎉 ImagePreloader: Preload completed!');
+      console.log(`📊 Results: ${loadedCount} loaded, ${failedCount} failed out of ${totalImages} total`);
       
-    //   // Log detailed results for debugging
-    //   this.logDetailedResults(results);
+      // Log detailed results for debugging
+      this._logDetailedResults(results);
       
-    //   if (this.onComplete) {
-    //     this.onComplete(results);
-    //   }
+      if (this._onComplete) {
+        this._onComplete(results);
+      }
 
-    //   return results;
-    // } catch (error) {
-    //   const errorMessage = `Preload failed: ${error}`;
-    //   console.error('💥 ImagePreloader Error:', errorMessage);
+      return results;
+    } catch (error) {
+      const errorMessage = `Preload failed: ${error}`;
+      console.error('💥 ImagePreloader Error:', errorMessage);
       
-    //   if (this.onError) {
-    //     this.onError(errorMessage);
-    //   }
+      if (this._onError) {
+        this._onError(errorMessage);
+      }
       
-    //   throw error;
-    // }
+      throw error;
+    }
   }
 
   /**
    * Update progress and call progress callback
    */
-  private updateProgress(total: number, loaded: number, failed: number, currentImage: string) {
+  private _updateProgress(total: number, loaded: number, failed: number, currentImage: string) {
     const percentage = Math.round((loaded / total) * 100);
     const progress: PreloadProgress = {
       total,
@@ -192,7 +192,7 @@ export class ImagePreloader {
   /**
    * Log detailed results for debugging
    */
-  private logDetailedResults(results: ImageLoadResult[]) {
+  private _logDetailedResults(results: ImageLoadResult[]) {
     console.group('🔍 Detailed Preload Results');
     
     const loaded = results.filter(r => r.loaded);

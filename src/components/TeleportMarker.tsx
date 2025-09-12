@@ -175,7 +175,7 @@ function EnergyPillar({ height = 2, radius = 0.3, hovered = false, clicked = fal
         opacity={config.innerOpacity}
         power={1.2}
         transparent
-        depthWrite={false}
+        // depthWrite={false}
         side={THREE.DoubleSide}
         blending={THREE.AdditiveBlending}
       />

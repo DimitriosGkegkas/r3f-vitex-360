@@ -92,7 +92,7 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, teleporting, onCl
   return (
     <group position={position as [number, number, number]}  >
       {/* Main sphere */}
-      {teleporting ? <TeleportMarker color={0x1088F4} onPointerOver={() => setHovered(true)}
+      {teleporting ? <TeleportMarker onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
         onClick={() => onClick(step.targetStep)} />
         :
