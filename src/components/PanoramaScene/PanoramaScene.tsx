@@ -172,12 +172,7 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
     }
     
     const files = [
-      `${currentEnvironment}/px.jpg`,
-      `${currentEnvironment}/nx.jpg`,
-      `${currentEnvironment}/py.jpg`,
-      `${currentEnvironment}/ny.jpg`,
-      `${currentEnvironment}/pz.jpg`,
-      `${currentEnvironment}/nz.jpg`,
+      `${currentEnvironment}/panorama.jpg`,
     ];
     
     console.log('🖼️ PanoramaScene: Loading environment images:', files);

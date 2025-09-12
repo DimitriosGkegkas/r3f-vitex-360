@@ -144,7 +144,7 @@ const VideoEnvironment: React.FC<VideoEnvironmentProps> = React.memo(({
   }, []);
 
   return (
-    <mesh ref={sphereRef} rotation={[0, Math.PI, 0]} scale={1}>
+    <mesh ref={sphereRef} rotation={[0, Math.PI, 0]} scale={[1, 1, -1]}>
       <sphereGeometry args={[50, settings.segments[0], settings.segments[1]]} />
       <meshBasicMaterial 
         map={videoTex} 

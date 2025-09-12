@@ -38,8 +38,11 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId }) =>
 
       const sensitivity = 0.002;
 
-      targetYaw.current -= deltaX * sensitivity; // left/right
-      targetPitch.current -= deltaY * sensitivity; // up/down
+      targetYaw.current += deltaX * sensitivity; // left/right
+      targetPitch.current += deltaY * sensitivity; // up/down
+
+      // targetYaw.current = Math.PI/2;
+      // targetPitch.current = 0
 
       // clamp target pitch
       const limit = Math.PI / 2 - 0.1;
@@ -71,7 +74,7 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId }) =>
           targetPitch.current = (environment.cameraAngle * Math.PI) / 180;
         }
         if (environment.cameraYaw !== undefined) {
-          targetYaw.current = (environment.cameraYaw * Math.PI) / 180;
+          targetYaw.current = 3*Math.PI/2 - (environment.cameraYaw * Math.PI) / 180;
         }
       } else {
         // Environment didn't change but step might have: look for keypoint with matching targetStep
@@ -79,7 +82,7 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId }) =>
           const keypoint = environment.keypoints.find(kp => kp.targetStep === stepId);
           if (keypoint) {
             targetPitch.current = -(keypoint.pitch * Math.PI) / 180;
-            targetYaw.current = (keypoint.yaw * Math.PI) / 180;
+            targetYaw.current = 3*Math.PI/2 - (keypoint.yaw * Math.PI) / 180;
           }
         }
       }

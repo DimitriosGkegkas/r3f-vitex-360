@@ -200,7 +200,8 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
         <XR store={xrStore}>
           <RendererSettings colorSpaceConfig={colorSpaceConfig} />
           <PerspectiveCamera
-            position={[0, 1.6, 0]} scale={[1, 1, -1]}
+            scale={[1, 1, 1]}
+            position={[0, 1.6, 0]}
             ref={cameraRef}
             makeDefault
             fov={85}

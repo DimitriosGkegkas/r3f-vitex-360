@@ -58,7 +58,7 @@ const HotspotMarker: React.FC<HotspotMarkerProps> = ({
           color={config.outerColor} 
           transparent 
           opacity={config.outerOpacity}
-          // depthWrite={true}
+          depthWrite={false}
         />
       </Sphere>
       
@@ -75,7 +75,7 @@ const HotspotMarker: React.FC<HotspotMarkerProps> = ({
           color={config.innerColor} 
           transparent 
           opacity={config.innerOpacity}
-          // depthWrite={false} // Disable depth writing
+          depthWrite={false} // Disable depth writing
           // depthTest={false}  // Disable depth testing so it always renders on top
         />
       </Sphere>
