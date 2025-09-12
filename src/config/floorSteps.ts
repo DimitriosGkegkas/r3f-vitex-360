@@ -179,13 +179,13 @@ export const floors: Record<string, Floor> = {
       //   stepName: 'Τέταρτο',
       //   environmentId: 'sorting-env_4_4'
       // },
-      // {
-      //   id: 'info_4_4_1',
-      //   title: 'Big bag station.',
-      //   description: 'Στο Big Bag Station γεμίζουν τα μεγάλα σακιά με τις απαραίτητες ποσότητες υλικών, έτοιμα να μπουν στη ροή της παραγωγής με ταχύτητα και ακρίβεια.',
-      //   stepName: 'Τέταρτο',
-      //   environmentId: 'sorting-env_4_4'
-      // },
+      {
+        id: 'info_4_4_1',
+        title: 'Big bag station.',
+        description: 'Στο Big Bag Station γεμίζουν τα μεγάλα σακιά με τις απαραίτητες ποσότητες υλικών, έτοιμα να μπουν στη ροή της παραγωγής με ταχύτητα και ακρίβεια.',
+        stepName: 'Τέταρτο',
+        environmentId: 'sorting-env_4_4'
+      },
       {
         id: 'info_4_4_2',
         title: '26 Φίλτρα συστήματος αποκονίωσης',
@@ -348,13 +348,13 @@ export const floors: Record<string, Floor> = {
         stepName: 'Πρώτο',
         environmentId: 'packaging-env_0_1'
       },
-      // {
-      //   id: 'info_0_1_3',
-      //   title: 'Αποθήκη',
-      //   description: 'Παλετοθέσεις αποθήκευσης αναλώσιμων και Α υλών.',
-      //   stepName: 'Πρώτο',
-      //   environmentId: 'packaging-env_0_1'
-      // },
+      {
+        id: 'info_0_1_3',
+        title: '110 Παλετοθέσεις αποθήκευσης αναλώσιμων και Α υλών.',
+        description: 'Με 110 παλετοθέσεις για αναλώσιμα και πρώτες ύλες, ο χώρος προσφέρει μεγάλη αποθηκευτική ικανότητα και απρόσκοπτη τροφοδοσία της παραγωγής.',
+        stepName: 'Πρώτο',
+        environmentId: 'packaging-env_0_1'
+      },
       {
         id: 'info_0_1_1',
         title: 'Χώρος γραφείων',

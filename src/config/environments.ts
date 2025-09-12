@@ -381,15 +381,15 @@ export const environments: Record<string, Environment> = {
         targetStep: 'info_4_3_1',
         title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_3'
       },
-      // {
-      //   id: 'info_4_4_1-kp',
-      //   yaw: 230,
-      //   pitch: -20,
-      //   zoom: 2.5,
-      //   targetFloor: 'sorting',
-      //   targetStep: 'info_4_4_1',
-      //   title: 'ΜΗΧΑΝΗΜΑ ΓΚΡΙ ΜΙΚΡΟ'
-      // },
+      {
+        id: 'info_4_4_1-kp',
+        yaw: -130,
+        pitch: -20,
+        zoom: 2.5,
+        targetFloor: 'sorting',
+        targetStep: 'info_4_4_1',
+        title: 'Big bag station'
+      },
       {
         id: 'info_4_4_2-kp',
         yaw: -50,
@@ -668,22 +668,22 @@ export const environments: Record<string, Environment> = {
       },
       {
         id: 'info_0_1_2-kp',
-        yaw: 122,
-        pitch: -30,
-        zoom: 2,
+        yaw: 137,
+        pitch: -35,
+        zoom: 2.2,
         targetFloor: 'packaging',
         targetStep: 'step_0_3_1_vid',
         title: 'Ταινιόδρομος μεταφοράς ετοίμων προ παλετοποίηση'
       },
-      // {
-      //   id: 'info_0_1_3-kp',
-      //   yaw: 30,
-      //   pitch: 0,
-      //   zoom: 2.5,
-      //   targetFloor: 'packaging',
-      //   targetStep: 'info_0_1_3',
-      //   title: 'Αποθήκη'
-      // }
+      {
+        id: 'info_0_1_3-kp',
+        yaw: 30,
+        pitch: 0,
+        zoom: 2.5,
+        targetFloor: 'packaging',
+        targetStep: 'info_0_1_3',
+        title: '110 Παλετοθέσεις αποθήκευσης αναλώσιμων και Α υλών.'
+      }
     ]
   },
   'packaging-env_0_2': {
