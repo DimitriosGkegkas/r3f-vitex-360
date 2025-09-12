@@ -22,7 +22,7 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_1': {
     id: 'raw-materials-env_5_1',
     environmentImage: '/cubemap/raw-materials/5_1',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 80,
     keypoints: [
       {
@@ -57,7 +57,7 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_2': {
     id: 'raw-materials-env_5_2',
     environmentImage: '/cubemap/raw-materials/5_2',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 30,
     keypoints: [
       {
@@ -92,7 +92,7 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_3': {
     id: 'raw-materials-env_5_3',
     environmentImage: '/cubemap/raw-materials/5_3',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 120,
     keypoints: [
       {
@@ -128,7 +128,7 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_4': {
     id: 'raw-materials-env_5_4',
     environmentImage: '/cubemap/raw-materials/5_4',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 90,
     keypoints: [
       {
@@ -217,7 +217,7 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_6': {
     id: 'raw-materials-env_5_6',
     environmentImage: '/cubemap/raw-materials/5_6',
-    cameraAngle: 0,
+    cameraAngle: -10,
     cameraYaw: 0,
     keypoints: [
       {
@@ -255,7 +255,7 @@ export const environments: Record<string, Environment> = {
   'sorting-env_4_1': {
     id: 'sorting-env_4_1',
     environmentImage: '/cubemap/sorting/4_1',
-    cameraAngle: 0,
+    cameraAngle: 10,
     cameraYaw: 50,
     keypoints: [
       // {
@@ -325,7 +325,7 @@ export const environments: Record<string, Environment> = {
   'sorting-env_4_3': {
     id: 'sorting-env_4_3',
     environmentImage: '/cubemap/sorting/4_3',
-    cameraAngle: 0,
+    cameraAngle: -10,
     cameraYaw: 50,
     keypoints: [
       {
@@ -360,7 +360,7 @@ export const environments: Record<string, Environment> = {
   'sorting-env_4_4': {
     id: 'sorting-env_4_4',
     environmentImage: '/cubemap/sorting/4_4',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: -50,
     keypoints: [
       {
@@ -408,7 +408,7 @@ export const environments: Record<string, Environment> = {
   'quantities-env_3_1': {
     id: 'quantities-env_3_1',
     environmentImage: '/cubemap/quantities/3_1',
-    cameraAngle: 0,
+    cameraAngle: -10,
     cameraYaw: -100,
     keypoints: [
       {
@@ -443,8 +443,8 @@ export const environments: Record<string, Environment> = {
   'quantities-env_3_2': {
     id: 'quantities-env_3_2',
     environmentImage: '/cubemap/quantities/3_2',
-    cameraAngle: 15,
-    cameraYaw: 0,
+    cameraAngle: -10,
+    cameraYaw: -50,
     keypoints: [
       {
         id: 'step_3_1-kp',
@@ -478,13 +478,13 @@ export const environments: Record<string, Environment> = {
   'quantities-env_3_3': {
     id: 'quantities-env_3_3',
     environmentImage: '/cubemap/quantities/3_3',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 190,
     keypoints: [
       {
         id: 'step_3_2-kp',
-        yaw: 75,
-        pitch: 0,
+        yaw: 115,
+        pitch: -20,
         zoom: 2,
         targetFloor: 'quantities',
         targetStep: 'info_3_2_1',
@@ -507,7 +507,7 @@ export const environments: Record<string, Environment> = {
   'secrets-env_2_1': {
     id: 'secrets-env_2_1',
     environmentImage: '/cubemap/secrets/2_1',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 240,
     keypoints: [
       {
@@ -533,7 +533,7 @@ export const environments: Record<string, Environment> = {
   'secrets-env_2_2': {
     id: 'secrets-env_2_2',
     environmentImage: '/cubemap/secrets/2_2',
-    cameraAngle: 5,
+    cameraAngle: -5,
     cameraYaw: 100,
     keypoints: [
       {
@@ -563,7 +563,7 @@ export const environments: Record<string, Environment> = {
   'mixing-env_1_1': {
     id: 'mixing-env_1_1',
     environmentImage: '/cubemap/mixing/1_1',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 150,
     keypoints: [
       {
@@ -598,7 +598,7 @@ export const environments: Record<string, Environment> = {
   'mixing-env_1_2': {
     id: 'mixing-env_1_2',
     environmentImage: '/cubemap/mixing/1_2',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: 120,
     keypoints: [
       {
@@ -627,7 +627,7 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_1': {
     id: 'packaging-env_0_1',
     environmentImage: '/cubemap/packaging/0_1',
-    cameraAngle: 10,
+    cameraAngle: -10,
     cameraYaw: -10,
     keypoints: [
       {
@@ -689,7 +689,7 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_2': {
     id: 'packaging-env_0_2',
     environmentImage: '/cubemap/packaging/0_2',
-    cameraAngle: 0,
+    cameraAngle: -10,
     cameraYaw: 0,
     keypoints: [
       {
@@ -715,12 +715,12 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_2_video': {
     id: 'packaging-env_0_2_video',
     environmentImage: '/video/0_2.mp4',
-    cameraAngle: 10,
-    cameraYaw: 60,
+    cameraAngle: -10,
+    cameraYaw: -60,
     keypoints: [
       {
         id: 'step_0_1-kp',
-        yaw: 250,
+        yaw: 180,
         pitch: -40,
         zoom: 1.5,
         targetFloor: 'packaging',
@@ -732,8 +732,8 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_3': {
     id: 'packaging-env_0_3',
     environmentImage: '/cubemap/packaging/0_3',
-    cameraAngle: 0,
-    cameraYaw: 35,
+    cameraAngle: -10,
+    cameraYaw: 45,
     keypoints: [
       {
         id: 'step_0_1-kp',
@@ -767,12 +767,12 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_3_video': {
     id: 'packaging-env_0_3_video',
     environmentImage: '/video/0_3.mp4',
-    cameraAngle: 0,
-    cameraYaw: 35,
+    cameraAngle: -10,
+    cameraYaw: -135,
     keypoints: [
       {
         id: 'step_0_1-kp',
-        yaw: 80,
+        yaw: -10,
         pitch: -50,
         zoom: 1.5,
         targetFloor: 'packaging',
@@ -784,8 +784,8 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_3_1_video': {
     id: 'packaging-env_0_3_1_video',
     environmentImage: '/video/0_3_1.mp4',
-    cameraAngle: 10,
-    cameraYaw: 225,
+    cameraAngle: -10,
+    cameraYaw: 155,
     keypoints: [
       {
         id: 'step_0_1-kp',
@@ -801,7 +801,7 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_4': {
     id: 'packaging-env_0_4',
     environmentImage: '/cubemap/packaging/0_4',
-    cameraAngle: 0,
+    cameraAngle: -10,
     cameraYaw: -90,
     keypoints: [
       {
