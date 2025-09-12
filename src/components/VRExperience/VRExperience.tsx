@@ -19,20 +19,24 @@ export const CustomVRButton: React.FC<{ xrStore: XRStore }> = ({ xrStore }) => {
     const handleVRButtonClick = async () => {
         if (isVRSupported && !isInVR) {
             try {
+                console.log('🥽 Attempting to enter VR...');
                 await xrStore.enterVR();
                 setIsInVR(true);
-                console.log('VR session started successfully');
+                console.log('✅ VR session started successfully');
             } catch (error) {
-                console.error('Failed to enter VR:', error);
+                console.error('❌ Failed to enter VR:', error);
                 setIsInVR(false);
+                // Show user-friendly error message
+                alert('Failed to enter VR mode. Please ensure your VR headset is connected and try again.');
             }
         } else if (isInVR) {
             try {
+                console.log('🖥️ Exiting VR...');
                 await xrStore.exitVR();
                 setIsInVR(false);
-                console.log('VR session ended');
+                console.log('✅ VR session ended');
             } catch (error) {
-                console.error('Failed to exit VR:', error);
+                console.error('❌ Failed to exit VR:', error);
             }
         }
     };

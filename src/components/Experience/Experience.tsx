@@ -22,6 +22,7 @@ interface ExperienceProps {
   isPreloading?: boolean;
   onPreloadComplete?: (results: ImageLoadResult[]) => void;
   onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
+  onShowScoreCard?: () => void;
 }
 
 export const Experience: React.FC<ExperienceProps> = ({
@@ -35,7 +36,8 @@ export const Experience: React.FC<ExperienceProps> = ({
   shouldStartVideo = false,
   isPreloading = false,
   onPreloadComplete,
-  onPreloadProgress
+  onPreloadProgress,
+  onShowScoreCard
 }) => {
   // State for video visibility
   const [showVideo, setShowVideo] = useState(!isBackgroundMode);
@@ -86,26 +88,35 @@ export const Experience: React.FC<ExperienceProps> = ({
   // Effect to start video when shouldStartVideo becomes true
   React.useEffect(() => {
     if (shouldStartVideo && !videoStarted) {
+      console.log('🎬 Experience: Starting video - shouldStartVideo:', shouldStartVideo, 'videoStarted:', videoStarted);
       setVideoStarted(true);
       setShowVideo(true);
     }
   }, [shouldStartVideo, videoStarted]);
 
+  // Effect to ensure video starts when showVideo becomes true
+  React.useEffect(() => {
+    if (showVideo && videoStarted) {
+      // Video will be controlled by VideoBackground component
+      console.log('🎬 Experience: Video should start playing - showVideo:', showVideo, 'videoStarted:', videoStarted);
+    }
+  }, [showVideo, videoStarted]);
+
   return (
 
     <div className={`experience-page ${isBackgroundMode ? 'background-mode' : ''}`}>
-      {showVideo && (
-        <VideoBackground
-          videoSrc="/video/intro_drone.mp4"
-          className="loading-page-bg"
-          autoplay={videoStarted}
-          muted={true}
-          loop={false}
-          onVideoEnd={handleVideoEnd}
-          onSkip={handleVideoSkip}
-          showSkipButton={!isBackgroundMode}
-        />
-      )}
+
+      <VideoBackground
+        videoSrc="/video/intro_drone.mp4"
+        className="loading-page-bg"
+        muted={true}
+        loop={false}
+        onVideoEnd={handleVideoEnd}
+        onSkip={handleVideoSkip}
+        showSkipButton={!isBackgroundMode}
+        showVideo={showVideo}
+      />
+
       <Image360Viewer
         currentFloorId={currentFloorId}
         currentStepId={currentStepId}
@@ -115,6 +126,7 @@ export const Experience: React.FC<ExperienceProps> = ({
         onStepChange={onStepChange}
         onFloorChange={onStateChange}
         onNext={canGoNext() ? () => handleStepChange('next') : undefined}
+        onPrevious={canGoPrevious() ? () => handleStepChange('prev') : undefined}
         isPreloading={isPreloading}
         onPreloadComplete={onPreloadComplete}
         onPreloadProgress={onPreloadProgress}
@@ -143,13 +155,14 @@ export const Experience: React.FC<ExperienceProps> = ({
         </div>
       )}
 
-      <Menu 
+      <Menu
         hideFloorsButton={showVideo}
         currentFloorId={currentFloorId}
         floors={floors}
         floorOrder={floorOrder}
         onStateChange={onStateChange}
         canGoPrevious={canGoPrevious}
+        onShowScoreCard={onShowScoreCard}
       />
     </div>
   );

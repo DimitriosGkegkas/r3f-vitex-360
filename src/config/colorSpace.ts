@@ -47,9 +47,9 @@ export interface ColorSpaceConfig {
 // Default configuration optimized for realism
 export const defaultColorSpaceConfig: ColorSpaceConfig = {
   renderer: {
-    outputColorSpace: 'srgb',
-    toneMapping: 'ACESFilmicToneMapping',
-    toneMappingExposure: 1.0,
+    outputColorSpace: 'srgb', // | 'srgb-linear' | 'display-p3' | 'rec2020'
+    toneMapping: 'LinearToneMapping', // Changed from ACESFilmicToneMapping for better compatibility
+    toneMappingExposure: 1,
     physicallyCorrectLights: true,
   },
   
@@ -145,21 +145,21 @@ export const vrColorSpaceConfig: ColorSpaceConfig = {
   ...defaultColorSpaceConfig,
   renderer: {
     ...defaultColorSpaceConfig.renderer,
-    outputColorSpace: 'srgb-linear', // Better for VR displays
-    toneMapping: 'LinearToneMapping', // More predictable in VR
-    toneMappingExposure: 1.2, // Slightly brighter for VR
+    outputColorSpace: 'srgb', // Use sRGB for better VR compatibility
+    toneMapping: 'ReinhardToneMapping', // Use compatible tone mapping
+    toneMappingExposure: 1.5, // Brighter for VR
     physicallyCorrectLights: true,
   },
   environment: {
     ...defaultColorSpaceConfig.environment,
     resolution: 2048, // Balanced quality/performance for VR
-    environmentIntensity: 1.1, // Slightly more intense for VR
+    environmentIntensity: 1.3, // More intense for VR
   },
   videoEnvironment: {
     ...defaultColorSpaceConfig.videoEnvironment,
-    colorSpace: 'srgb-linear', // Better for VR video
+    colorSpace: 'srgb', // Use sRGB for VR video
     toneMapped: true,
-    encoding: 'LinearEncoding', // Better for VR
+    encoding: 'sRGBEncoding', // Use sRGB encoding for VR
   },
 };
 

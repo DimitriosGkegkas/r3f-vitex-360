@@ -9,14 +9,14 @@ export const testImagePreloader = () => {
   const preloader = new ImagePreloader();
   
   // Access private method for testing (we'll need to make it public or create a test method)
-  const imagePaths = (preloader as any).getAllImagePaths();
+  const imagePaths = (preloader as any)._getAllImagePaths();
   
   console.log('📁 Found image paths:', imagePaths);
   console.log('📊 Total images to load:', imagePaths.length);
   
   // Group by environment for verification
   const byEnvironment = new Map<string, string[]>();
-  imagePaths.forEach(path => {
+  imagePaths.forEach((path: string) => {
     const envPath = path.split('/').slice(0, -1).join('/');
     if (!byEnvironment.has(envPath)) {
       byEnvironment.set(envPath, []);

@@ -1,11 +1,13 @@
 import React from 'react'
-import { XR } from '@react-three/xr'
+import { XR, createXRStore } from '@react-three/xr'
 import ControllerLabels, { useControllerButtonEvents } from './index'
 
 // Example showing how to integrate controller labels with button handling
 export const VRExperienceWithControllerLabels: React.FC = () => {
+  // Create XR store for the example
+  const xrStore = React.useMemo(() => createXRStore(), []);
   // Handle button events for the right controller
-  const handleRightButtonPress = (buttonIndex: number, buttonName: string) => {
+  const handleRightButtonPress = (_buttonIndex: number, buttonName: string) => {
     console.log(`Right controller button pressed: ${buttonName}`)
     
     // Add your button handling logic here
@@ -28,7 +30,7 @@ export const VRExperienceWithControllerLabels: React.FC = () => {
     }
   }
 
-  const handleLeftButtonPress = (buttonIndex: number, buttonName: string) => {
+  const handleLeftButtonPress = (_buttonIndex: number, buttonName: string) => {
     console.log(`Left controller button pressed: ${buttonName}`)
     
     // Add your button handling logic here
@@ -53,7 +55,7 @@ export const VRExperienceWithControllerLabels: React.FC = () => {
   useControllerButtonEvents('left', handleLeftButtonPress)
 
   return (
-    <XR>
+    <XR store={xrStore}>
       {/* Your existing VR content goes here */}
       
       {/* Add controller labels */}
