@@ -45,12 +45,9 @@ export class ImagePreloader {
       }
     });
 
-    // For each environment path, add all 6 cubemap faces
+    // For each environment path, add the panorama image
     environmentPaths.forEach(basePath => {
-      const faces = ['px', 'nx', 'py', 'ny', 'pz', 'nz'];
-      faces.forEach(face => {
-        imagePaths.push(`${basePath}/${face}.jpg`);
-      });
+      imagePaths.push(`${basePath}/panorama.jpg`);
     });
 
     console.log('🔍 ImagePreloader: Found', imagePaths.length, 'images to preload');
@@ -116,7 +113,7 @@ export class ImagePreloader {
 
     try {
       // Load images in batches to avoid overwhelming the browser
-      const batchSize = 6; // Load 6 images at a time (one environment)
+      const batchSize = 1; // Load 1 image at a time (one panorama per environment)
       const results: ImageLoadResult[] = [];
 
       for (let i = 0; i < imagePaths.length; i += batchSize) {
