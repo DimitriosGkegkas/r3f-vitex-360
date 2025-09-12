@@ -32,7 +32,7 @@ export const CustomVRButton: React.FC<{ xrStore: XRStore }> = ({ xrStore }) => {
         } else if (isInVR) {
             try {
                 console.log('🖥️ Exiting VR...');
-                await xrStore.exitVR();
+                await xrStore.getState().session.end();
                 setIsInVR(false);
                 console.log('✅ VR session ended');
             } catch (error) {
