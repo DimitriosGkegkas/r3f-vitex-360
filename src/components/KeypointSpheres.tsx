@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { allSteps, Keypoint } from '../config';
 import TeleportMarker from './TeleportMarker';
 import HotspotMarker from './HotspotMarker';
+import { Billboard, Text } from '@react-three/drei';
 
 interface KeypointSpheresProps {
   keypoints: Keypoint[];
@@ -53,7 +54,7 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, teleporting, onCl
   // Convert yaw/pitch/zoom to 3D position
   // Camera is at [0, 10, 0], so we need to offset from that position
   const getPosition = () => {
-    const yawRad = (step.yaw * Math.PI) / 180;
+    const yawRad = Math.PI/2 - (step.yaw * Math.PI) / 180;
     const pitchRad = (step.pitch * Math.PI) / 180;
 
     // Calculate position on a sphere relative to camera
@@ -72,11 +73,11 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, teleporting, onCl
     const x = position[0];
     const y = position[1];
     const z = position[2];
-    
+
     // Calculate the angle to face the origin
     const yaw = Math.atan2(x, z);
     const pitch = Math.atan2(-y, Math.sqrt(x * x + z * z));
-    
+
     return [pitch, yaw, 0];
   };
 
