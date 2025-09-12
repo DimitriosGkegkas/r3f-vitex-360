@@ -47,6 +47,12 @@ const App: React.FC = () => {
   const visitedCount = visitedSteps.length;
   const scorePercentage = Math.round((visitedCount / totalPossibleSteps) * 100);
 
+  const [isInVR, setIsInVR] = useState(false);
+
+  const closeVR = () => {
+    xrStore.getState().session?.end();
+    setIsInVR(false);
+  };
   // Calculate daily production capacity based on score
   const dailyProduction = Math.round((scorePercentage / 100) * 14000); // Max 14,000 bags per day
 
@@ -99,6 +105,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isAtLastStep) {
       setShowScoreCard(true);
+      closeVR();
     }
   }, [isAtLastStep]);
 
@@ -161,6 +168,7 @@ const App: React.FC = () => {
 
   const handleShowScoreCard = () => {
     setShowScoreCard(true);
+    closeVR();
   };
 
   const handleCloseScoreCard = () => {
@@ -201,16 +209,14 @@ const App: React.FC = () => {
     }
   };
 
+
   return (
     <div className="App">
       {/* Always render Experience in background */}
 
       <div className="experience-container">
         {/* VR Toggle */}
-        <div className="vr-toggle-container">
-          <CustomVRButton xrStore={xrStore} />
-        </div>
-
+        <CustomVRButton xrStore={xrStore} setIsInVR={setIsInVR} isInVR={isInVR} />
         {/* Render VR or Regular Experience */}
         <Experience
           xrStore={xrStore}

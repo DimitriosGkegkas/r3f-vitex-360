@@ -40,52 +40,6 @@ interface InfoCardData {
   totalSteps?: number;
 }
 
-// Component to handle renderer settings and context loss
-const RendererSettings: React.FC<{ colorSpaceConfig: any }> = ({ colorSpaceConfig: _colorSpaceConfig }) => {
-  const { gl: _gl } = useThree();
-
-  // useEffect(() => {
-  //   if (gl) {
-  //     // Apply color space settings
-  //     gl.outputColorSpace = colorSpaceConfig.renderer.outputColorSpace;
-  //     gl.toneMapping = THREE[colorSpaceConfig.renderer.toneMapping as keyof typeof THREE] as THREE.ToneMapping;
-  //     gl.toneMappingExposure = colorSpaceConfig.renderer.toneMappingExposure;
-
-  //     console.log('🎨 Applied color space settings to renderer:', {
-  //       outputColorSpace: gl.outputColorSpace,
-  //       toneMapping: gl.toneMapping,
-  //       toneMappingExposure: gl.toneMappingExposure
-  //     });
-
-  //     // Handle WebGL context loss
-  //     const handleContextLost = (event: Event) => {
-  //       console.warn('⚠️ WebGL context lost, preventing default behavior');
-  //       event.preventDefault();
-  //     };
-
-  //     const handleContextRestored = () => {
-  //       console.log('✅ WebGL context restored');
-  //       // Reapply settings after context restoration
-  //       gl.outputColorSpace = colorSpaceConfig.renderer.outputColorSpace;
-  //       gl.toneMapping = THREE[colorSpaceConfig.renderer.toneMapping as keyof typeof THREE] as THREE.ToneMapping;
-  //       gl.toneMappingExposure = colorSpaceConfig.renderer.toneMappingExposure;
-  //     };
-
-  //     // Add event listeners
-  //     gl.domElement.addEventListener('webglcontextlost', handleContextLost);
-  //     gl.domElement.addEventListener('webglcontextrestored', handleContextRestored);
-
-  //     // Cleanup
-  //     return () => {
-  //       gl.domElement.removeEventListener('webglcontextlost', handleContextLost);
-  //       gl.domElement.removeEventListener('webglcontextrestored', handleContextRestored);
-  //     };
-  //   }
-  // }, [gl, colorSpaceConfig]);
-
-  return null;
-};
-
 
 const Image360Viewer: React.FC<Image360ViewerProps> = ({
   currentFloorId,
@@ -198,9 +152,7 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
         performance={{ min: 0.5 }} // Maintain 50% performance target
       >
         <XR store={xrStore}>
-          <RendererSettings colorSpaceConfig={colorSpaceConfig} />
           <PerspectiveCamera
-            scale={[1, 1, 1]}
             position={[0, 1.6, 0]}
             ref={cameraRef}
             makeDefault
@@ -211,24 +163,24 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             matrixAutoUpdate={true}
             matrixWorldAutoUpdate={true}
           />
-        {/* Enhanced lighting for VR */}
-        {/* Sunlight simulation - directional light from above */}
-        <directionalLight
-          position={[0, 50, 0]}
-          intensity={xrStore.getState()?.session ? 3 : 2}
-          castShadow={false}
-        />
+          {/* Enhanced lighting for VR */}
+          {/* Sunlight simulation - directional light from above */}
+          <directionalLight
+            position={[0, 50, 0]}
+            intensity={xrStore.getState()?.session ? 3 : 2}
+            castShadow={false}
+          />
 
-        {/* Ambient light for overall scene illumination */}
-        <ambientLight intensity={xrStore.getState()?.session ? 0.5 : 0.3} />
+          {/* Ambient light for overall scene illumination */}
+          <ambientLight intensity={xrStore.getState()?.session ? 0.5 : 0.3} />
 
-        {/* Hemisphere light for realistic sky lighting */}
-        <hemisphereLight
-          args={["#87CEEB", "#8B4513", xrStore.getState()?.session ? 0.6 : 0.4]}
-        />
+          {/* Hemisphere light for realistic sky lighting */}
+          <hemisphereLight
+            args={["#87CEEB", "#8B4513", xrStore.getState()?.session ? 0.6 : 0.4]}
+          />
 
-        {/* Additional VR-specific lighting */}
-        {xrStore.getState()?.session && (
+          {/* Additional VR-specific lighting */}
+
           <>
             <directionalLight
               position={[10, 10, 10]}
@@ -241,70 +193,70 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
               color="#ffffff"
             />
           </>
-        )}
 
-        <DragLookControls floor={floor} stepId={currentStepId} />
-        <PanoramaScene
-          environment={environment}
-          isPreloading={isPreloading}
-          onPreloadComplete={onPreloadComplete}
-          onPreloadProgress={onPreloadProgress}
-          onEnvironmentReady={() => {
-            console.log('🎬 Image360Viewer: Environment ready callback received');
-          }}
-          keypoints={environment?.keypoints || []}
-          environmentId={environmentId || ''}
-          onStepChange={onStepChange}
-          onTooltipChange={onTooltipChange}
-        />
-        <ControllerLabels
-          handedness="right"
-          onNextStep={onNext}
-          onPreviousStep={onPrevious}
-          onShowInfo={handleShowInfo}
-          isInfoVisible={showInfo}
-        />
-        <ControllerLabels
-          handedness="left"
-          onNextStep={onNext}
-          onPreviousStep={onPrevious}
-          onShowInfo={handleShowFloorPanel}
-          isInfoVisible={showFloorPanel}
-          onNextFloor={handleNextFloor}
-          onPreviousFloor={handlePreviousFloor}
-        />
 
-        {/* VR Information Display */}
-        {step && (
-          <VRInfoDisplay
-            stepData={{
-              id: step.id,
-              title: step.title,
-              description: step.description,
-              stepName: step.stepName,
-              floor: infoCardData.floor,
-              currentStep: (floor?.steps.findIndex(s => s.id === currentStepId) ?? -1) + 1,
-              totalSteps: floor?.steps.length
+          <DragLookControls floor={floor} stepId={currentStepId} />
+          <PanoramaScene
+            environment={environment}
+            isPreloading={isPreloading}
+            onPreloadComplete={onPreloadComplete}
+            onPreloadProgress={onPreloadProgress}
+            onEnvironmentReady={() => {
+              console.log('🎬 Image360Viewer: Environment ready callback received');
             }}
-            position={[-0.0, -0., -0.17]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.5, 0.5, 0.005]}
-            isVisible={showInfo}
-            handedness="right"
+            keypoints={environment?.keypoints || []}
+            environmentId={environmentId || ''}
+            onStepChange={onStepChange}
+            onTooltipChange={onTooltipChange}
           />
-        )}
+          <ControllerLabels
+            handedness="right"
+            onNextStep={onNext}
+            onPreviousStep={onPrevious}
+            onShowInfo={handleShowInfo}
+            isInfoVisible={showInfo}
+          />
+          <ControllerLabels
+            handedness="left"
+            onNextStep={onNext}
+            onPreviousStep={onPrevious}
+            onShowInfo={handleShowFloorPanel}
+            isInfoVisible={showFloorPanel}
+            onNextFloor={handleNextFloor}
+            onPreviousFloor={handlePreviousFloor}
+          />
 
-        {/* Floor Info Panel for Left Controller */}
-        <FloorInfoPanel
-          currentFloorId={currentFloorId}
-          experienceStates={floors}
-          stateOrder={['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging']}
-          isVisible={showFloorPanel}
-          handedness="left"
-          onFloorChange={onFloorChange}
-        />
+          {/* VR Information Display */}
+          {step && (
+            <VRInfoDisplay
+              stepData={{
+                id: step.id,
+                title: step.title,
+                description: step.description,
+                stepName: step.stepName,
+                floor: infoCardData.floor,
+                currentStep: (floor?.steps.findIndex(s => s.id === currentStepId) ?? -1) + 1,
+                totalSteps: floor?.steps.length
+              }}
+              position={[-0.0, -0., -0.17]} rotation={[-Math.PI / 2, 0, 0]} scale={[0.5, 0.5, 0.005]}
+              isVisible={showInfo}
+              handedness="right"
+            />
+          )}
 
-      </XR>
+          {/* Floor Info Panel for Left Controller */}
+          <FloorInfoPanel
+            currentFloorId={currentFloorId}
+            experienceStates={floors}
+            stateOrder={['raw-materials', 'sorting', 'quantities', 'secrets', 'mixing', 'packaging']}
+            isVisible={showFloorPanel}
+            handedness="left"
+            onFloorChange={onFloorChange}
+          />
 
-    </Canvas >
+        </XR>
+
+      </Canvas >
     </>
   );
 };
