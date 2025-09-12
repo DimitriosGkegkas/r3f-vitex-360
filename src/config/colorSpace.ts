@@ -8,7 +8,7 @@
 export interface ColorSpaceConfig {
   // WebGL Renderer Settings
   renderer: {
-    outputColorSpace: 'srgb' | 'srgb-linear' | 'display-p3' | 'rec2020';
+    outputColorSpace: 'srgb' | 'srgb-linear' | 'display-p3';
     toneMapping: 'LinearToneMapping' | 'ReinhardToneMapping' | 'CineonToneMapping' | 'ACESFilmicToneMapping';
     toneMappingExposure: number;
     physicallyCorrectLights: boolean;
@@ -38,7 +38,7 @@ export interface ColorSpaceConfig {
   
   // Video Environment Settings
   videoEnvironment: {
-    colorSpace: 'srgb' | 'srgb-linear' | 'display-p3' | 'rec2020';
+    colorSpace: 'srgb' | 'srgb-linear' | 'display-p3';
     toneMapped: boolean;
     encoding: 'sRGBEncoding' | 'LinearEncoding' | 'RGBEncoding' | 'RGBEEncoding';
   };

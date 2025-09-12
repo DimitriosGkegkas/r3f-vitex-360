@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Environment, useEnvironment } from '@react-three/drei';
+import { Environment } from '@react-three/drei';
 import { Environment as EnvironmentType } from '../../config';
 import { getColorSpaceConfig } from '../../config/colorSpace';
 import VideoEnvironment from '../VideoEnvironment';
