@@ -67,7 +67,6 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   onPreloadComplete,
   onPreloadProgress,
   // VR video props
-  showVRVideo = false,
   vrVideoData = null,
   onVRVideoEnd
 }) => {

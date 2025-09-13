@@ -135,7 +135,7 @@ function RingBase({ radius = 0.5, thickness = 0.04, hovered = false, clicked = f
   );
 }
 
-interface EnergyPillarProps {
+export interface EnergyPillarProps {
   height?: number;
   radius?: number;
   hovered?: boolean;

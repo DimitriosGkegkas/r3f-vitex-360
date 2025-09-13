@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import { useThree, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { Floor, environments } from '../../config';
-import { useXR } from '@react-three/xr';
 
 interface DragLookControlsProps {
   floor?: Floor;
@@ -14,7 +13,6 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId, isIn
   const { camera, gl } = useThree();
   const [isDragging, setIsDragging] = useState(false);
   const prevMouse = useRef({ x: 0, y: 0 });
-  const { session } = useXR();
 
   // store yaw/pitch separately
   const yaw = useRef(0);

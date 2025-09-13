@@ -9,7 +9,6 @@ import Image360Viewer from '../Image360Viewer';
 import { XRStore } from '@react-three/xr';
 import { VideoBackground } from '../VideoBackground';
 import { ImageLoadResult } from '../../utils/imagePreloader';
-import { DoubleSide } from 'three';
 
 interface ExperienceProps {
   xrStore: XRStore;
