@@ -22,3 +22,6 @@ export { FilledButton } from './FilledButton';
 export { QuizCard } from './QuizCard';
 export { QuizQuestion } from './QuizQuestion';
 export { QuizResult } from './QuizResult';
+export { FloorVideoCard } from './FloorVideoCard';
+export { default as VRVideoScreen } from './VRVideoScreen';
+export { AppLayout } from './AppLayout';

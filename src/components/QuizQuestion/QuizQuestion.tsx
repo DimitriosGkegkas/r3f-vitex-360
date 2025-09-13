@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { QuizQuestion as QuizQuestionType } from '../../config/quizData';
 import { FilledButton } from '../FilledButton';
 import './QuizQuestion.css';
+import * as THREE from 'three';
+import { MarkerState, teleportMarkerStates } from '../../config/markerStates';
+import { EnergyPillarProps } from '../TeleportMarker';
 
 interface QuizQuestionProps {
   question: QuizQuestionType;
@@ -131,3 +134,31 @@ export const QuizQuestion: React.FC<QuizQuestionProps> = ({
     </div>
   );
 };
+export function EnergyPillar({ height = 2, radius = 0.3, hovered = false, clicked = false }: EnergyPillarProps) {
+  const matRef = useRef<THREE.ShaderMaterial & { time?: number; }>(null);
+  const meshRef = useRef<THREE.Mesh>(null);
+
+  // Determine current state
+  const currentState: MarkerState = clicked ? 'clicked' : hovered ? 'hover' : 'normal';
+  const config = teleportMarkerStates[currentState];
+
+
+  return (
+    <mesh ref={meshRef} position={[0, height / 2, 0]}>
+      {/* tip: more radial segments -> smoother */}
+      <cylinderGeometry args={[radius, radius, height, 64, 1, true]} />
+      {/* custom dissolve material */}
+      <dissolveMaterial
+        ref={matRef}
+        attach="material"
+        color={new THREE.Color(config.innerColor)}
+        height={height}
+        opacity={config.innerOpacity}
+        power={1.2}
+        transparent
+        // depthWrite={false}
+        side={THREE.DoubleSide}
+        blending={THREE.AdditiveBlending} />
+    </mesh>
+  );
+}

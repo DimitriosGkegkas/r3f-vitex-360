@@ -11,6 +11,7 @@ import VRInfoDisplay from '../ControllerLabels/VRInfoDisplay';
 import PanoramaScene from '../PanoramaScene';
 import DragLookControls from '../DragLookControls';
 import FloorInfoPanel from '../FloorInfoPanel';
+import VRVideoScreen from '../VRVideoScreen';
 import { ImageLoadResult } from '../../utils/imagePreloader';
 
 interface Image360ViewerProps {
@@ -26,8 +27,17 @@ interface Image360ViewerProps {
   onNext?: () => void;
   onPrevious?: () => void;
   isPreloading?: boolean;
+  isInVR?: boolean;
   onPreloadComplete?: (results: ImageLoadResult[]) => void;
   onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
+  // VR video props
+  showVRVideo?: boolean;
+  vrVideoData?: {
+    floorIndex: number;
+    floorTitle: string;
+    floorNumber: string;
+  } | null;
+  onVRVideoEnd?: () => void;
 }
 
 // Extract InfoCard data interface
@@ -49,12 +59,17 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   className = '',
   onFloorChange,
   onTooltipChange,
+  isInVR,
   onStepChange,
   onNext,
   onPrevious,
   isPreloading = false,
   onPreloadComplete,
-  onPreloadProgress
+  onPreloadProgress,
+  // VR video props
+  showVRVideo = false,
+  vrVideoData = null,
+  onVRVideoEnd
 }) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const [showInfo, setShowInfo] = useState(true);
@@ -163,39 +178,7 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             matrixAutoUpdate={true}
             matrixWorldAutoUpdate={true}
           />
-          {/* Enhanced lighting for VR */}
-          {/* Sunlight simulation - directional light from above */}
-          <directionalLight
-            position={[0, 50, 0]}
-            intensity={xrStore.getState()?.session ? 3 : 2}
-            castShadow={false}
-          />
-
-          {/* Ambient light for overall scene illumination */}
-          <ambientLight intensity={xrStore.getState()?.session ? 0.5 : 0.3} />
-
-          {/* Hemisphere light for realistic sky lighting */}
-          <hemisphereLight
-            args={["#87CEEB", "#8B4513", xrStore.getState()?.session ? 0.6 : 0.4]}
-          />
-
-          {/* Additional VR-specific lighting */}
-
-          <>
-            <directionalLight
-              position={[10, 10, 10]}
-              intensity={1}
-              color="#ffffff"
-            />
-            <pointLight
-              position={[0, 2, 0]}
-              intensity={0.5}
-              color="#ffffff"
-            />
-          </>
-
-
-          <DragLookControls floor={floor} stepId={currentStepId} />
+          <DragLookControls floor={floor} stepId={currentStepId} isInVR={isInVR} />
           <PanoramaScene
             environment={environment}
             isPreloading={isPreloading}
@@ -253,6 +236,19 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
             handedness="left"
             onFloorChange={onFloorChange}
           />
+
+          {/* VR Video Screen - only shows when in VR and video is active */}
+          {vrVideoData && isInVR && (
+            <VRVideoScreen
+              floorIndex={vrVideoData.floorIndex}
+              onVideoEnd={onVRVideoEnd || (() => { })}
+              isVisible={true}
+              distance={3}
+              width={4}
+              height={2.25}
+              curve={0.}
+            />
+          )}
 
         </XR>
 

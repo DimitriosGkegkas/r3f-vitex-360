@@ -53,7 +53,7 @@ const KeypointSphere: React.FC<KeypointSphereProps> = ({ step, teleporting, onCl
   // Convert yaw/pitch/zoom to 3D position
   // Camera is at [0, 10, 0], so we need to offset from that position
   const getPosition = () => {
-    const yawRad = Math.PI/2 - (step.yaw * Math.PI) / 180;
+    const yawRad = - (step.yaw * Math.PI) / 180;
     const pitchRad = (step.pitch * Math.PI) / 180;
 
     // Calculate position on a sphere relative to camera

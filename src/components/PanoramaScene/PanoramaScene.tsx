@@ -95,57 +95,36 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
     }
   }, [isPreloading, isPreloadComplete]);
 
-  // Handle environment changes with fade animation
-  useEffect(() => {
-    if (environmentImage !== currentEnvironment) {
-      console.log('🔄 PanoramaScene: Environment changing, starting fade animation');
-
-      // Set loading state
-      setIsEnvironmentLoading(true);
-      setIsEnvironmentReady(false);
-
-      // Start fade in sequence
-      const fadeIn = () => {
-        fadeOpacity.current = 0;
-        const fadeInInterval = setInterval(() => {
-          fadeOpacity.current += 0.05; // Adjust speed as needed
-          if (fadeOpacity.current >= 1) {
-            fadeOpacity.current = 1;
-            clearInterval(fadeInInterval);
-
-            // Change environment after fade in completes
-            setCurrentEnvironment(environmentImage);
-
-            // The fade out will be triggered by onEnvironmentReady callback
-            // when the environment content is actually loaded
-          }
-        }, 16); // ~60fps
-      };
-
-      fadeIn();
-    }
-  }, [environmentImage, currentEnvironment]);
-
-  // Handle environment ready callback
-  useEffect(() => {
-    if (isEnvironmentReady && isEnvironmentLoading) {
-      console.log('✅ PanoramaScene: Environment ready, starting fade out');
-
-      // Start fade out after environment is ready
-      const fadeOutInterval = setInterval(() => {
-        fadeOpacity.current -= 0.05; // Adjust speed as needed
-        if (fadeOpacity.current <= 0) {
-          fadeOpacity.current = 0;
-          clearInterval(fadeOutInterval);
-          setIsEnvironmentLoading(false);
-        }
-      }, 16); // ~60fps
-    }
-  }, [isEnvironmentReady, isEnvironmentLoading]);
 
   // Animation frame to update mesh opacity
   useFrame(() => {
     if (fadeMeshRef.current && fadeMeshRef.current.material) {
+      if (environmentImage !== currentEnvironment) {
+        console.log('🔄 PanoramaScene: Environment changing, starting fade animation');
+
+        // Set loading state
+        setIsEnvironmentLoading(true);
+        setIsEnvironmentReady(false);
+        // Start fade in sequence
+        fadeOpacity.current += 0.05; // Adjust speed as needed
+        if (fadeOpacity.current >= 1) {
+          fadeOpacity.current = 1;
+
+          // Change environment after fade in completes
+          setCurrentEnvironment(environmentImage);
+
+          // The fade out will be triggered by onEnvironmentReady callback
+          // when the environment content is actually loaded
+        }
+      }
+      if (isEnvironmentReady && isEnvironmentLoading) {
+        console.log('✅ PanoramaScene: Environment ready, starting fade out');
+        fadeOpacity.current -= 0.05; // Adjust speed as needed
+        if (fadeOpacity.current <= 0) {
+          fadeOpacity.current = 0;
+          setIsEnvironmentLoading(false);
+        }
+      }
       (fadeMeshRef.current.material as MeshBasicMaterial).opacity = fadeOpacity.current;
     }
   });
@@ -171,9 +150,18 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
       return { preset: 'sunset' as const };
     }
 
+    // const files = [
+    //   `${currentEnvironment}/panorama.jpg`,
+    // ];
     const files = [
-      `${currentEnvironment}/panorama.jpg`,
+      `${currentEnvironment}/cube_posx.png`, // +X
+      `${currentEnvironment}/cube_negx.png`, // -X
+      `${currentEnvironment}/cube_posy.png`, // +Y
+      `${currentEnvironment}/cube_negy.png`, // -Y
+      `${currentEnvironment}/cube_posz.png`, // +Z
+      `${currentEnvironment}/cube_negz.png`, // -Z
     ];
+    
 
 
     return {
@@ -210,11 +198,11 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
           {/* Image environment (default) */}
           <Environment
             {...getEnvironmentProps()}
-          ground={{
-            height: 1.7,
-            radius: 60,
-            scale: 100,
-          }}
+            ground={{
+              height: 1.7,
+              radius: 60,
+              scale: 100,
+            }}
           />
           {/* For image environments, trigger ready after a short delay */}
           {isEnvironmentLoading && !isEnvironmentReady && (
@@ -234,10 +222,42 @@ const PanoramaScene: React.FC<PanoramaSceneProps> = ({
       )}
 
       {/* Fade overlay mesh */}
-      <mesh ref={fadeMeshRef} position={[0, 1.6, 0]}>
+      
+      <mesh ref={fadeMeshRef} position={[0, 1.6, 0]} scale={10}>
         <sphereGeometry args={[1, 32, 32]} />
-        <meshBasicMaterial color="white" transparent opacity={0} side={THREE.DoubleSide} depthTest={false} depthWrite />
+        <meshBasicMaterial color="white" transparent opacity={0} side={THREE.DoubleSide}/>
       </mesh>
+
+      {/* Enhanced lighting for VR */}
+      {/* Sunlight simulation - directional light from above */}
+      <directionalLight
+        position={[0, 50, 0]}
+        intensity={3}
+        castShadow={false}
+      />
+
+      {/* Ambient light for overall scene illumination */}
+      <ambientLight intensity={0.5} />
+
+      {/* Hemisphere light for realistic sky lighting */}
+      <hemisphereLight
+        args={["#87CEEB", "#8B4513", 0.6 ]}
+      />
+
+      {/* Additional VR-specific lighting */}
+
+      <>
+        <directionalLight
+          position={[10, 10, 10]}
+          intensity={1}
+          color="#ffffff"
+        />
+        <pointLight
+          position={[0, 2, 0]}
+          intensity={0.5}
+          color="#ffffff"
+        />
+      </>
     </group>
   );
 };
