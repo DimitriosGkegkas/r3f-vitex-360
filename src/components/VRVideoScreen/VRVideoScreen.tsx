@@ -27,6 +27,8 @@ export const VRVideoScreen: React.FC<VRVideoScreenProps> = ({
     const materialRef = useRef<THREE.MeshBasicMaterial>(null);
     const cylinderMaterialRef = useRef<THREE.MeshBasicMaterial>(null);
     const { camera } = useThree();
+    
+    const fadeMeshRef = useRef<THREE.Mesh>(null);
 
     // Fade animation state
     const [fadeOpacity, setFadeOpacity] = useState(0);
@@ -82,6 +84,9 @@ export const VRVideoScreen: React.FC<VRVideoScreenProps> = ({
             if (cylinderMaterialRef.current) {
                 cylinderMaterialRef.current.opacity = newOpacity;
             }
+        }
+        if (fadeMeshRef.current && fadeMeshRef.current.material) {
+            (fadeMeshRef.current.material as THREE.MeshBasicMaterial).opacity = fadeOpacity;
         }
     });
 
@@ -232,15 +237,9 @@ export const VRVideoScreen: React.FC<VRVideoScreenProps> = ({
                     color={0xffffff} // Always white background
                 />
             </mesh>
-            <mesh rotation={[0, Math.PI, 0]} scale={[1, 1, 1]} position={[0, 0, 0]}>
-                <cylinderGeometry args={[60, 60, 100]} />
-                <meshBasicMaterial
-                    ref={cylinderMaterialRef}
-                    color="white"
-                    side={THREE.DoubleSide}
-                    transparent={true}
-                    opacity={fadeOpacity}
-                />
+            <mesh ref={fadeMeshRef} position={[0, 1.6, 0]} scale={10}>
+                <sphereGeometry args={[1, 32, 32]} />
+                <meshBasicMaterial color="white" transparent opacity={0} side={THREE.DoubleSide} />
             </mesh>
         </>
     );
