@@ -22,7 +22,7 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_1': {
     id: 'raw-materials-env_5_1',
     environmentImage: '/cubemap/raw-materials/5_1',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: 80,
     keypoints: [
       {
@@ -67,7 +67,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_6_1',
-        title: 'Μετάβαση στα σιλό/5_6'
+        title: 'Μετάβαση στα σιλό'
       },
       {
         id: 'step_5_3_kp',
@@ -76,7 +76,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_3_1',
-        title: 'Μετάβαση στους σωλήνες/5_3'
+        title: 'Μετάβαση στους σωλήνες'
       },
       {
         id: 'info_5_2_1_kp',
@@ -102,7 +102,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_2_1',
-        title: 'Μετάβαση στο πίσω/5_2'
+        title: 'Επιστροφή'
       },
       {
         id: 'step_5_4_kp',
@@ -111,7 +111,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_4_2',
-        title: 'Μετάβαση στο επόμενο/5_4'
+        title: 'Επόμενο'
       },
       {
         id: 'info_5_3_1',
@@ -128,8 +128,8 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_4': {
     id: 'raw-materials-env_5_4',
     environmentImage: '/cubemap/raw-materials/5_4',
-    cameraAngle: -10,
-    cameraYaw: 100,
+    cameraAngle: 10,
+    cameraYaw: -15,
     keypoints: [
       {
         id: 'step_5_1_kp',
@@ -138,7 +138,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'step_5_1',
-        title: 'Μετάβαση στο προηγούμενο/5_1'
+        title: 'Μετάβαση στο αναβατόριο'
       },
       {
         id: 'step_5_3_kp',
@@ -147,7 +147,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_3_1',
-        title: 'Μετάβαση στους σωλήνες/5_3'
+        title: 'Μετάβαση στους σωλήνες'
       },
       {
         id: 'step_5_5_kp',
@@ -156,7 +156,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_5_1',
-        title: 'Μετάβαση στο επόμενο/5_5'
+        title: 'Μετάβαση στα silo'
       },
       // {
       //   id: 'info_5_4_1_kp',
@@ -174,14 +174,14 @@ export const environments: Record<string, Environment> = {
         zoom: 1.5,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_4_2',
-        title: 'Φίλτρα συστήματος αποκονίωσης.'
+        title: 'Φίλτρα συστήματος αποκονίωσης'
       },
     ]
   },
   'raw-materials-env_5_5': {
     id: 'raw-materials-env_5_5',
     environmentImage: '/cubemap/raw-materials/5_5',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: 140,
     keypoints: [
       {
@@ -191,7 +191,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_4_2',
-        title: 'Μετάβαση στο προηγούμενο/5_4'
+        title: 'Επιστροφή'
       },
       {
         id: 'step_5_6_kp',
@@ -200,7 +200,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_6_1',
-        title: 'Μετάβαση στο επόμενο/5_6'
+        title: 'Επόμενο'
       },
       {
         id: 'info_5_5_1kp',
@@ -217,7 +217,7 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_6': {
     id: 'raw-materials-env_5_6',
     environmentImage: '/cubemap/raw-materials/5_6',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: 0,
     keypoints: [
       {
@@ -227,7 +227,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_4_2',
-        title: 'Μετάβαση στο 5_4'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       },
       {
         id: 'step_5_5_kp',
@@ -236,7 +236,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_5_1',
-        title: 'Μετάβαση στο 5_5'
+        title: 'Μετάβαση στα silo'
       },
       {
         id: 'info_5_6_1_kp',
@@ -283,7 +283,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.2,
         targetFloor: 'sorting',
         targetStep: 'info_4_3_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΒΗΜΑ 4_3'
+        title: 'Μετάβαση στους καδοζυγούς'
       },
     ]
   },
@@ -325,8 +325,8 @@ export const environments: Record<string, Environment> = {
   'sorting-env_4_3': {
     id: 'sorting-env_4_3',
     environmentImage: '/cubemap/sorting/4_3',
-    cameraAngle: -10,
-    cameraYaw: 50,
+    cameraAngle: 0,
+    cameraYaw: 80,
     keypoints: [
       {
         id: 'step_4_1-kp',
@@ -335,7 +335,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.1,
         targetFloor: 'sorting',
         targetStep: 'step_4_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_1'
+        title: 'Μετάβαση στην απόλιξη των Silo'
       },
       {
         id: 'step_4_4-kp',
@@ -344,7 +344,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.5,
         targetFloor: 'sorting',
         targetStep: 'info_4_4_2',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_4'
+        title: 'Μετάβαση στο σύστημα αποκονίωσης'
       },
       {
         id: 'info_4_3_1-kp',
@@ -360,7 +360,7 @@ export const environments: Record<string, Environment> = {
   'sorting-env_4_4': {
     id: 'sorting-env_4_4',
     environmentImage: '/cubemap/sorting/4_4',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: -50,
     keypoints: [
       {
@@ -370,7 +370,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.1,
         targetFloor: 'sorting',
         targetStep: 'step_4_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_1'
+        title: 'Μετάβαση στην απόλιξη των Silo'
       },
       {
         id: 'step_4_3-kp',
@@ -379,7 +379,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.1,
         targetFloor: 'sorting',
         targetStep: 'info_4_3_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 4_3'
+        title: 'Μετάβαση στους καδοζυγούς'
       },
       {
         id: 'info_4_4_1-kp',
@@ -418,7 +418,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'quantities',
         targetStep: 'info_3_2_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΕΠΟΜΕΝΟ/3_2'
+        title: 'Μετάβαση στη μονάδα ρίψης προζυγισμένων πρόσθετων'
       },
       {
         id: 'info_3_1_1',
@@ -443,7 +443,7 @@ export const environments: Record<string, Environment> = {
   'quantities-env_3_2': {
     id: 'quantities-env_3_2',
     environmentImage: '/cubemap/quantities/3_2',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: -50,
     keypoints: [
       {
@@ -453,7 +453,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.5,
         targetFloor: 'quantities',
         targetStep: 'step_3_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/3_!'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       },
       {
         id: 'step_3_3-kp',
@@ -462,7 +462,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'quantities',
         targetStep: 'info_3_3_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΕΠΟΜΕΝΟ/3_3'
+        title: 'Μετάβση στο επόμενο'
       },
       {
         id: 'info_3_2_1-kp',
@@ -471,14 +471,14 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'quantities',
         targetStep: 'info_3_2_1',
-        title: 'Σταθμός ρίψης προζυγισμένων πρόσθετων.'
+        title: 'Σταθμός ρίψης προζυγισμένων πρόσθετων'
       },
     ]
   },
   'quantities-env_3_3': {
     id: 'quantities-env_3_3',
     environmentImage: '/cubemap/quantities/3_3',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: 190,
     keypoints: [
       {
@@ -488,7 +488,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'quantities',
         targetStep: 'info_3_2_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/3_2'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       },
       {
         id: 'info_3_3_1-kp',
@@ -497,7 +497,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'quantities',
         targetStep: 'info_3_3_1',
-        title: 'MHXANHMA'
+        title: 'Σταθμός ρίψης προζυγισμένων πρόσθετων'
       },
     ]
   },
@@ -543,7 +543,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'secrets',
         targetStep: 'step_2_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/2_1'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       },
       {
         id: 'info_2_2_1-kp',
@@ -563,7 +563,7 @@ export const environments: Record<string, Environment> = {
   'mixing-env_1_1': {
     id: 'mixing-env_1_1',
     environmentImage: '/cubemap/mixing/1_1',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: 150,
     keypoints: [
       {
@@ -573,7 +573,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'mixing',
         targetStep: 'info_1_2_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΕΠΟΜΕΝΟ/1_2'
+        title: 'Μετάβαση στο σύστημα αποκονίωσης'
       },
       {
         id: 'info_1_1_1-kp',
@@ -598,7 +598,7 @@ export const environments: Record<string, Environment> = {
   'mixing-env_1_2': {
     id: 'mixing-env_1_2',
     environmentImage: '/cubemap/mixing/1_2',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: 120,
     keypoints: [
       {
@@ -608,7 +608,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.2,
         targetFloor: 'mixing',
         targetStep: 'step_1_1',
-        title: 'ΠΡΟΗΓΟΥΜΕΝΟ ΒΗΜΑ/1_1'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       },
       {
         id: 'info_1_2_1-kp',
@@ -627,7 +627,7 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_1': {
     id: 'packaging-env_0_1',
     environmentImage: '/cubemap/packaging/0_1',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: -10,
     keypoints: [
       {
@@ -699,7 +699,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.5,
         targetFloor: 'packaging',
         targetStep: 'step_0_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_1'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       },
       {
         id: 'step_0_2_vid-kp',
@@ -715,17 +715,17 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_2_video': {
     id: 'packaging-env_0_2_video',
     environmentImage: '/video/0_2.mp4',
-    cameraAngle: -10,
-    cameraYaw: -60,
+    cameraAngle: 10,
+    cameraYaw: -90,
     keypoints: [
       {
         id: 'step_0_1-kp',
-        yaw: 180,
+        yaw: 70,
         pitch: -40,
         zoom: 1.5,
         targetFloor: 'packaging',
         targetStep: 'step_0_1',
-        title: 'ΕΠΙΣΤΡΟΦΗ ΠΙΣΩ/ΒΗΜΑ 0_1'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       }
     ]
   },
@@ -767,8 +767,8 @@ export const environments: Record<string, Environment> = {
   'packaging-env_0_3_video': {
     id: 'packaging-env_0_3_video',
     environmentImage: '/video/0_3.mp4',
-    cameraAngle: -10,
-    cameraYaw: -135,
+    cameraAngle: 10,
+    cameraYaw: 120,
     keypoints: [
       {
         id: 'step_0_1-kp',
@@ -777,24 +777,24 @@ export const environments: Record<string, Environment> = {
         zoom: 1.5,
         targetFloor: 'packaging',
         targetStep: 'step_0_1',
-        title: 'ΔΙΑΔΡΟΜΟΣ'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       }
     ]
   },
   'packaging-env_0_3_1_video': {
     id: 'packaging-env_0_3_1_video',
     environmentImage: '/video/0_3_1.mp4',
-    cameraAngle: -10,
-    cameraYaw: 155,
+    cameraAngle: 10,
+    cameraYaw: 75,
     keypoints: [
       {
         id: 'step_0_1-kp',
-        yaw: 200,
+        yaw: 20,
         pitch: -20,
         zoom: 1.5,
         targetFloor: 'packaging',
         targetStep: 'step_0_1',
-        title: 'ΕΠΙΣΤΡΟΦΗ ΣΤΟ ΠΡΟΗΓΟΥΜΕΝΟ/0_1'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       }
     ]
   },
@@ -811,7 +811,7 @@ export const environments: Record<string, Environment> = {
         zoom: 1.7,
         targetFloor: 'packaging',
         targetStep: 'step_0_1',
-        title: 'ΜΕΤΑΒΑΣΗ ΣΤΟ ΒΗΜΑ 0_1'
+        title: 'Επιστροφή στον κεντρικό χώρο'
       },
       {
         id: 'info_0_4_1-kp',
