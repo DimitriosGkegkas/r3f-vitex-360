@@ -104,7 +104,7 @@ export const floors: Record<string, Floor> = {
         id: 'info_5_5_1',
         title: 'Silo. Aποθήκευση Α υλών.',
         description: 'Εδώ βρίσκονται τα 15 σιλό που αποθηκεύουν τις πρώτες ύλες με ασφάλεια και οργάνωση. Τα χαρακτηριστικά χρώματα του Χρωμοπύργου ξεχωρίζουν και σε αυτό το σημείο, ως σήμα κατατεθέν του εργοστασίου.',
-        stepName: 'Τέταρτο',
+        stepName: 'Πέμπτο',
         environmentId: 'raw-materials-env_5_5'
       },
       // {
@@ -181,7 +181,7 @@ export const floors: Record<string, Floor> = {
       // },
       {
         id: 'info_4_4_1',
-        title: 'Big bag station.',
+        title: 'Big bag station',
         description: 'Στο Big Bag Station γεμίζουν τα μεγάλα σακιά με τις απαραίτητες ποσότητες υλικών, έτοιμα να μπουν στη ροή της παραγωγής με ταχύτητα και ακρίβεια.',
         stepName: 'Τέταρτο',
         environmentId: 'sorting-env_4_4'

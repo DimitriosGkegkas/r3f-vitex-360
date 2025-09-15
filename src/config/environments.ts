@@ -28,7 +28,7 @@ export const environments: Record<string, Environment> = {
       {
         id: 'info_5_1_1-kp',
         yaw: 70,
-        pitch: -10,
+        pitch: 0,
         zoom: 1.8,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_1_1',
@@ -129,7 +129,7 @@ export const environments: Record<string, Environment> = {
     id: 'raw-materials-env_5_4',
     environmentImage: '/cubemap/raw-materials/5_4',
     cameraAngle: -10,
-    cameraYaw: 90,
+    cameraYaw: 100,
     keypoints: [
       {
         id: 'step_5_1_kp',
@@ -182,7 +182,7 @@ export const environments: Record<string, Environment> = {
     id: 'raw-materials-env_5_5',
     environmentImage: '/cubemap/raw-materials/5_5',
     cameraAngle: -10,
-    cameraYaw: 120,
+    cameraYaw: 140,
     keypoints: [
       {
         id: 'step_5_4_kp',
@@ -256,7 +256,7 @@ export const environments: Record<string, Environment> = {
     id: 'sorting-env_4_1',
     environmentImage: '/cubemap/sorting/4_1',
     cameraAngle: 10,
-    cameraYaw: 50,
+    cameraYaw: 30,
     keypoints: [
       // {
       //   id: 'step_4_2-kp',
@@ -267,6 +267,15 @@ export const environments: Record<string, Environment> = {
       //   targetStep: 'info_4_2_1',
       //   title: 'ΜΕΤΑΒΑΣΗ ΒΗΜΑ 4_2'
       // },
+            {
+        id: 'info_4_1_1-kp',
+        yaw: 0,
+        pitch: 25,
+        zoom: 2.1,
+        targetFloor: 'sorting',
+        targetStep: 'info_4_1_1',
+        title: 'Απόλιξη silo αποθήκευσης Α υλών'
+      },
       {
         id: 'step_4_3-kp',
         yaw: 195,
@@ -276,15 +285,7 @@ export const environments: Record<string, Environment> = {
         targetStep: 'info_4_3_1',
         title: 'ΜΕΤΑΒΑΣΗ ΒΗΜΑ 4_3'
       },
-      {
-        id: 'info_4_1_1-kp',
-        yaw: 0,
-        pitch: 25,
-        zoom: 2.1,
-        targetFloor: 'sorting',
-        targetStep: 'info_4_1_1',
-        title: 'Απόλιξη silo αποθήκευσης Α υλών'
-      },
+
     ]
   },
   // 'sorting-env_4_2': {
@@ -408,7 +409,7 @@ export const environments: Record<string, Environment> = {
   'quantities-env_3_1': {
     id: 'quantities-env_3_1',
     environmentImage: '/cubemap/quantities/3_1',
-    cameraAngle: -10,
+    cameraAngle: 10,
     cameraYaw: -100,
     keypoints: [
       {
@@ -422,7 +423,7 @@ export const environments: Record<string, Environment> = {
       },
       {
         id: 'info_3_1_1',
-        yaw: 225,
+        yaw: -135,
         pitch: 20,
         zoom: 2,
         targetFloor: 'quantities',
@@ -578,7 +579,7 @@ export const environments: Record<string, Environment> = {
       {
         id: 'info_1_1_1-kp',
         yaw: 92,
-        pitch: -20,
+        pitch: -15,
         zoom: 2.5,
         targetFloor: 'mixing',
         targetStep: 'info_1_1_1',
