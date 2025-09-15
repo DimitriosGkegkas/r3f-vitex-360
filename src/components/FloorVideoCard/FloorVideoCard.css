@@ -1,0 +1,233 @@
+.floor-video-card-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: opacity 0.4s ease-out, backdrop-filter 0.4s ease-out;
+  animation: fadeInBlur 0.5s ease-out;
+}
+
+.floor-video-card {
+  width: 800px;
+  max-width: 90vw;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  overflow: hidden;
+  border: 0px;
+  animation: slideInUp 0.5s ease-out;
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+}
+
+.floor-video-card-overlay.fade-out {
+  animation: fadeOutBlur 0.4s ease-out forwards;
+}
+
+.floor-video-card.fade-out {
+  animation: slideOutDown 0.4s ease-out forwards;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInBlur {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+@keyframes fadeOutBlur {
+  from {
+    opacity: 1;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  to {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+}
+.floor-video-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.floor-video-number {
+  color: #1088F4;
+  font-size: 14px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  line-height: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.floor-video-title {
+  color: #1A1A1A;
+  font-size: 20px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.floor-video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floor-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.floor-video.loading {
+  opacity: 0;
+}
+
+.floor-video-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: #fff;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #1088F4;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.floor-video-error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ff4444;
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.floor-video-skip {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.floor-video-skip:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-2px);
+}
+
+.floor-video-skip svg {
+  width: 14px;
+  height: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .floor-video-card {
+    width: 95vw;
+    margin: 20px;
+  }
+  
+  .floor-video-header {
+    padding: 20px 20px 12px 20px;
+  }
+  
+  .floor-video-title {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  
+  .floor-video-container {
+    aspect-ratio: 16/10;
+  }
+}
+
+@media (max-width: 480px) {
+  .floor-video-card {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  .floor-video-container {
+    aspect-ratio: unset;
+    height: calc(100vh - 100px);
+  }
+}

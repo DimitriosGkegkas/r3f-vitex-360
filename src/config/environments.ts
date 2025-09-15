@@ -285,7 +285,6 @@ export const environments: Record<string, Environment> = {
         targetStep: 'info_4_3_1',
         title: 'ΜΕΤΑΒΑΣΗ ΒΗΜΑ 4_3'
       },
-
     ]
   },
   // 'sorting-env_4_2': {

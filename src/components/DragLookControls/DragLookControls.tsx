@@ -6,9 +6,10 @@ import { Floor, environments } from '../../config';
 interface DragLookControlsProps {
   floor?: Floor;
   stepId?: string;
+  isInVR?: boolean;
 }
 
-const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId }) => {
+const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId, isInVR }) => {
   const { camera, gl } = useThree();
   const [isDragging, setIsDragging] = useState(false);
   const prevMouse = useRef({ x: 0, y: 0 });
@@ -67,26 +68,28 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId }) =>
     if (environmentId) {
       const environment = environments[environmentId || ''];
       const environmentChanged = prevEnvironmentId.current !== environmentId;
-      
+
       if (environmentChanged) {
         // Environment changed: use environment's default camera angles
         if (environment.cameraAngle !== undefined) {
-          targetPitch.current = (environment.cameraAngle * Math.PI) / 180;
+          targetPitch.current = -(environment.cameraAngle * Math.PI) / 180;
+          pitch.current = targetPitch.current;
         }
         if (environment.cameraYaw !== undefined) {
-          targetYaw.current = 3*Math.PI/2 - (environment.cameraYaw * Math.PI) / 180;
+          targetYaw.current = Math.PI - (environment.cameraYaw * Math.PI) / 180;
+          yaw.current = targetYaw.current;
         }
       } else {
         // Environment didn't change but step might have: look for keypoint with matching targetStep
         if (stepId) {
           const keypoint = environment.keypoints.find(kp => kp.targetStep === stepId);
           if (keypoint) {
-            targetPitch.current = -(keypoint.pitch * Math.PI) / 180;
-            targetYaw.current = 3*Math.PI/2 - (keypoint.yaw * Math.PI) / 180;
+            targetPitch.current = (keypoint.pitch * Math.PI) / 180;
+            targetYaw.current = Math.PI - (keypoint.yaw * Math.PI) / 180;
           }
         }
       }
-      
+
       // Update previous environment ID
       prevEnvironmentId.current = environmentId;
     }
@@ -94,6 +97,7 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId }) =>
 
   // Apply smooth rotation every frame
   useFrame(() => {
+    if (isInVR) return;
     // Lerp yaw and pitch towards targets if not dragging
 
     yaw.current = THREE.MathUtils.lerp(yaw.current, targetYaw.current, 0.05);

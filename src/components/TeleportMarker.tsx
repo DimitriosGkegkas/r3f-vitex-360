@@ -135,7 +135,7 @@ function RingBase({ radius = 0.5, thickness = 0.04, hovered = false, clicked = f
   );
 }
 
-interface EnergyPillarProps {
+export interface EnergyPillarProps {
   height?: number;
   radius?: number;
   hovered?: boolean;
@@ -150,17 +150,6 @@ function EnergyPillar({ height = 2, radius = 0.3, hovered = false, clicked = fal
   const currentState: MarkerState = clicked ? 'clicked' : hovered ? 'hover' : 'normal';
   const config = teleportMarkerStates[currentState];
 
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    if (matRef.current) matRef.current.time = t;
-    if (meshRef.current) {
-      const rotationSpeed = clicked ? 1.0 : hovered ? 0.5 : 0.25;
-      meshRef.current.rotation.y = t * rotationSpeed;
-      // Add scale animation based on state
-      const scaleMultiplier = config.scale;
-      meshRef.current.scale.setScalar(scaleMultiplier);
-    }
-  });
 
   return (
     <mesh ref={meshRef} position={[0, height / 2, 0]}>
@@ -176,7 +165,7 @@ function EnergyPillar({ height = 2, radius = 0.3, hovered = false, clicked = fal
         power={1.2}
         transparent
         // depthWrite={false}
-        side={THREE.DoubleSide}
+        // side={THREE.DoubleSide}
         blending={THREE.AdditiveBlending}
       />
     </mesh>

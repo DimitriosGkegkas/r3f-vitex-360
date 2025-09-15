@@ -20,9 +20,18 @@ interface ExperienceProps {
   isBackgroundMode?: boolean;
   shouldStartVideo?: boolean;
   isPreloading?: boolean;
+  isInVR?: boolean;
   onPreloadComplete?: (results: ImageLoadResult[]) => void;
   onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
   onShowScoreCard?: () => void;
+  // VR video props
+  showVRVideo?: boolean;
+  vrVideoData?: {
+    floorIndex: number;
+    floorTitle: string;
+    floorNumber: string;
+  } | null;
+  onVRVideoEnd?: () => void;
 }
 
 export const Experience: React.FC<ExperienceProps> = ({
@@ -32,12 +41,17 @@ export const Experience: React.FC<ExperienceProps> = ({
   onStateChange,
   onStepChange,
   onTooltipChange,
+  isInVR,
   isBackgroundMode = false,
   shouldStartVideo = false,
   isPreloading = false,
   onPreloadComplete,
   onPreloadProgress,
-  onShowScoreCard
+  onShowScoreCard,
+  // VR video props
+  showVRVideo = false,
+  vrVideoData = null,
+  onVRVideoEnd
 }) => {
   // State for video visibility
   const [showVideo, setShowVideo] = useState(!isBackgroundMode);
@@ -130,6 +144,7 @@ export const Experience: React.FC<ExperienceProps> = ({
         isPreloading={isPreloading}
         onPreloadComplete={onPreloadComplete}
         onPreloadProgress={onPreloadProgress}
+        isInVR={isInVR}
         infoCardData={{
           title: currentStep.title,
           description: currentStep.description,
@@ -138,6 +153,10 @@ export const Experience: React.FC<ExperienceProps> = ({
           currentStep: currentStepIndex + 1,
           totalSteps: totalStepsInFloor
         }}
+        // VR video props
+        showVRVideo={showVRVideo}
+        vrVideoData={vrVideoData}
+        onVRVideoEnd={onVRVideoEnd}
       />
       <Header />
       {!showVideo && (
@@ -154,7 +173,6 @@ export const Experience: React.FC<ExperienceProps> = ({
           />
         </div>
       )}
-
       <Menu
         hideFloorsButton={showVideo}
         currentFloorId={currentFloorId}
