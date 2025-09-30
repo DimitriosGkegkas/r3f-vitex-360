@@ -35,7 +35,7 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
 
   const bulletPoints = [
     `Αξιοποίησες ${visitedCount} από τα ${totalPossibleSteps} κρυφά μυστικά της Vitex και θα μπορούσες να παράξεις ${dailyProduction.toLocaleString()} σακιά την ημέρα.`,
-    'Το νέο εργοστάσιο της Vitex μπορεί πάνω από 2.000.000 σακιά τον χρόνο.'
+    'Το νέο εργοστάσιο της Vitex μπορεί πάνω από 2.240.000 σακιά τον χρόνο.'
   ];
 
   const trophyIcon = (

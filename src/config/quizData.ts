@@ -34,9 +34,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     id: 2,
     question: "Με ποιον ρυθμό μπορεί να γίνει η παλετοποίηση στο εργοστάσιο;",
     options: [
-      { letter: "Α", text: "100 σακιά/ώρα" },
-      { letter: "Β", text: "500 σακιά/ώρα" },
-      { letter: "Γ", text: "1.000 σακιά/ώρα" },
+      { letter: "Α", text: "2000 σακιά/ώρα" },
+      { letter: "Β", text: "4000 σακιά/ώρα" },
+      { letter: "Γ", text: "6.400 σακιά/ώρα" },
       { letter: "Δ", text: "Η τουρμπίνα" }
     ],
     correctAnswer: 2,
