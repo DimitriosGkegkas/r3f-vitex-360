@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatedIcon } from '../AnimatedIcon';
-import { BulletPoint } from '../BulletPoint';
+// import { BulletPoint } from '../BulletPoint';
 import { FilledButton } from '../FilledButton';
 import { QuizCard } from '../QuizCard';
 import { QuizResult } from '../QuizResult';
@@ -20,9 +20,9 @@ interface ScoreCardProps {
 type QuizState = 'score' | 'quiz' | 'result';
 
 export const ScoreCard: React.FC<ScoreCardProps> = ({
-  visitedCount,
-  totalPossibleSteps,
-  dailyProduction,
+  // visitedCount,
+  // totalPossibleSteps,
+  // dailyProduction,
   onRestart,
   quizTimerSeconds = 10,
   autoNextDelay = 5000
