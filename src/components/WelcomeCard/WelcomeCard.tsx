@@ -13,7 +13,7 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = ({ onStart , loadingPerce
   const bulletPoints = [
     'Ακολούθησε τα βήματα για να δεις πώς φτάνουμε από την πρώτη ύλη στο τελικό προϊόν',
     'Ακολούθησε τα βήματα ή περιηγήσου ελεύθερα στον χώρο',
-    'Όσο περισσότερο καταλάβεις πώς δουλεύει το νέο εργοστάσιο, τόσο πιο πολλά σακιά θα καταφέρεις να παράγεις'
+    // 'Όσο περισσότερο καταλάβεις πώς δουλεύει το νέο εργοστάσιο, τόσο πιο πολλά σακιά θα καταφέρεις να παράγεις'
   ];
 
   const factoryIcon = (
@@ -28,7 +28,7 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = ({ onStart , loadingPerce
         {factoryIcon}
       </AnimatedIcon>
       <h1 className="welcome-title">
-        Καλώς ήλθες στην ψηφιακή περιήγηση στο νέο εργοστάσιο της Vitex!
+       Καλώς ήλθες στην ψηφιακή περιήγηση του νέου εργοστασίου κονιαμάτων της Vitex!
       </h1>
       <div className="bullet-points">
         {bulletPoints.map((point, index) => (

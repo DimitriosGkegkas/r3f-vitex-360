@@ -209,7 +209,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'raw-materials',
         targetStep: 'info_5_5_1',
-        title: 'Silo. Aποθήκευση Α υλών.'
+        title: 'Silo. Aποθήκευση A’ Υλών.'
       },
 
     ]
@@ -655,7 +655,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'packaging',
         targetStep: 'step_0_2_vid',
-        title: 'Εισαγωγή παλέτων προς τύλιξη'
+        title: 'Εισαγωγή παλετών προς τύλιξη'
       },
       {
         id: 'info_0_1_1-kp',
@@ -708,7 +708,7 @@ export const environments: Record<string, Environment> = {
         zoom: 2,
         targetFloor: 'packaging',
         targetStep: 'step_0_2_vid',
-        title: 'Εισαγωγή παλέτων προς τύλιξη'
+        title: 'Εισαγωγή παλετών προς τύλιξη'
       },
     ]
   },

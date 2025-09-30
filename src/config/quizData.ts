@@ -23,11 +23,11 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     question: "Πόσα σιλό αποθήκευσης Α’ υλών διαθέτει το εργοστάσιο;",
     options: [
       { letter: "Α", text: "8" },
-      { letter: "Β", text: "10" },
+      { letter: "Β", text: "11" },
       { letter: "Γ", text: "15" },
       { letter: "Δ", text: "20" }
     ],
-    correctAnswer: 2,
+    correctAnswer: 1,
     explanation: "Με 15 σιλό, η Vitex έχει τεράστια δυναμικότητα αποθήκευσης, που δίνει τεράστια ευελιξία στην παραγωγή."
   },
   {

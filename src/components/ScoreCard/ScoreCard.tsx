@@ -33,10 +33,10 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
   const [showResult, setShowResult] = useState(false);
   const [loadingPercentage, setLoadingPercentage] = useState(0);
 
-  const bulletPoints = [
-    `Αξιοποίησες ${visitedCount} από τα ${totalPossibleSteps} κρυφά μυστικά της Vitex και θα μπορούσες να παράξεις ${dailyProduction.toLocaleString()} σακιά την ημέρα.`,
-    'Το νέο εργοστάσιο της Vitex μπορεί πάνω από 2.240.000 σακιά τον χρόνο.'
-  ];
+  // const bulletPoints = [
+  //   // `Αξιοποίησες ${visitedCount} από τα ${totalPossibleSteps} κρυφά μυστικά της Vitex και θα μπορούσες να παράξεις ${dailyProduction.toLocaleString()} σακιά την ημέρα.`,
+  //   // 'Το νέο εργοστάσιο της Vitex μπορεί πάνω από 2.240.000 σακιά τον χρόνο.'
+  // ];
 
   const trophyIcon = (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -161,12 +161,12 @@ export const ScoreCard: React.FC<ScoreCardProps> = ({
         {trophyIcon}
       </AnimatedIcon>
       <h1 className="score-title">
-        Καταπληκτική δουλειά στο εργοστάσιο!
+        Kαταπληκτική δουλειά στο εργοστάσιο κονιαμάτων!
       </h1>
       <div className="bullet-points">
-        {bulletPoints.map((point, index) => (
+        {/* {bulletPoints.map((point, index) => (
           <BulletPoint key={index} text={point} />
-        ))}
+        ))} */}
       </div>
       <FilledButton
         text="Προχωράμε στο κουίζ"
