@@ -73,6 +73,15 @@ const FloorPanel: React.FC<FloorPanelProps> = ({
                 <>
                   <div className="floor-number">{floor.floorNumber}</div>
                   <div className="floor-name">{floor.title}</div>
+                  {isActive && (
+                    <div className="you-are-here-marker">
+                      <img 
+                        src="/you-are-here.png" 
+                        alt="You are here" 
+                        className="you-are-here-icon"
+                      />
+                    </div>
+                  )}
                 </>
 
               </div>
