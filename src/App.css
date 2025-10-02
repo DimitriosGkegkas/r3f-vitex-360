@@ -6,6 +6,10 @@
   font-family: 'Manrope', sans-serif;
 }
 
+body {
+  overflow: hidden;
+}
+
 .experience-container {
   display: flex;
   width: 100%;
@@ -80,8 +84,7 @@
   }
   
   .vr-toggle-container {
-    top: 10px;
-    right: 10px;
+    display: none;
   }
 }
 
@@ -95,10 +98,6 @@
     min-height: 250px;
   }
   
-  .vr-toggle-container {
-    top: 5px;
-    right: 5px;
-  }
 }
 
 * {

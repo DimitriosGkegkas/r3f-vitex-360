@@ -16,6 +16,7 @@ export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [isFadingOut, setIsFadingOut] = useState(false);
+  const [needsUserInteraction, setNeedsUserInteraction] = useState(false);
 
   const videoSrc = `/floors-videos/floor-${floorIndex}.mp4`;
 
@@ -26,6 +27,19 @@ export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
       onVideoEnd();
     }, 400); // Match the CSS animation duration
   }, [onVideoEnd]);
+
+  const handlePlayClick = useCallback(async () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    try {
+      await video.play();
+      setNeedsUserInteraction(false);
+    } catch (error) {
+      console.error('Error playing video:', error);
+      setHasError(true);
+    }
+  }, []);
 
   const handleOverlayClick = useCallback((e: React.MouseEvent) => {
     // Only close if clicking on the overlay background, not on the video card itself
@@ -73,11 +87,22 @@ export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
       if (!isComponentMounted) return;
       // Try to play the video once it can play
       video.play().catch(error => {
-        console.error('Error playing video:', error);
+        console.log('Autoplay prevented, user interaction required:', error);
         if (isComponentMounted) {
-          handleError();
+          setNeedsUserInteraction(true);
+          setIsLoading(false);
         }
       });
+    };
+
+    const handlePlay = () => {
+      if (!isComponentMounted) return;
+      setNeedsUserInteraction(false);
+    };
+
+    const handlePause = () => {
+      if (!isComponentMounted) return;
+      // Video paused, but we don't need to track this state
     };
 
     // Add event listeners
@@ -85,6 +110,8 @@ export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
     video.addEventListener('error', handleError);
     video.addEventListener('ended', handleEnded);
     video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('play', handlePlay);
+    video.addEventListener('pause', handlePause);
 
     // Set a timeout to auto-close if video doesn't load within 10 seconds
     loadingTimeout = setTimeout(() => {
@@ -104,6 +131,8 @@ export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
       video.removeEventListener('error', handleError);
       video.removeEventListener('ended', handleEnded);
       video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('play', handlePlay);
+      video.removeEventListener('pause', handlePause);
       // Pause video when component unmounts to prevent AbortError
       video.pause();
     };
@@ -130,6 +159,17 @@ export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
           {hasError && (
             <div className="floor-video-error">
               <span>Σφάλμα φόρτωσης βίντεο</span>
+            </div>
+          )}
+
+          {needsUserInteraction && (
+            <div className="floor-video-play-button" onClick={handlePlayClick}>
+              <div className="play-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none">
+                  <path d="M8 5v14l11-7z" fill="currentColor"/>
+                </svg>
+              </div>
+              <span>Πατήστε για αναπαραγωγή</span>
             </div>
           )}
           

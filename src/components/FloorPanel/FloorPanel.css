@@ -250,6 +250,7 @@
   width: 100%;
   justify-content: space-around;
   align-items: center;
+  flex-direction: row;
 }
 
 .control-button {
@@ -297,20 +298,25 @@
   justify-content: center;
   align-items: center;
   gap: 8px;
-  display: inline-flex;
+  display: flex;
   width: 20px;
   height: 20px;
   background: none;
   border: none;
   cursor: pointer;
   overflow: hidden;
+  padding: 0;
+  opacity: 1;
+  visibility: visible;
+  z-index: 1;
 }
 
-.close-button .control-icon {
+.close-button svg {
   width: 20px;
   height: 20px;
-  position: relative;
-  overflow: hidden;
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 .close-button .control-icon::before {

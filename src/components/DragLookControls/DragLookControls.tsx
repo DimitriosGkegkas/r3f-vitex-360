@@ -22,20 +22,30 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId, isIn
   const targetYaw = useRef(0);
   const targetPitch = useRef(0);
 
-  const onPointerDown = useCallback((e: MouseEvent) => {
+  const onPointerDown = useCallback((e: MouseEvent | TouchEvent) => {
     setIsDragging(true);
-    prevMouse.current = { x: e.clientX, y: e.clientY };
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    prevMouse.current = { x: clientX, y: clientY };
+    
+    // Prevent default touch behavior to avoid scrolling
+    if ('touches' in e) {
+      e.preventDefault();
+    }
   }, []);
 
   const onPointerUp = useCallback(() => setIsDragging(false), []);
 
   const onPointerMove = useCallback(
-    (e: MouseEvent) => {
+    (e: MouseEvent | TouchEvent) => {
       if (!isDragging) return;
 
-      const deltaX = e.clientX - prevMouse.current.x;
-      const deltaY = e.clientY - prevMouse.current.y;
-      prevMouse.current = { x: e.clientX, y: e.clientY };
+      const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+      const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+      
+      const deltaX = clientX - prevMouse.current.x;
+      const deltaY = clientY - prevMouse.current.y;
+      prevMouse.current = { x: clientX, y: clientY };
 
       const sensitivity = 0.002;
 
@@ -48,6 +58,11 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId, isIn
       // clamp target pitch
       const limit = Math.PI / 2 - 0.1;
       targetPitch.current = Math.max(-limit, Math.min(limit, targetPitch.current));
+      
+      // Prevent default touch behavior to avoid scrolling
+      if ('touches' in e) {
+        e.preventDefault();
+      }
     },
     [isDragging]
   );
@@ -109,18 +124,34 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId, isIn
     camera.quaternion.copy(q);
   });
 
-  // Mouse listeners
+  // Mouse and touch listeners
   useEffect(() => {
     const dom = gl.domElement;
+    
+    // Mouse events
     dom.addEventListener('mousedown', onPointerDown);
     dom.addEventListener('mouseup', onPointerUp);
     dom.addEventListener('mouseleave', onPointerUp);
     dom.addEventListener('mousemove', onPointerMove);
+    
+    // Touch events
+    dom.addEventListener('touchstart', onPointerDown, { passive: false });
+    dom.addEventListener('touchend', onPointerUp);
+    dom.addEventListener('touchcancel', onPointerUp);
+    dom.addEventListener('touchmove', onPointerMove, { passive: false });
+    
     return () => {
+      // Mouse events
       dom.removeEventListener('mousedown', onPointerDown);
       dom.removeEventListener('mouseup', onPointerUp);
       dom.removeEventListener('mouseleave', onPointerUp);
       dom.removeEventListener('mousemove', onPointerMove);
+      
+      // Touch events
+      dom.removeEventListener('touchstart', onPointerDown);
+      dom.removeEventListener('touchend', onPointerUp);
+      dom.removeEventListener('touchcancel', onPointerUp);
+      dom.removeEventListener('touchmove', onPointerMove);
     };
   }, [gl, onPointerDown, onPointerUp, onPointerMove]);
 
