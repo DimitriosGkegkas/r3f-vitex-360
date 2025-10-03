@@ -28,7 +28,7 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = ({ onStart , loadingPerce
         {factoryIcon}
       </AnimatedIcon>
       <h1 className="welcome-title">
-       Καλώς ήλθες στην ψηφιακή περιήγηση του νέου εργοστασίου κονιαμάτων της Vitex!
+       Καλώς ήλθες στον Χρωμόπυργο! Ψηφιακή περιήγηση του νέου εργοστασίου κονιαμάτων της Vitex.
       </h1>
       <div className="bullet-points">
         {bulletPoints.map((point, index) => (
