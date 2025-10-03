@@ -28,10 +28,6 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId, isIn
     const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
     prevMouse.current = { x: clientX, y: clientY };
     
-    // Prevent default touch behavior to avoid scrolling
-    if ('touches' in e) {
-      e.preventDefault();
-    }
   }, []);
 
   const onPointerUp = useCallback(() => setIsDragging(false), []);
@@ -59,10 +55,6 @@ const DragLookControls: React.FC<DragLookControlsProps> = ({ floor, stepId, isIn
       const limit = Math.PI / 2 - 0.1;
       targetPitch.current = Math.max(-limit, Math.min(limit, targetPitch.current));
       
-      // Prevent default touch behavior to avoid scrolling
-      if ('touches' in e) {
-        e.preventDefault();
-      }
     },
     [isDragging]
   );
