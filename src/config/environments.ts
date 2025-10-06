@@ -66,7 +66,7 @@ export const environments: Record<string, Environment> = {
         pitch: -17,
         zoom: 2,
         targetFloor: 'raw-materials',
-        targetStep: 'info_5_6_1',
+        targetStep: 'info_5_5_1',
         title: 'Μετάβαση στα σιλό'
       },
       {
