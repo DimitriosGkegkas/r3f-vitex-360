@@ -181,8 +181,8 @@ export const environments: Record<string, Environment> = {
   'raw-materials-env_5_5': {
     id: 'raw-materials-env_5_5',
     environmentImage: '/cubemap/raw-materials/5_5',
-    cameraAngle: 10,
-    cameraYaw: 140,
+    cameraAngle: -20,
+    cameraYaw: 90,
     keypoints: [
       {
         id: 'step_5_4_kp',
@@ -193,15 +193,15 @@ export const environments: Record<string, Environment> = {
         targetStep: 'info_5_4_2',
         title: 'Επιστροφή'
       },
-      {
-        id: 'step_5_6_kp',
-        yaw: 147,
-        pitch: -25,
-        zoom: 2,
-        targetFloor: 'raw-materials',
-        targetStep: 'info_5_6_1',
-        title: 'Επόμενο'
-      },
+      // {
+      //   id: 'step_5_6_kp',
+      //   yaw: 147,
+      //   pitch: -25,
+      //   zoom: 2,
+      //   targetFloor: 'raw-materials',
+      //   targetStep: 'info_5_6_1',
+      //   title: 'Επόμενο'
+      // },
       {
         id: 'info_5_5_1kp',
         yaw: 75,
@@ -238,15 +238,15 @@ export const environments: Record<string, Environment> = {
         targetStep: 'info_5_5_1',
         title: 'Μετάβαση στα silo'
       },
-      {
-        id: 'info_5_6_1_kp',
-        yaw: 0,
-        pitch: 0,
-        zoom: 2,
-        targetFloor: 'raw-materials',
-        targetStep: 'info_5_6_1',
-        title: 'Tο οικοσύστημα Vitex'
-      },
+      // {
+      //   id: 'info_5_6_1_kp',
+      //   yaw: 0,
+      //   pitch: 0,
+      //   zoom: 2,
+      //   targetFloor: 'raw-materials',
+      //   targetStep: 'info_5_6_1',
+      //   title: 'Tο οικοσύστημα Vitex'
+      // },
     ]
   },
   // raw materials level 
@@ -641,8 +641,8 @@ export const environments: Record<string, Environment> = {
       },
       {
         id: 'step_0_3-kp',
-        yaw: 155,
-        pitch: -30,
+        yaw: 105,
+        pitch: -25,
         zoom: 2,
         targetFloor: 'packaging',
         targetStep: 'step_0_3_vid',
@@ -772,7 +772,7 @@ export const environments: Record<string, Environment> = {
     keypoints: [
       {
         id: 'step_0_1-kp',
-        yaw: -10,
+        yaw: -100,
         pitch: -50,
         zoom: 1.5,
         targetFloor: 'packaging',
