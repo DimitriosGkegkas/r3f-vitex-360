@@ -35,6 +35,10 @@ interface AppLayoutProps {
   totalPossibleSteps: number;
   dailyProduction: number;
   
+  // Audio state
+  isMuted: boolean;
+  onToggleMute: () => void;
+  
   // Handlers
   onStart: () => void;
   onStateChange: (floorId: string) => void;
@@ -68,6 +72,8 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   visitedSteps,
   totalPossibleSteps,
   dailyProduction,
+  isMuted,
+  onToggleMute,
   onStart,
   onStateChange,
   onStepChange,
@@ -114,6 +120,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           showVRVideo={showFloorVideo && isInVR}
           vrVideoData={floorVideoData}
           onVRVideoEnd={onFloorVideoEnd}
+          // Audio state
+          isMuted={isMuted}
+          onToggleMute={onToggleMute}
         />
 
         {/* Render tooltip outside the canvas */}
@@ -163,6 +172,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           floorIndex={floorVideoData.floorIndex}
           onVideoEnd={onFloorVideoEnd}
           isVisible={showFloorVideo}
+          muted={isMuted}
         />
       )}
     </div>

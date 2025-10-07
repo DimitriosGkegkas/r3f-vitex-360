@@ -12,6 +12,8 @@ export interface MenuProps {
   onStateChange: (stateId: string) => void;
   canGoPrevious: () => boolean;
   onShowScoreCard?: () => void;
+  isMuted: boolean;
+  onToggleMute: () => void;
 }
 
 export const Menu: React.FC<MenuProps> = ({ 
@@ -22,10 +24,11 @@ export const Menu: React.FC<MenuProps> = ({
   floorOrder,
   onStateChange,
   canGoPrevious,
-  onShowScoreCard
+  onShowScoreCard,
+  isMuted,
+  onToggleMute
 }) => {
   const [isFloorPanelOpen, setIsFloorPanelOpen] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
   const [isHelpActive, setIsHelpActive] = useState(false);
 
 
@@ -41,9 +44,6 @@ export const Menu: React.FC<MenuProps> = ({
     }
   };
 
-  const toggleMute = () => {
-    setIsMuted(!isMuted);
-  };
 
   const toggleHelp = () => {
     setIsHelpActive(!isHelpActive);
@@ -88,7 +88,7 @@ export const Menu: React.FC<MenuProps> = ({
 
         <button
           className={`menu-button`}
-          onClick={toggleMute}
+          onClick={onToggleMute}
         >
           <div className="button-icon">
             {isMuted ? (

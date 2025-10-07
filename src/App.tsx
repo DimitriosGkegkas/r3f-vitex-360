@@ -163,6 +163,10 @@ const App: React.FC = () => {
       totalPossibleSteps={scoreData.totalPossibleSteps}
       dailyProduction={scoreData.dailyProduction}
       
+      // Audio state
+      isMuted={appState.isMuted}
+      onToggleMute={appState.toggleMute}
+      
       // Handlers
       onStart={handleStart}
       onStateChange={handleStateChange}

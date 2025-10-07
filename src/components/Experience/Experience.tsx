@@ -35,6 +35,9 @@ interface ExperienceProps {
     floorNumber: string;
   } | null;
   onVRVideoEnd?: () => void;
+  // Audio state
+  isMuted?: boolean;
+  onToggleMute?: () => void;
 }
 
 export const Experience: React.FC<ExperienceProps> = ({
@@ -57,7 +60,10 @@ export const Experience: React.FC<ExperienceProps> = ({
   // VR video props
   showVRVideo = false,
   vrVideoData = null,
-  onVRVideoEnd
+  onVRVideoEnd,
+  // Audio state
+  isMuted = false,
+  onToggleMute = () => {}
 }) => {
   // State for video visibility
   const [showVideo, setShowVideo] = useState(!isBackgroundMode);
@@ -129,7 +135,7 @@ export const Experience: React.FC<ExperienceProps> = ({
       <VideoBackground
         videoSrc="/video/intro_drone.mp4"
         className="loading-page-bg"
-        muted={true}
+        muted={isMuted}
         loop={false}
         onVideoEnd={handleVideoEnd}
         onSkip={handleVideoSkip}
@@ -163,6 +169,8 @@ export const Experience: React.FC<ExperienceProps> = ({
         showVRVideo={showVRVideo}
         vrVideoData={vrVideoData}
         onVRVideoEnd={onVRVideoEnd}
+        // Audio state
+        muted={isMuted}
       />
       <Header />
       {!showVideo && (
@@ -189,6 +197,8 @@ export const Experience: React.FC<ExperienceProps> = ({
         onStateChange={onStateChange}
         canGoPrevious={canGoPrevious}
         onShowScoreCard={onShowScoreCard}
+        isMuted={isMuted}
+        onToggleMute={onToggleMute}
       />
     </div>
   );

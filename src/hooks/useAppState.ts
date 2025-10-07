@@ -43,6 +43,7 @@ export const useAppState = () => {
   const [showFloorVideo, setShowFloorVideo] = useState(false);
   const [floorVideoData, setFloorVideoData] = useState<FloorVideoData | null>(null);
   const [isInfoPanelOpen, setIsInfoPanelOpen] = useState(true);
+  const [isMuted, setIsMuted] = useState(false);
 
   const handlePreloadProgress = useCallback((progress: PreloadProgress) => {
     console.log('📊 App: Preload progress update', progress);
@@ -89,6 +90,7 @@ export const useAppState = () => {
     showFloorVideo,
     floorVideoData,
     isInfoPanelOpen,
+    isMuted,
 
     // Setters
     setCurrentPage,
@@ -105,5 +107,6 @@ export const useAppState = () => {
     // Handlers
     handlePreloadProgress,
     handlePreloadComplete,
+    toggleMute: () => setIsMuted(!isMuted),
   };
 };

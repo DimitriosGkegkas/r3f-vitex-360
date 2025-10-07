@@ -6,6 +6,7 @@ interface VRVideoScreenProps {
     floorIndex: number;
     onVideoEnd: () => void;
     isVisible: boolean;
+    muted?: boolean;
     distance?: number; // Distance from user in VR
     width?: number; // Screen width in VR
     height?: number; // Screen height in VR
@@ -16,6 +17,7 @@ export const VRVideoScreen: React.FC<VRVideoScreenProps> = ({
     floorIndex,
     onVideoEnd,
     isVisible,
+    muted = false,
     distance = 3, // 3 meters in front of user
     width = 4, // 4 meters wide
     height = 2.25, // 16:9 aspect ratio
@@ -123,7 +125,7 @@ export const VRVideoScreen: React.FC<VRVideoScreenProps> = ({
         video.src = videoSrc;
         video.crossOrigin = 'anonymous';
         video.loop = false; // Disable loop so video can end and auto-remove
-        video.muted = false; // Enable audio
+        video.muted = muted;
         video.playsInline = true;
         video.preload = 'auto';
         video.setAttribute('webkit-playsinline', 'true');
