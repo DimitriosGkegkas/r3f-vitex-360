@@ -5,12 +5,14 @@ interface FloorVideoCardProps {
   floorIndex: number;
   onVideoEnd: () => void;
   isVisible: boolean;
+  muted: boolean;
 }
 
 export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
   floorIndex,
   onVideoEnd,
-  isVisible
+  isVisible,
+  muted
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -176,7 +178,7 @@ export const FloorVideoCard: React.FC<FloorVideoCardProps> = ({
           <video
             ref={videoRef}
             className={`floor-video ${isLoading ? 'loading' : ''}`}
-            muted={false}
+            muted={muted}
             controls={false}
             playsInline
             preload="metadata"

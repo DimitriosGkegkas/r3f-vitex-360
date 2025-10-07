@@ -38,6 +38,8 @@ interface Image360ViewerProps {
     floorNumber: string;
   } | null;
   onVRVideoEnd?: () => void;
+  // Audio state
+  muted?: boolean;
 }
 
 // Extract InfoCard data interface
@@ -68,7 +70,9 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
   onPreloadProgress,
   // VR video props
   vrVideoData = null,
-  onVRVideoEnd
+  onVRVideoEnd,
+  // Audio state
+  muted = false
 }) => {
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const [showInfo, setShowInfo] = useState(true);
@@ -242,6 +246,7 @@ const Image360Viewer: React.FC<Image360ViewerProps> = ({
               floorIndex={vrVideoData.floorIndex}
               onVideoEnd={onVRVideoEnd || (() => { })}
               isVisible={true}
+              muted={muted}
               distance={3}
               width={4}
               height={2.25}
