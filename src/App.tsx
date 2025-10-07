@@ -107,6 +107,9 @@ const App: React.FC = () => {
   const handleStepChange = (newStepId: string) => {
     appState.setCurrentStepId(newStepId);
 
+    // Open info panel when step changes (hotspot clicked)
+    appState.setIsInfoPanelOpen(true);
+
     // Mark this step as visited
     const newVisitedStep: VisitedStep = {
       floorId: appState.currentFloorId,
@@ -143,6 +146,7 @@ const App: React.FC = () => {
       showFloorVideo={appState.showFloorVideo}
       floorVideoData={appState.floorVideoData}
       isWelcomeDissolving={appState.isWelcomeDissolving}
+      isInfoPanelOpen={appState.isInfoPanelOpen}
       
       // Preload state
       isPreloading={appState.isPreloading}
@@ -170,6 +174,7 @@ const App: React.FC = () => {
       onCloseScoreCard={handleCloseScoreCard}
       onFloorVideoEnd={floorVideo.hideFloorVideo}
       onRestart={handleRestart}
+      onInfoPanelClose={() => appState.setIsInfoPanelOpen(false)}
     />
   );
 };

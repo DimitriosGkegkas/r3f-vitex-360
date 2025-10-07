@@ -42,6 +42,7 @@ export const useAppState = () => {
   const [showScoreCard, setShowScoreCard] = useState(false);
   const [showFloorVideo, setShowFloorVideo] = useState(false);
   const [floorVideoData, setFloorVideoData] = useState<FloorVideoData | null>(null);
+  const [isInfoPanelOpen, setIsInfoPanelOpen] = useState(true);
 
   const handlePreloadProgress = useCallback((progress: PreloadProgress) => {
     console.log('📊 App: Preload progress update', progress);
@@ -87,6 +88,7 @@ export const useAppState = () => {
     showScoreCard,
     showFloorVideo,
     floorVideoData,
+    isInfoPanelOpen,
 
     // Setters
     setCurrentPage,
@@ -98,6 +100,7 @@ export const useAppState = () => {
     setShowScoreCard,
     setShowFloorVideo,
     setFloorVideoData,
+    setIsInfoPanelOpen,
 
     // Handlers
     handlePreloadProgress,

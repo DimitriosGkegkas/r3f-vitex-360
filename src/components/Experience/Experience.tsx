@@ -24,6 +24,9 @@ interface ExperienceProps {
   onPreloadComplete?: (results: ImageLoadResult[]) => void;
   onPreloadProgress?: (progress: { loaded: number; total: number; percentage: number; currentImage?: string }) => void;
   onShowScoreCard?: () => void;
+  // Info panel state
+  isInfoPanelOpen?: boolean;
+  onInfoPanelClose?: () => void;
   // VR video props
   showVRVideo?: boolean;
   vrVideoData?: {
@@ -48,6 +51,9 @@ export const Experience: React.FC<ExperienceProps> = ({
   onPreloadComplete,
   onPreloadProgress,
   onShowScoreCard,
+  // Info panel state
+  isInfoPanelOpen = true,
+  onInfoPanelClose,
   // VR video props
   showVRVideo = false,
   vrVideoData = null,
@@ -170,6 +176,8 @@ export const Experience: React.FC<ExperienceProps> = ({
             totalSteps={totalStepsInFloor}
             onNext={canGoNext() ? () => handleStepChange('next') : undefined}
             onPrev={canGoPrevious() ? () => handleStepChange('prev') : undefined}
+            isOpen={isInfoPanelOpen}
+            onClose={onInfoPanelClose}
           />
         </div>
       )}

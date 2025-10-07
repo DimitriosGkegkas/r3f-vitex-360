@@ -18,6 +18,7 @@ interface AppLayoutProps {
   showFloorVideo: boolean;
   floorVideoData: FloorVideoData | null;
   isWelcomeDissolving: boolean;
+  isInfoPanelOpen: boolean;
   
   // Preload state
   isPreloading: boolean;
@@ -45,6 +46,7 @@ interface AppLayoutProps {
   onCloseScoreCard: () => void;
   onFloorVideoEnd: () => void;
   onRestart: () => void;
+  onInfoPanelClose: () => void;
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
@@ -56,6 +58,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   showFloorVideo,
   floorVideoData,
   isWelcomeDissolving,
+  isInfoPanelOpen,
   isPreloading,
   preloadResults,
   preloadProgress,
@@ -75,6 +78,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   onCloseScoreCard,
   onFloorVideoEnd,
   onRestart,
+  onInfoPanelClose,
 }) => {
   const visitedCount = visitedSteps.length;
 
@@ -103,6 +107,9 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
           onPreloadComplete={onPreloadComplete}
           onPreloadProgress={onPreloadProgress}
           onShowScoreCard={onShowScoreCard}
+          // Info panel state
+          isInfoPanelOpen={isInfoPanelOpen}
+          onInfoPanelClose={onInfoPanelClose}
           // VR video props - only show VR video when in VR mode
           showVRVideo={showFloorVideo && isInVR}
           vrVideoData={floorVideoData}
