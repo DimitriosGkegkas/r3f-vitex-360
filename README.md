@@ -284,3 +284,8 @@ src/
 ## License
 
 This project is private and proprietary.
+
+
+sudo su
+rm -r /var/www/thes/
+cp -r /home/dimitrisgk/r3f-thessaloniki/dist/ /var/www/thes
